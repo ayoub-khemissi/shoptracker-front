@@ -15,7 +15,7 @@ import Subtitle from "../components/Subtitle";
 import TextImportant from "../components/TextImportant";
 import FooterLink from "../components/FooterLink";
 import Breadcrumb from "../components/Breadcrumb";
-import Circle from "../components/Circle";
+import CircleLink from "../components/CircleLink";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -25,7 +25,7 @@ export default function Showcase() {
     <main className="p-16">
       <Button type="primary" onClick={() => { }}>S'inscrire</Button>
       <ShopTrackerLogo />
-      <Button type="primary" defaultCursor={true} onClick={() => { }}>Liste de souhaits</Button>
+      <Button type="primary" defaultCursor onClick={() => { }}>Liste de souhaits</Button>
       <Title className="text-primary text-3xl text-left">Choisis ton abonnement et profite dès<br /><span className="text-secondary">maintenant de nos services</span> !</Title>
       <Input labelText="Adresse email" type="email" placeholder="xyz@mail.com" value={input} onChange={(e) => { setInput(e.target.value) }} />
       <Checkbox labelText="Traquer le restockage" checked={checked} onChange={(e) => { setChecked(!checked) }} />
@@ -39,7 +39,7 @@ export default function Showcase() {
       <Breadcrumb href="/subscribe">⇽ Retour aux abonnements</Breadcrumb>
       <TextImportant>Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
-      <Circle><img src="assets/svg/icons/google-logo.svg" /></Circle>
+      <CircleLink href="/login"><img src="assets/svg/icons/google-logo.svg" /></CircleLink>
     </main>
   );
 }

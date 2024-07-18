@@ -22,10 +22,12 @@ export default function Showcase() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <main className="p-16">
+    <>
       <Button type="primary" onClick={() => { }}>S'inscrire</Button>
-      <ShopTrackerLogo />
+      <Button type="contrast" onClick={() => { }}>Retour</Button>
       <Button type="primary" defaultCursor onClick={() => { }}>Liste de souhaits</Button>
+      <Button type="contrast" defaultCursor onClick={() => { }}>Historique</Button>
+      <ShopTrackerLogo />
       <Title className="text-primary text-3xl text-left">Choisis ton abonnement et profite dès<br /><span className="text-secondary">maintenant de nos services</span> !</Title>
       <Input labelText="Adresse email" type="email" placeholder="xyz@mail.com" value={input} onChange={(e) => { setInput(e.target.value) }} />
       <Checkbox labelText="Traquer le restockage" checked={checked} onChange={(e) => { setChecked(!checked) }} />
@@ -40,6 +42,6 @@ export default function Showcase() {
       <TextImportant>Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
       <CircleLink href="/login"><img src="assets/svg/icons/google-logo.svg" /></CircleLink>
-    </main>
+    </>
   );
 }

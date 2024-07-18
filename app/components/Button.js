@@ -6,7 +6,7 @@ const Button = ({ children, className, onClick, type = "primary", defaultCursor 
       typeClass = `border-primary text-contrast bg-primary hover:text-primary hover:bg-contrast`;
       break;
 
-    case "primary":
+    case "contrast":
       typeClass = `border-primary text-primary bg-contrast hover:text-contrast hover:bg-primary`;
       break;
   }

@@ -6,7 +6,7 @@ const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 const TextLink = ({ children, className, href }) => {
 
   return (
-    <Link href={href} className={`${montserrat.className} ${className} underline`}>{children}</Link>
+    <Link href={href} className={`${montserrat.className} underline ${className}`}>{children}</Link>
   );
 }
 

@@ -6,7 +6,7 @@ const lexend = Lexend({ weight: "700", subsets: ["latin"] });
 const FooterLink = ({ children, className, href }) => {
 
   return (
-    <Link href={href} className={`${lexend.className} ${className} text-sm`}>{children}</Link>
+    <Link href={href} className={`${lexend.className} text-sm ${className}`}>{children}</Link>
   );
 }
 

@@ -6,7 +6,7 @@ const lexend = Lexend({ weight: "700", subsets: ["latin"] });
 const NavLink = ({ children, className, href }) => {
 
   return (
-    <Link href={href} className={`${lexend.className} ${className} uppercase text-xl`}>{children}</Link>
+    <Link href={href} className={`${lexend.className} uppercase text-xl ${className}`}>{children}</Link>
   );
 }
 

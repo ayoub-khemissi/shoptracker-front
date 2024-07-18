@@ -1,6 +1,6 @@
 const Separator = ({ className }) => {
   return (
-    <div className={`${className} bg-primary w-100 h-0.5`}></div>
+    <div className={`bg-primary w-100 h-0.5 ${className}`}></div>
   );
 }
 

@@ -2,9 +2,9 @@ import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
-const Input = ({ className = "", labelText = null, type, placeholder, value, onChange }) => {
+const Input = ({ className, labelText = null, type, placeholder, value, onChange }) => {
   return (
-    <div className={`${className} flex flex-col`}>
+    <div className={`flex flex-col ${className}`}>
       {labelText &&
         <label className={`${montserrat.className} uppercase py-1`}>{labelText}</label>
       }

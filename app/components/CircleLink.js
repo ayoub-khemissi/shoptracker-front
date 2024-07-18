@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const CircleLink = ({ children, className, href }) => {
   return (
-    <Link href={href} className={`${className} border border-primary rounded-full w-12 h-12 flex justify-center items-center`}>{children}</Link>
+    <Link href={href} className={`border border-primary rounded-full w-12 h-12 flex justify-center items-center ${className}`}>{children}</Link>
   );
 }
 

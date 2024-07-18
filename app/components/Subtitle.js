@@ -4,7 +4,7 @@ const lexend = Lexend({ weight: "800", subsets: ["latin"] });
 
 const Subtitle = ({ children, className }) => {
   return (
-    <h3 className={`${lexend.className} ${className} uppercase`}>{children}</h3>
+    <h3 className={`${lexend.className} uppercase ${className}`}>{children}</h3>
   );
 }
 

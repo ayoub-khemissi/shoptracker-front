@@ -6,7 +6,7 @@ const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 const Breadcrumb = ({ children, className, href }) => {
 
   return (
-    <Link href={href} className={`${montserrat.className} ${className} uppercase leading-4`}>{children}</Link>
+    <Link href={href} className={`${montserrat.className} uppercase leading-4 ${className}`}>{children}</Link>
   );
 }
 

@@ -1,4 +1,6 @@
-const Button = ({ children, className = "", onClick, type = "primary", defaultCursor = false }) => {
+import Link from "next/link";
+
+const ButtonLink = ({ children, className = "", href, type = "primary" }) => {
   let typeClass;
 
   switch (type) {
@@ -16,10 +18,12 @@ const Button = ({ children, className = "", onClick, type = "primary", defaultCu
   }
 
   return (
-    <button className={`${typeClass} uppercase font-semibold px-5 py-2 text-sm border-2 transition duration-200 rounded-full ${defaultCursor ? "cursor-default" : ""} ${className}`} onClick={onClick}>
-      {children}
-    </button>
+    <div className={`${typeClass} flex justify-center items-center border-2 transition duration-200 rounded-full ${className}`}>
+      <Link className="uppercase font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
+        {children}
+      </Link>
+    </div>
   );
 }
 
-export default Button;
+export default ButtonLink;

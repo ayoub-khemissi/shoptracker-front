@@ -28,6 +28,11 @@ module.exports = {
           DEFAULT: "#1E1E25",
           light: "#FFFFFF"
         },
+        "contrast-alt": {
+          dark: "#232033",
+          DEFAULT: "#232033",
+          light: "#FFFFFF"
+        },
         gray: {
           dark: "#D3D3D3",
           DEFAULT: "#D3D3D3",

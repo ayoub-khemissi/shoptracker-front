@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
         <>
           {children}
         </>
-        <footer className="bg-contrast-alt flex justify-center items-center space-x-4 lg:px-40 lg:py-10 px-20 py-6">
+        <footer className="bg-contrast-alt flex flex-wrap justify-center items-center space-x-4 lg:px-40 lg:py-10 px-20 py-6">
           <p className="text-sm">© 2024 <ShopTrackerLogo className="text-sm" /></p>
           <FooterLink href="terms-of-use">Terms of Use</FooterLink>
           <FooterLink href="terms-of-sale">Terms of Sale</FooterLink>

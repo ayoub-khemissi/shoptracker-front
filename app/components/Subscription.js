@@ -26,7 +26,12 @@ const Subscription = ({ className = "", type = "contrast", planInfo }) => {
   }
 
   return (
-    <div className={`${type === "contrast" ? "bg-contrast text-primary border-primary" : "bg-primary text-contrast border-contrast"} rounded-2xl border-2 w-80 ${className}`}>
+    <div className={`${type === "contrast" ? "bg-contrast text-primary border-primary" : "bg-primary text-contrast border-contrast"} relative rounded-2xl border-2 w-80 ${className}`}>
+      {type === "primary" &&
+        <div className="absolute top-0 right-0 rounded-tr-xl rounded-bl-xl bg-contrast m-0.5 px-5 py-1">
+          <TextNormal className="text-xs uppercase text-primary">Popular</TextNormal>
+        </div>
+      }
       <div className="px-4 py-4 space-y-4">
         <Subtitle className="text-lg">{title}</Subtitle>
         <TextImportant className="text-2xl">{formatMonthlyAnnuallyPrice(monthlyAnnually, price)}<span className="text-xs">€ {billingTime}</span></TextImportant>

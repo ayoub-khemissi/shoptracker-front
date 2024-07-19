@@ -39,7 +39,7 @@ export default function Showcase() {
       <Input type="text" placeholder="0.00€" value={input} onChange={(e) => { setInput(e.target.value) }} />
       <TextNormal>Tu n'as pas de compte ?</TextNormal>
       <NavLink href="/contact">Contact</NavLink>
-      <Separator />
+      <Separator type="primary" />
       <Subtitle className="text-lg">Gratuit</Subtitle>
       <Breadcrumb href="/subscribe">⇽ Retour aux abonnements</Breadcrumb>
       <TextImportant>Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>

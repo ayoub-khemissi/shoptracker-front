@@ -113,9 +113,9 @@ export default function Home() {
           } />
         </div>
         <div className="flex justify-center items-center py-3">
-          <Separator className="rounded-full" />
+          <Separator type="primary" className="rounded-full" />
           <Subtitle className="px-2">Or</Subtitle>
-          <Separator className="rounded-full" />
+          <Separator type="primary" className="rounded-full" />
         </div>
         <div className="flex justify-center items-center">
           <Button onClick={() => { }}>I customize my subscription 💎</Button>

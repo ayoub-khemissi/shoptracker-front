@@ -35,7 +35,7 @@ const Subscription = ({ className = "", type = "contrast", planInfo }) => {
           <ButtonLink href="/checkout" type={type === "contrast" ? "primary" : "tertiary"}>Select this plan</ButtonLink>
         </div>
       </div>
-      <Separator className={type === "contrast" ? "bg-primary" : "bg-contrast"} />
+      <Separator type={type === "contrast" ? "primary" : "contrast"} />
       <div className="px-4 py-4 space-y-3">
         <Subtitle className="text-sm">Features</Subtitle>
         <div className="flex items-center space-x-4">

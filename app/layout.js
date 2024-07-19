@@ -1,22 +1,17 @@
 import { Montserrat } from "next/font/google";
-import "./globals.css";
 import ShopTrackerLogo from "./components/ShopTrackerLogo";
 import Link from "next/link";
 import NavLink from "./components/NavLink";
 import FooterLink from "./components/FooterLink";
+import "./globals.css";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "ShopTracker.",
-  description: "Get Alerts on Availability and Price Drops for Your Favorite Products!",
-};
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.className} bg-contrast-dark text-primary-dark lg:px-40 lg:py-10 md:px-20 md:py-6 px-10 py-2`}>
-        <header className="flex justify-between items-center">
+    <html lang="en" className="scroll-smooth">
+      <body className={`${montserrat.className} bg-contrast text-primary`}>
+        <header className="flex justify-between items-center lg:px-40 lg:py-10 px-20 py-6">
           <div>
             <Link href="/">
               <ShopTrackerLogo />
@@ -27,10 +22,10 @@ export default function RootLayout({ children }) {
             <NavLink href="/login">Signin</NavLink>
           </nav>
         </header>
-        <main>
+        <>
           {children}
-        </main>
-        <footer className="flex justify-center items-center space-x-4">
+        </>
+        <footer className="bg-contrast-alt flex justify-center items-center space-x-4 lg:px-40 lg:py-10 px-20 py-6">
           <p className="text-sm">© 2024 <ShopTrackerLogo className="text-sm" /></p>
           <FooterLink href="terms-of-use">Terms of Use</FooterLink>
           <FooterLink href="terms-of-sale">Terms of Sale</FooterLink>

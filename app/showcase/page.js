@@ -15,16 +15,19 @@ import Subtitle from "../components/Subtitle";
 import TextImportant from "../components/TextImportant";
 import FooterLink from "../components/FooterLink";
 import Breadcrumb from "../components/Breadcrumb";
-import CircleLink from "../components/CircleLink";
+import Subscription from "../components/Subscription";
+import CircleButton from "../components/CircleButton";
+import ButtonLink from "../components/ButtonLink";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
   const [checked, setChecked] = useState(false);
 
   return (
-    <>
+    <main className="bg-gradient-to-b from-contrast from-90% to-contrast-alt">
       <Button type="primary" onClick={() => { }}>S'inscrire</Button>
       <Button type="contrast" onClick={() => { }}>Retour</Button>
+      <Button type="tertiary" onClick={() => { }}>Sélectionner</Button>
       <Button type="primary" defaultCursor onClick={() => { }}>Liste de souhaits</Button>
       <Button type="contrast" defaultCursor onClick={() => { }}>Historique</Button>
       <ShopTrackerLogo />
@@ -41,7 +44,20 @@ export default function Showcase() {
       <Breadcrumb href="/subscribe">⇽ Retour aux abonnements</Breadcrumb>
       <TextImportant>Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
-      <CircleLink href="/login"><img src="assets/svg/icons/google-logo.svg" /></CircleLink>
-    </>
+      <CircleButton onClick={() => { }}><img src="assets/svg/icons/google-logo.svg" /></CircleButton>
+      <Subscription type="contrast" planInfo={
+        {
+          monthlyAnnually: false,
+          title: "Basic Plan",
+          price: 4.99,
+          description: <>Our free plan to test our <br /><span className="text-secondary">application with</span> <br />confidence!</>,
+          trackCheckInterval: 21600000,
+          trackEnabledMaxProducts: 1,
+          trackDisabledMaxProducts: 5,
+          trackMaxUserSearchesPerDay: 5
+        }
+      } />
+      <ButtonLink href="/checkout">Sélectionner</ButtonLink>
+    </main>
   );
 }

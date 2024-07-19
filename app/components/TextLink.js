@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
-const TextLink = ({ children, className, href }) => {
+const TextLink = ({ children, className = "", href }) => {
 
   return (
     <Link href={href} className={`${montserrat.className} underline ${className}`}>{children}</Link>

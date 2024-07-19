@@ -2,7 +2,7 @@ import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
-const Checkbox = ({ className, labelText, checked, onChange }) => {
+const Checkbox = ({ className = "", labelText, checked, onChange }) => {
   return (
     <div className={`flex flex-row items-center ${className}`} onClick={onChange} >
       <div className="border border-primary rounded w-5 h-5 flex justify-center items-center">

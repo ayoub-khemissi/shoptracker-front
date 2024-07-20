@@ -23,11 +23,11 @@ export default function Home() {
         <div className="flex flex-wrap justify-evenly items-center space-y-4 py-6">
           <div className="lg:w-1/3 flex flex-col justify-center items-center space-y-6">
             <img className="h-96" src="assets/svg/illustrations/shopping.svg" />
-            <TextNormal className="text-center text-3xl">{productsTracked} products are being tracked<br /> right now.</TextNormal>
+            <TextNormal className="text-center lg:text-3xl text-2xl">{productsTracked} products are being tracked<br /> right now.</TextNormal>
           </div>
           <div className="lg:w-1/3 flex flex-col justify-center items-center space-y-6">
             <img className="h-96" src="assets/svg/illustrations/stock-prices.svg" />
-            <TextNormal className="text-center text-3xl">{checksPerformed} checks performed<br /> since the launch.</TextNormal>
+            <TextNormal className="text-center lg:text-3xl text-2xl">{checksPerformed} checks performed<br /> since the launch.</TextNormal>
           </div>
         </div>
         <div className="lg:flex hidden justify-center items-center py-10">
@@ -39,15 +39,15 @@ export default function Home() {
         <div className="flex lg:flex-nowrap flex-wrap justify-between items-center py-20 lg:space-x-24 space-y-4">
           <div className="lg:w-1/3 flex flex-col justify-between items-center space-y-10">
             <img className="h-72" src="assets/svg/illustrations/product-url.svg" />
-            <TextNormal className="text-center text-2xl">Copy and paste the product page URL from the e-commerce site to the tracking page 🔎.</TextNormal>
+            <TextNormal className="text-center lg:text-3xl text-2xl">Copy and paste the product page URL from the e-commerce site to the tracking page 🔎.</TextNormal>
           </div>
           <div className="lg:w-1/3 flex flex-col justify-between items-center space-y-10">
             <img className="h-72" src="assets/svg/illustrations/confirmation.svg" />
-            <TextNormal className="text-center text-2xl">Validate the product information and follow the instructions to start tracking 🕵.</TextNormal>
+            <TextNormal className="text-center lg:text-3xl text-2xl">Validate the product information and follow the instructions to start tracking 🕵.</TextNormal>
           </div>
           <div className="lg:w-1/3 flex flex-col justify-center items-center space-y-10">
             <img className="h-72" src="assets/svg/illustrations/notification.svg" />
-            <TextNormal className="text-center text-2xl">Receive a notification when your product is back in stock or when its price has dropped 🎉!</TextNormal>
+            <TextNormal className="text-center lg:text-3xl text-2xl">Receive a notification when your product is back in stock or when its price has dropped 🎉!</TextNormal>
           </div>
         </div>
         <div className="lg:flex hidden justify-center items-center py-10">
@@ -57,9 +57,9 @@ export default function Home() {
       <section id="subscribe" className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:px-40 lg:py-20 md:px-20 md:py-10 px-10 py-6">
         <Title className="text-center">Choose your subscription plan and enjoy<br /> <span className="text-secondary hover:text-tertiary transition duration-200">our services now 💫</span>!</Title>
         <div className="flex justify-center items-center py-6 space-x-2">
-          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-50" : "opacity-100"}`}>Monthly billing</TextImportant>
+          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-50" : "opacity-100"} text-right`}>Monthly billing</TextImportant>
           <Switch checked={monthlyAnnually} onChange={() => { setMonthlyAnnually(!monthlyAnnually) }} />
-          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-100" : "opacity-50"}`}>Annual billing<br /><span className="text-xs">(save ~25% annually)</span></TextImportant>
+          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-100" : "opacity-50"} text-left`}>Annual billing<br /><span className="text-xs">(save ~25% annually)</span></TextImportant>
         </div>
         <div className="flex flex-wrap justify-evenly">
           <Subscription className="2xl:mb-0 mb-4" type="contrast" planInfo={
@@ -99,7 +99,7 @@ export default function Home() {
               trackMaxUserSearchesPerDay: 20
             }
           } />
-          <Subscription className="2xl:mb-0 mb-4" type="contrast" planInfo={
+          <Subscription className="2xl:mb-0" type="contrast" planInfo={
             {
               monthlyAnnually: monthlyAnnually,
               title: "Premium Plan",

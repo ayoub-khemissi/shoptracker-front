@@ -11,13 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${montserrat.className} bg-contrast text-primary`}>
-        <header className="flex justify-between items-center lg:px-40 lg:py-10 px-20 py-6">
+        <header className="flex flex-wrap sm:justify-between justify-center items-center lg:px-40 lg:py-10 px-20 py-6">
           <div>
             <Link href="/">
               <ShopTrackerLogo />
             </Link>
           </div>
-          <nav className="flex justify-end items-center space-x-4">
+          <nav className="flex sm:justify-end justify-center items-center space-x-4">
             <NavLink href="/register">Signup</NavLink>
             <NavLink href="/login">Signin</NavLink>
           </nav>

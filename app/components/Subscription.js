@@ -32,7 +32,7 @@ const Subscription = ({ className = "", type = "contrast", planInfo }) => {
           <TextNormal className="text-xs uppercase text-primary">Popular</TextNormal>
         </div>
       }
-      <div className="px-4 py-4 space-y-4">
+      <div className="px-4 py-4 space-y-6">
         <Subtitle className="text-lg">{title}</Subtitle>
         <TextImportant className="text-2xl">{formatMonthlyAnnuallyPrice(monthlyAnnually, price)}<span className="text-xs">€ {billingTime}</span></TextImportant>
         <TextImportant>{description}</TextImportant>

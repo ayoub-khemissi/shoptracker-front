@@ -1,8 +1,7 @@
 export function convertMilliseconds(ms) {
   const second = 1000;
-  const minute = 60000;
-  const hour = 3600000;
-  const day = 24 * hour;
+  const minute = 60 * second;
+  const hour = 60 * minute;
 
   if (ms < second) {
     return "less than a second";
@@ -13,7 +12,7 @@ export function convertMilliseconds(ms) {
     let minutes = Math.floor(ms / minute);
     return minutes + (minutes === 1 ? " minute" : " minutes");
   } else {
-    let hours = Math.floor((ms % day) / hour);
+    let hours = Math.floor(ms / hour);
     return hours + (hours === 1 ? " hour" : " hours");
   }
 }

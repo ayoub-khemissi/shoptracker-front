@@ -33,9 +33,9 @@ export default function Showcase() {
       <Button type="contrast" defaultCursor onClick={() => { }}>Historique</Button>
       <ShopTrackerLogo />
       <Title className="text-primary text-3xl text-left">Choisis ton abonnement et profite dès<br /><span className="text-secondary">maintenant de nos services</span> !</Title>
-      <Input labelText="Adresse email" type="email" placeholder="xyz@mail.com" value={input} onChange={(e) => { setInput(e.target.value) }} />
-      <Checkbox labelText="Traquer le restockage" checked={checked} onChange={(e) => { setChecked(!checked) }} />
-      <Switch checked={checked} onChange={(e) => { setChecked(!checked) }} />
+      <Input labelText="Adresse email" type="email" placeholder="xyz@mail.com" value={input} onChange={e => { setInput(e.target.value) }} />
+      <Checkbox labelText="Traquer le restockage" checked={checked} onChange={() => { setChecked(!checked) }} />
+      <Switch checked={checked} onChange={() => { setChecked(!checked) }} />
       <TextLink href="/register">S'inscrire</TextLink>
       <Input type="text" placeholder="0.00€" value={input} onChange={(e) => { setInput(e.target.value) }} />
       <TextNormal>Tu n'as pas de compte ?</TextNormal>

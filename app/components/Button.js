@@ -16,7 +16,7 @@ const Button = ({ children, className = "", onClick, type = "primary", defaultCu
   }
 
   return (
-    <button className={`${typeClass} uppercase font-semibold px-5 py-2 text-sm border-2 transition duration-200 rounded-full ${defaultCursor ? "cursor-default" : ""} ${className}`} onClick={onClick}>
+    <button className={`${typeClass} uppercase text-nowrap font-semibold px-5 py-2 text-sm border-2 transition duration-200 rounded-full ${defaultCursor ? "cursor-default" : ""} ${className}`} onClick={onClick}>
       {children}
     </button>
   );

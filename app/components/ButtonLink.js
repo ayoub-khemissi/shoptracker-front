@@ -19,7 +19,7 @@ const ButtonLink = ({ children, className = "", href, type = "primary" }) => {
 
   return (
     <div className={`${typeClass} flex justify-center items-center border-2 transition duration-200 rounded-full ${className}`}>
-      <Link className="uppercase font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
+      <Link className="uppercase text-nowrap font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
         {children}
       </Link>
     </div>

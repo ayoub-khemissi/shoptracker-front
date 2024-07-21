@@ -7,9 +7,8 @@ import Link from "next/link";
 import TextImportant from "./components/TextImportant";
 import Switch from "./components/Switch";
 import Subscription from "./components/Subscription";
-import Separator from "./components/Separator";
-import Subtitle from "./components/Subtitle";
 import Button from "./components/Button";
+import OrSeparator from "./components/OrSeparator";
 
 export default function Home() {
   const [productsTracked, setProductsTracked] = useState(0);
@@ -112,11 +111,7 @@ export default function Home() {
             }
           } />
         </div>
-        <div className="flex justify-center items-center py-3">
-          <Separator type="primary" className="rounded-full" />
-          <Subtitle className="px-2">Or</Subtitle>
-          <Separator type="primary" className="rounded-full" />
-        </div>
+        <OrSeparator className="py-3" />
         <div className="flex justify-center items-center">
           <Button onClick={() => { }}>I customize my subscription 💎</Button>
         </div>

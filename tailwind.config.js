@@ -34,8 +34,8 @@ module.exports = {
           light: "#FFFFFF"
         },
         gray: {
-          dark: "#D3D3D3",
-          DEFAULT: "#D3D3D3",
+          dark: "#A3A3A3",
+          DEFAULT: "#A3A3A3",
           light: "#A0A0A0"
         }
       }

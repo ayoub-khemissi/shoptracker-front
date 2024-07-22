@@ -1,17 +1,17 @@
-const Button = ({ children, className = "", onClick, type = "primary", defaultCursor = false }) => {
+const Button = ({ children, className = "", onClick, type = "primary", locked = false, defaultCursor = false }) => {
   let typeClass;
 
   switch (type) {
     case "primary":
-      typeClass = `border-primary text-contrast bg-primary hover:text-primary hover:bg-contrast`;
+      typeClass = `border-primary text-contrast bg-primary ${locked ? "" : "hover:text-primary hover:bg-contrast"}`;
       break;
 
     case "tertiary":
-      typeClass = `border-tertiary text-primary bg-tertiary hover:border-secondary hover:text-contrast hover:bg-secondary`;
+      typeClass = `border-tertiary text-primary bg-tertiary ${locked ? "" : "hover:border-secondary hover:text-contrast hover:bg-secondary"}`;
       break;
 
     case "contrast":
-      typeClass = `border-primary text-primary bg-contrast hover:text-contrast hover:bg-primary`;
+      typeClass = `border-primary text-primary bg-contrast ${locked ? "" : "hover:text-contrast hover:bg-primary"}`;
       break;
   }
 

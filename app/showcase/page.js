@@ -40,11 +40,11 @@ export default function Showcase() {
       <TextLink href="/register">S'inscrire</TextLink>
       <Input type="text" placeholder="0.00€" value={input} onChange={(e) => { setInput(e.target.value) }} />
       <TextNormal>Tu n'as pas de compte ?</TextNormal>
-      <NavLink  className="text-xl" href="/contact">Contact</NavLink>
+      <NavLink className="text-xl" href="/contact">Contact</NavLink>
       <Separator type="primary" />
       <Subtitle className="text-lg">Gratuit</Subtitle>
       <Breadcrumb href="/subscribe">⇽ Retour aux abonnements</Breadcrumb>
-      <TextImportant>Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>
+      <TextImportant className="leading-4">Parfait pour un suivi régulier <br /><span className="text-secondary">et fiable de tes produits.</span> <br />N'attends plus !</TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
       <CircleButton onClick={() => { }}><img src="assets/svg/icons/google-logo.svg" /></CircleButton>
       <Subscription type="contrast" planInfo={
@@ -61,7 +61,8 @@ export default function Showcase() {
       } />
       <ButtonLink href="/checkout">Sélectionner</ButtonLink>
       <OrSeparator />
-      <Track number={0} siteDomain="rabanne.com" productInfo={{
+      <Track number={0} product={{
+        id: 1,
         name: {
           value: "1 Million - Coffret Eau de toilette ambrée",
           accuracy: 0.9

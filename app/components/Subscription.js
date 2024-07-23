@@ -34,8 +34,8 @@ const Subscription = ({ className = "", type = "contrast", planInfo }) => {
       }
       <div className="px-4 py-4 space-y-6">
         <Subtitle className="text-lg">{title}</Subtitle>
-        <TextImportant className="text-2xl">{formatMonthlyAnnuallyPrice(monthlyAnnually, price)}<span className="text-xs">€ {billingTime}</span></TextImportant>
-        <TextImportant>{description}</TextImportant>
+        <TextImportant className="leading-4 text-2xl">{formatMonthlyAnnuallyPrice(monthlyAnnually, price)}<span className="text-xs">€ {billingTime}</span></TextImportant>
+        <TextImportant className="leading-4">{description}</TextImportant>
         <div className="flex justify-center items-center">
           <ButtonLink href="/checkout" type={type === "contrast" ? "primary" : "tertiary"}>Select this plan</ButtonLink>
         </div>

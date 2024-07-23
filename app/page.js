@@ -56,9 +56,9 @@ export default function Home() {
       <section id="subscribe" className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:px-40 lg:py-20 md:px-20 md:py-10 px-10 py-6">
         <Title className="text-center">Choose your subscription plan and enjoy<br /> <span className="text-secondary hover:text-tertiary transition duration-200">our services now 💫</span>!</Title>
         <div className="flex justify-center items-center py-6 space-x-2">
-          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-50" : "opacity-100"} text-right`}>Monthly billing</TextImportant>
+          <TextImportant className={`leading-4 transition duration-200 ${monthlyAnnually ? "opacity-50" : "opacity-100"} text-right`}>Monthly billing</TextImportant>
           <Switch checked={monthlyAnnually} onChange={() => { setMonthlyAnnually(!monthlyAnnually) }} />
-          <TextImportant className={`transition duration-200 ${monthlyAnnually ? "opacity-100" : "opacity-50"} text-left`}>Annual billing<br /><span className="text-xs">(save ~25% annually)</span></TextImportant>
+          <TextImportant className={`leading-4 transition duration-200 ${monthlyAnnually ? "opacity-100" : "opacity-50"} text-left`}>Annual billing<br /><span className="text-xs">(save ~25% annually)</span></TextImportant>
         </div>
         <div className="flex flex-wrap justify-evenly">
           <Subscription className="2xl:mb-0 mb-4" type="contrast" planInfo={

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const ButtonLink = ({ children, className = "", href, type = "primary" }) => {
+const ButtonLink = ({ children, className = "", href, type = "primary", target = "_self" }) => {
   let typeClass;
 
   switch (type) {
@@ -19,7 +19,7 @@ const ButtonLink = ({ children, className = "", href, type = "primary" }) => {
 
   return (
     <div className={`${typeClass} flex justify-center items-center border-2 transition duration-200 rounded-full ${className}`}>
-      <Link className="uppercase text-nowrap font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
+      <Link target={target} className="uppercase text-nowrap font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
         {children}
       </Link>
     </div>

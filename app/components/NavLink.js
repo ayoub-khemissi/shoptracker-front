@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const lexend = Lexend({ weight: "700", subsets: ["latin"] });
 
-const NavLink = ({ children, type="primary", className = "", href }) => {
+const NavLink = ({ children, type = "primary", className = "", href, target = "_self" }) => {
   let typeClass;
 
   switch (type) {
@@ -19,9 +19,9 @@ const NavLink = ({ children, type="primary", className = "", href }) => {
       typeClass = "text-contrast hover:text-tertiary";
       break;
   }
-  
+
   return (
-    <Link href={href} className={`${lexend.className} ${typeClass} transition duration-200 uppercase text-xl ${className}`}>{children}</Link>
+    <Link target={target} href={href} className={`${lexend.className} ${typeClass} transition duration-200 uppercase ${className}`}>{children}</Link>
   );
 }
 

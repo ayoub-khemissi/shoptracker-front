@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
             </Link>
           </div>
           <nav className="flex sm:justify-end justify-center items-center space-x-4">
-            <NavLink href="/register">Sign Up</NavLink>
-            <NavLink href="/login">Sign In</NavLink>
+            <NavLink className="text-xl" href="/register">Sign Up</NavLink>
+            <NavLink className="text-xl" href="/login">Sign In</NavLink>
           </nav>
         </header>
         <div className="flex-1">

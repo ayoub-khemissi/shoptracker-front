@@ -15,7 +15,7 @@ const Input = ({
   onChange,
 }) => {
   let input;
-  const classNames = `py-2 px-4 border-2 rounded-md border-primary bg-contrast placeholder-gray ${className}`;
+  const classNames = `py-2 px-4 border-2 rounded-md border-primary bg-contrast placeholder-gray ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`;
 
   switch (type) {
     case "number":
@@ -49,7 +49,7 @@ const Input = ({
   }
 
   return (
-    <div className={`flex w-full flex-col ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       {labelText && <label className={`${montserrat.className} pb-1 uppercase`}>{labelText}</label>}
       {input}
     </div>

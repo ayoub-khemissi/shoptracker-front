@@ -22,6 +22,7 @@ import OrSeparator from "../components/OrSeparator";
 import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
+import TextLabel from "../components/TextLabel";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -51,6 +52,7 @@ export default function Showcase() {
         <span className="text-secondary">maintenant de nos services</span> !
       </Title>
       <Input
+        className="w-full"
         labelText="Adresse email"
         type="email"
         placeholder="xyz@mail.com"
@@ -74,6 +76,7 @@ export default function Showcase() {
       />
       <TextLink href="/register">S'inscrire</TextLink>
       <Input
+        className="w-full"
         type="text"
         placeholder="0.00€"
         value={input}
@@ -147,7 +150,7 @@ export default function Showcase() {
             value: false,
             accuracy: 0.7,
           },
-          price_status: 3,
+          price_status: 1,
           created_at: 1721682389515,
           check_interval: 1800000,
           status: 2,
@@ -155,6 +158,7 @@ export default function Showcase() {
           initial_price: 75.99,
         }}
       />
+      <TextLabel>Email</TextLabel>
     </main>
   );
 }

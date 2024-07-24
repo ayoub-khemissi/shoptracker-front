@@ -10,6 +10,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import UnderlineLink from "../components/UnderlineLink";
 import Image from "next/image";
+import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function Login() {
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
         <Title className="text-center text-4xl">Sign In</Title>
         <CircleButton onClick={() => {}}>
-          <Image src="assets/svg/icons/google-logo.svg" alt="google sign" />
+          <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <OrSeparator className="w-full" />
         <Input

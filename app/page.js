@@ -10,6 +10,13 @@ import Subscription from "./components/Subscription";
 import Button from "./components/Button";
 import OrSeparator from "./components/OrSeparator";
 import Image from "next/image";
+import ShoppingSvg from "../public/assets/svg/illustrations/shopping.svg";
+import StockPricesSvg from "../public/assets/svg/illustrations/stock-prices.svg";
+import ScrollArrowsDownSecondarySvg from "../public/assets/svg/icons/scroll-arrows-down-secondary.svg";
+import ProductUrlSvg from "../public/assets/svg/illustrations/product-url.svg";
+import ConfirmationSvg from "../public/assets/svg/illustrations/confirmation.svg";
+import NotificationSvg from "../public/assets/svg/illustrations/notification.svg";
+import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrows-down-tertiary.svg";
 
 export default function Home() {
   const [productsTracked, setProductsTracked] = useState(0);
@@ -32,18 +39,14 @@ export default function Home() {
         </Title>
         <div className="flex flex-wrap items-center justify-evenly space-y-4 py-6">
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
-            <Image className="h-96" src="assets/svg/illustrations/shopping.svg" alt="shopping" />
+            <Image className="h-96" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               {productsTracked} products are being tracked
               <br /> right now.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
-            <Image
-              className="h-96"
-              src="assets/svg/illustrations/stock-prices.svg"
-              alt="stock prices"
-            />
+            <Image className="h-96" src={StockPricesSvg} alt="stock prices" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               {checksPerformed} checks performed
               <br /> since the launch.
@@ -52,10 +55,7 @@ export default function Home() {
         </div>
         <div className="hidden items-center justify-center py-10 lg:flex">
           <Link href="#how-to" className="animate-bounce">
-            <Image
-              src="assets/svg/icons/scroll-arrows-down-secondary.svg"
-              alt="scroll down arrow"
-            />
+            <Image src={ScrollArrowsDownSecondarySvg} alt="scroll down arrow" />
           </Link>
         </div>
       </section>
@@ -73,31 +73,19 @@ export default function Home() {
         </Title>
         <div className="flex flex-wrap items-center justify-between space-y-4 py-20 lg:flex-nowrap lg:space-x-24">
           <div className="flex flex-col items-center justify-between space-y-10 lg:w-1/3">
-            <Image
-              className="h-72"
-              src="assets/svg/illustrations/product-url.svg"
-              alt="product url"
-            />
+            <Image className="h-72" src={ProductUrlSvg} alt="product url" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               Copy and paste the product page URL from the e-commerce site to the tracking page 🔎.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-between space-y-10 lg:w-1/3">
-            <Image
-              className="h-72"
-              src="assets/svg/illustrations/confirmation.svg"
-              alt="product confirmation"
-            />
+            <Image className="h-72" src={ConfirmationSvg} alt="product confirmation" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               Validate the product information and follow the instructions to start tracking 🕵.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-10 lg:w-1/3">
-            <Image
-              className="h-72"
-              src="assets/svg/illustrations/notification.svg"
-              alt="receive notification"
-            />
+            <Image className="h-72" src={NotificationSvg} alt="receive notification" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               Receive a notification when your product is back in stock or when its price has
               dropped 🎉!
@@ -106,7 +94,7 @@ export default function Home() {
         </div>
         <div className="hidden items-center justify-center py-10 lg:flex">
           <Link href="#subscribe" className="animate-bounce">
-            <Image src="assets/svg/icons/scroll-arrows-down-tertiary.svg" alt="scroll down arrow" />
+            <Image src={ScrollArrowsDownTertiarySvg} alt="scroll down arrow" />
           </Link>
         </div>
       </section>
@@ -232,7 +220,7 @@ export default function Home() {
           <Link href="#top" className="animate-bounce">
             <Image
               className="rotate-180"
-              src="assets/svg/icons/scroll-arrows-down-secondary.svg"
+              src={ScrollArrowsDownSecondarySvg}
               alt="scroll up arrow"
             />
           </Link>

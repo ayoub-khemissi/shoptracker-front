@@ -21,6 +21,7 @@ import ButtonLink from "../components/ButtonLink";
 import OrSeparator from "../components/OrSeparator";
 import Track from "../components/Track";
 import Image from "next/image";
+import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -94,7 +95,7 @@ export default function Showcase() {
       </TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
       <CircleButton onClick={() => {}}>
-        <Image src="assets/svg/icons/google-logo.svg" alt="google sign" />
+        <Image src={GoogleLogoSvg} alt="google sign" />
       </CircleButton>
       <Subscription
         type="contrast"

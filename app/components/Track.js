@@ -5,6 +5,7 @@ import InvisibleButton from "./InvisibleButton";
 import NavLink from "./NavLink";
 import Constants from "@/utils/Constants";
 import Image from "next/image";
+import NextCheckSvg from "../../public/assets/svg/icons/next-check.svg";
 
 const { TRACK_STATUS_ENABLED } = Constants;
 
@@ -142,7 +143,8 @@ const Track = ({ className = "", number, product }) => {
           </TextImportant>
           <div className="flex w-2/12 items-center justify-center">
             <Image
-              className="h-10 w-10"
+              width={40}
+              height={40}
               src={`assets/svg/icons/${getPriceStatusSvgName(price_status)}.svg`}
               alt="price status"
             />
@@ -157,7 +159,8 @@ const Track = ({ className = "", number, product }) => {
           </TextImportant>
           <div className="flex w-2/12 items-center justify-center">
             <Image
-              className="h-10 w-10"
+              width={40}
+              height={40}
               src={`assets/svg/icons/${getAvailabilitySvgName(availability.value)}.svg`}
               alt="availability status"
             />
@@ -169,11 +172,7 @@ const Track = ({ className = "", number, product }) => {
         <div className="flex items-center justify-between">
           <TextImportant className="w-5/12 text-sm leading-4 md:text-lg">Next check</TextImportant>
           <div className="flex w-2/12 items-center justify-center">
-            <Image
-              className="h-10 w-10"
-              src="assets/svg/icons/next-check.svg"
-              alt="next product check"
-            />
+            <Image className="h-10 w-10" src={NextCheckSvg} alt="next product check" />
           </div>
           <TextImportant className="w-5/12 py-1 text-right text-sm leading-4 text-primary md:text-lg">
             {convertMilliseconds(created_at - Date.now() + check_interval)}

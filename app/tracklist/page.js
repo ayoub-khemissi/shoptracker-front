@@ -33,7 +33,7 @@ export default function Tracker() {
   }
 
   return (
-    <main className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-3 lg:px-40 lg:py-10 md:px-20 py-8 px-10">
+    <main className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-3 lg:px-40 md:px-20 px-10">
       <div className="flex justify-center items-center space-x-4">
         <Button locked type={tab === "tracked-products" ? "primary" : "contrast"} defaultCursor={true} onClick={() => { setTab("tracked-products"); }}>Tracked products</Button>
         <Button locked type={tab === "history" ? "primary" : "contrast"} defaultCursor={true} onClick={() => { setTab("history"); }}>History</Button>

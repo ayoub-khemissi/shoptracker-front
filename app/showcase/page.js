@@ -26,7 +26,7 @@ export default function Showcase() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <main className="lg:flex flex-col justify-center items-center h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-4 lg:px-40 lg:py-10 md:px-20 py-8 px-10">
+    <main className="lg:flex flex-col justify-center items-center h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-4 lg:px-40 md:px-20 px-10">
       <Button type="primary" onClick={() => { }}>S'inscrire</Button>
       <Button type="contrast" onClick={() => { }}>Retour</Button>
       <Button type="tertiary" onClick={() => { }}>Sélectionner</Button>

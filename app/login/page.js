@@ -15,7 +15,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="lg:flex h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:space-x-20 space-x-0 space-y-4 lg:space-y-0 lg:px-40 lg:py-10 md:px-20 py-8 px-10">
+    <div className="lg:flex h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:space-x-20 space-x-0 space-y-4 lg:space-y-0 lg:px-40 md:px-20 px-10">
       <section className="lg:flex lg:flex-col justify-center lg:w-1/2 hidden space-y-4 text-center lg:text-left">
         <ShopTrackerLogo className="text-5xl" />
         <TextNormal className="text-3xl">Get an alert on the availability and <span className="text-secondary hover:text-tertiary transition duration-200">price drop of your favorite products</span>!</TextNormal>

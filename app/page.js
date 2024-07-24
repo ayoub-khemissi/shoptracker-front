@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <main>
-      <section id="top" className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:px-40 lg:py-10 md:px-20 py-8 px-10">
+      <section id="top" className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt lg:px-40 md:px-20 px-10">
         <Title className="text-center">Get an alert on the availability and price drop<br /> <span className="text-secondary hover:text-tertiary transition duration-200">of your favorite products</span>!</Title>
         <div className="flex flex-wrap justify-evenly items-center space-y-4 py-6">
           <div className="lg:w-1/3 flex flex-col justify-center items-center space-y-6">

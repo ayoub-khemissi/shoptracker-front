@@ -25,7 +25,7 @@ export default function Tracker() {
   }
 
   return (
-    <main className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-3 lg:px-40 lg:py-10 md:px-20 py-8 px-10">
+    <main className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt space-y-3 lg:px-40 md:px-20 px-10">
       <div className="w-full space-y-3">
         <Input type="url" labelText="Url of the product page" placeholder="https://www.e-commerce.com/product/123456789" onChange={e => { setUrl(e.target.value); }} value={url} />
         <Input type="text" labelText="Product details (optional)" placeholder="Name, description, color..." onChange={e => { setAdditionalInfo(e.target.value); }} value={additionalInfo} />

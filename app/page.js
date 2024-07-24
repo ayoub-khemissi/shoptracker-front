@@ -115,8 +115,8 @@ export default function Home() {
         <div className="flex justify-center items-center">
           <Button onClick={() => { }}>I customize my subscription 💎</Button>
         </div>
-        <div className="flex items-center py-10 rotate-180">
-          <Link href="#top" className="animate-bounce"><img src="assets/svg/icons/scroll-arrows-down-secondary.svg" /></Link>
+        <div className="flex justify-end items-center">
+          <Link href="#top" className="animate-bounce"><img className="rotate-180" src="assets/svg/icons/scroll-arrows-down-secondary.svg" /></Link>
         </div>
       </section>
     </main>

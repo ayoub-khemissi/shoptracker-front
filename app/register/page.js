@@ -35,6 +35,7 @@ export default function Register() {
         </CircleButton>
         <OrSeparator className="w-full" />
         <Input
+          className="w-full"
           labelText="Email"
           type="email"
           placeholder="xyz@mail.com"
@@ -44,6 +45,7 @@ export default function Register() {
           }}
         />
         <Input
+          className="w-full"
           labelText="Password"
           type="password"
           placeholder="••••••••••••"

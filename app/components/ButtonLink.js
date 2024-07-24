@@ -18,12 +18,18 @@ const ButtonLink = ({ children, className = "", href, type = "primary", target =
   }
 
   return (
-    <div className={`${typeClass} flex justify-center items-center border-2 transition duration-200 rounded-full ${className}`}>
-      <Link target={target} className="uppercase text-nowrap font-semibold text-sm text-center px-5 py-2 h-full w-full" href={href}>
+    <div
+      className={`${typeClass} flex items-center justify-center rounded-full border-2 transition duration-200 ${className}`}
+    >
+      <Link
+        target={target}
+        className="h-full w-full text-nowrap px-5 py-2 text-center text-sm font-semibold uppercase"
+        href={href}
+      >
         {children}
       </Link>
     </div>
   );
-}
+};
 
 export default ButtonLink;

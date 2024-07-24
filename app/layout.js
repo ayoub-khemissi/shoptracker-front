@@ -10,23 +10,27 @@ const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${montserrat.className} bg-contrast text-primary flex flex-col h-screen`}>
-        <header className="flex flex-wrap sm:justify-between justify-center items-center lg:px-40 lg:py-10 px-20 py-6">
+      <body className={`${montserrat.className} flex h-screen flex-col bg-contrast text-primary`}>
+        <header className="flex flex-wrap items-center justify-center px-20 py-6 sm:justify-between lg:px-40 lg:py-10">
           <div>
             <Link href="/">
               <ShopTrackerLogo />
             </Link>
           </div>
-          <nav className="flex sm:justify-end justify-center items-center space-x-4">
-            <NavLink className="text-xl" href="/register">Sign Up</NavLink>
-            <NavLink className="text-xl" href="/login">Sign In</NavLink>
+          <nav className="flex items-center justify-center space-x-4 sm:justify-end">
+            <NavLink className="text-xl" href="/register">
+              Sign Up
+            </NavLink>
+            <NavLink className="text-xl" href="/login">
+              Sign In
+            </NavLink>
           </nav>
         </header>
-        <div className="flex-1">
-          {children}
-        </div>
-        <footer className="bg-contrast-alt flex flex-wrap justify-center items-center space-x-4 lg:px-40 lg:py-10 px-20 py-6">
-          <p className="text-sm">© 2024 <ShopTrackerLogo className="text-sm" /></p>
+        <div className="flex-1">{children}</div>
+        <footer className="flex flex-wrap items-center justify-center space-x-4 bg-contrast-alt px-20 py-6 lg:px-40 lg:py-10">
+          <p className="text-sm">
+            © 2024 <ShopTrackerLogo className="text-sm" />
+          </p>
           <FooterLink href="terms-of-use">Terms of Use</FooterLink>
           <FooterLink href="terms-of-sale">Terms of Sale</FooterLink>
           <FooterLink href="privacy">Privacy</FooterLink>

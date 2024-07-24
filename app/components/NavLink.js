@@ -21,8 +21,14 @@ const NavLink = ({ children, type = "primary", className = "", href, target = "_
   }
 
   return (
-    <Link target={target} href={href} className={`${lexend.className} ${typeClass} transition duration-200 uppercase ${className}`}>{children}</Link>
+    <Link
+      target={target}
+      href={href}
+      className={`${lexend.className} ${typeClass} uppercase transition duration-200 ${className}`}
+    >
+      {children}
+    </Link>
   );
-}
+};
 
 export default NavLink;

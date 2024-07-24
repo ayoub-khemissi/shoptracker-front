@@ -1,9 +1,9 @@
 const InvisibleButton = ({ children, className = "", onClick }) => {
   return (
-    <button className={`bg-transparent border-none p-0 m-0 ${className}`} onClick={onClick}>
+    <button className={`m-0 border-none bg-transparent p-0 ${className}`} onClick={onClick}>
       {children}
     </button>
   );
-}
+};
 
 export default InvisibleButton;

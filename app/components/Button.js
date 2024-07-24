@@ -1,4 +1,11 @@
-const Button = ({ children, className = "", onClick, type = "primary", locked = false, defaultCursor = false }) => {
+const Button = ({
+  children,
+  className = "",
+  onClick,
+  type = "primary",
+  locked = false,
+  defaultCursor = false,
+}) => {
   let typeClass;
 
   switch (type) {
@@ -16,10 +23,13 @@ const Button = ({ children, className = "", onClick, type = "primary", locked = 
   }
 
   return (
-    <button className={`${typeClass} uppercase text-nowrap font-semibold px-5 py-2 text-sm border-2 transition duration-200 rounded-full ${defaultCursor ? "cursor-default" : ""} ${className}`} onClick={onClick}>
+    <button
+      className={`${typeClass} text-nowrap rounded-full border-2 px-5 py-2 text-sm font-semibold uppercase transition duration-200 ${defaultCursor ? "cursor-default" : ""} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
-}
+};
 
 export default Button;

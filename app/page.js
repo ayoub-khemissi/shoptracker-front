@@ -98,7 +98,7 @@ export default function Home() {
               trackMaxUserSearchesPerDay: 20
             }
           } />
-          <Subscription className="2xl:mb-0" type="contrast" planInfo={
+          <Subscription type="contrast" planInfo={
             {
               monthlyAnnually: monthlyAnnually,
               title: "Premium Plan",
@@ -115,7 +115,7 @@ export default function Home() {
         <div className="flex justify-center items-center">
           <Button onClick={() => { }}>I customize my subscription 💎</Button>
         </div>
-        <div className="flex justify-end items-center">
+        <div className="flex justify-end items-center md:py-2 py-6">
           <Link href="#top" className="animate-bounce"><img className="rotate-180" src="assets/svg/icons/scroll-arrows-down-secondary.svg" /></Link>
         </div>
       </section>

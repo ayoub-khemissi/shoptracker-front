@@ -10,7 +10,7 @@ export default function Tracker() {
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [trackStock, setTrackStock] = useState(true);
   const [trackPrice, setTrackPrice] = useState(true);
-  const [trackPriceThreshold, setTrackPriceThreshold] = useState(null);
+  const [trackPriceThreshold, setTrackPriceThreshold] = useState("");
 
   const handleTrackPrice = () => {
     if (!trackStock && trackPrice) {

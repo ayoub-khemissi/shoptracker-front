@@ -61,7 +61,7 @@ export default function Tracker() {
         </Button>
       </div>
       <div className="flex flex-wrap items-center justify-evenly">
-        {getFilteredAndSortedTracklist().forEach((product, index) => {
+        {getFilteredAndSortedTracklist().map((product, index) => {
           return <Track number={index} key={`track-${product.id}`} product={product} />;
         })}
       </div>

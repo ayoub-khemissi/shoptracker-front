@@ -12,7 +12,7 @@ const Input = ({
   min,
   max,
   disabled = false,
-  onChange,
+  onChange = () => {},
 }) => {
   let input;
   const classNames = `py-2 px-4 border-2 rounded-md border-primary bg-contrast placeholder-gray ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`;

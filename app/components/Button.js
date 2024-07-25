@@ -1,7 +1,7 @@
 const Button = ({
   children,
   className = "",
-  onClick,
+  onClick = () => {},
   type = "primary",
   locked = false,
   defaultCursor = false,

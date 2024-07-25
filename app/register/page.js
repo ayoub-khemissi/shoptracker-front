@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import ShopTrackerLogo from "../components/ShopTrackerLogo";
 import TextNormal from "../components/TextNormal";
 import CircleButton from "../components/CircleButton";
-import OrSeparator from "../components/OrSeparator";
+import TextSeparator from "../components/TextSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import UnderlineLink from "../components/UnderlineLink";
@@ -33,7 +33,7 @@ export default function Register() {
         <CircleButton onClick={() => {}}>
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
-        <OrSeparator className="w-full" />
+        <TextSeparator className="w-full">Or</TextSeparator>
         <Input
           className="w-full"
           labelText="Email"

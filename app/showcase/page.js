@@ -18,7 +18,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import Subscription from "../components/Subscription";
 import CircleButton from "../components/CircleButton";
 import ButtonLink from "../components/ButtonLink";
-import OrSeparator from "../components/OrSeparator";
+import TextSeparator from "../components/TextSeparator";
 import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
@@ -120,7 +120,7 @@ export default function Showcase() {
         }}
       />
       <ButtonLink href="/checkout">Sélectionner</ButtonLink>
-      <OrSeparator />
+      <TextSeparator>Or</TextSeparator>
       <Track
         number={0}
         product={{

@@ -8,7 +8,7 @@ import TextImportant from "./components/TextImportant";
 import Switch from "./components/Switch";
 import Subscription from "./components/Subscription";
 import Button from "./components/Button";
-import OrSeparator from "./components/OrSeparator";
+import TextSeparator from "./components/TextSeparator";
 import Image from "next/image";
 import ShoppingSvg from "../public/assets/svg/illustrations/shopping.svg";
 import StockPricesSvg from "../public/assets/svg/illustrations/stock-prices.svg";
@@ -212,7 +212,7 @@ export default function Home() {
             }}
           />
         </div>
-        <OrSeparator className="py-3" />
+        <TextSeparator className="py-3">Or</TextSeparator>
         <div className="flex items-center justify-center">
           <Button onClick={() => {}}>I customize my subscription 💎</Button>
         </div>

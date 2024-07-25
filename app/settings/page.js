@@ -6,9 +6,13 @@ import Input from "../components/Input";
 import TextLabel from "../components/TextLabel";
 import Image from "next/image";
 import TextSeparator from "../components/TextSeparator";
+import Switch from "../components/Switch";
 
 export default function Settings() {
   const [tab, setTab] = useState("profile");
+  const [notificationMailbox, setNotificationMailbox] = useState(true);
+  const [notificationTextMessage, setNotificationTextMessage] = useState(true);
+  const [notificationBrowser, setNotificationBrowser] = useState(true);
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
@@ -91,6 +95,41 @@ export default function Settings() {
           <div className="flex items-center justify-between space-x-4">
             <TextLabel>Zipcode</TextLabel>
             <Input className="w-60 md:w-96" placeholder="Zipcode" type="text" />
+          </div>
+          <div className="flex items-center justify-end">
+            <Button onClick={() => {}}>Update</Button>
+          </div>
+        </div>
+      )}
+      {tab === "notifications" && (
+        <div className="space-y-5">
+          <TextSeparator>Receive a notification</TextSeparator>
+          <div
+            className="flex items-center justify-between space-x-4"
+            onClick={() => {
+              setNotificationTextMessage(!notificationTextMessage);
+            }}
+          >
+            <TextLabel>By text message</TextLabel>
+            <Switch checked={notificationTextMessage} />
+          </div>
+          <div
+            className="flex items-center justify-between"
+            onClick={() => {
+              setNotificationMailbox(!notificationMailbox);
+            }}
+          >
+            <TextLabel>In your mailbox</TextLabel>
+            <Switch checked={notificationMailbox} />
+          </div>
+          <div
+            className="flex items-center justify-between"
+            onClick={() => {
+              setNotificationBrowser(!notificationBrowser);
+            }}
+          >
+            <TextLabel>On your browser</TextLabel>
+            <Switch checked={notificationBrowser} />
           </div>
           <div className="flex items-center justify-end">
             <Button onClick={() => {}}>Update</Button>

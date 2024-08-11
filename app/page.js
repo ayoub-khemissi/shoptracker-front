@@ -118,7 +118,7 @@ export default function Home() {
           </TextImportant>
           <Switch
             checked={monthlyAnnually}
-            onChange={() => {
+            onClick={() => {
               setMonthlyAnnually(!monthlyAnnually);
             }}
           />

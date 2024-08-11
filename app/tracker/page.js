@@ -52,8 +52,8 @@ export default function Tracker() {
       </div>
       <div className="space-y-4 lg:flex lg:space-y-0">
         <div className="space-y-2 lg:w-1/2">
-          <Checkbox labelText="Track restocking" checked={trackStock} onChange={handleTrackStock} />
-          <Checkbox labelText="Track price" checked={trackPrice} onChange={handleTrackPrice} />
+          <Checkbox labelText="Track restocking" checked={trackStock} onClick={handleTrackStock} />
+          <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
           <div className={`${trackPrice ? "opacity-100" : "opacity-50"} flex items-center`}>
             <Input
               labelText="Notify me when price below:"

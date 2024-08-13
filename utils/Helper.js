@@ -18,9 +18,11 @@ export function convertMilliseconds(ms) {
 }
 
 export function formatMonthlyAnnuallyPrice(monthlyAnnually, price) {
-  if (!price || price == 0) { return 0; }
-  const annuallyCalc = Math.round(price * 12 * 0.75) - 0.01;
+  if (!price || price == 0) {
+    return 0;
+  }
 
+  const annuallyCalc = Math.round(price * 12 * 0.75) - 0.01;
   return formatPrice(monthlyAnnually ? annuallyCalc : price);
 }
 

@@ -7,7 +7,7 @@ import TextNormal from "./TextNormal";
 import Image from "next/image";
 import CircleCheckSvg from "../../public/assets/svg/icons/circle-check.svg";
 
-const Subscription = ({ className = "", type = "contrast", planInfo }) => {
+const Subscription = ({ className = "", type = "contrast", callToAction = true, planInfo }) => {
   const {
     monthlyAnnually,
     title,
@@ -52,11 +52,13 @@ const Subscription = ({ className = "", type = "contrast", planInfo }) => {
           <span className="text-xs">€ {billingTime}</span>
         </TextImportant>
         <TextImportant className="leading-4">{description}</TextImportant>
-        <div className="flex items-center justify-center">
-          <ButtonLink href="/checkout" type={type === "contrast" ? "primary" : "tertiary"}>
-            Select this plan
-          </ButtonLink>
-        </div>
+        {callToAction && (
+          <div className="flex items-center justify-center">
+            <ButtonLink href="/checkout" type={type === "contrast" ? "primary" : "tertiary"}>
+              Select this plan
+            </ButtonLink>
+          </div>
+        )}
       </div>
       <Separator type={type === "contrast" ? "primary" : "contrast"} />
       <div className="space-y-3 px-4 py-4">

@@ -8,6 +8,10 @@ const ButtonLink = ({ children, className = "", href, type = "primary", target =
       typeClass = `border-primary text-contrast bg-primary hover:text-primary hover:bg-contrast`;
       break;
 
+    case "secondary":
+      typeClass = `border-secondary text-contrast bg-secondary hover:border-tertiary hover:text-primary hover:bg-tertiary`;
+      break;
+
     case "tertiary":
       typeClass = `border-tertiary text-primary bg-tertiary hover:border-secondary hover:text-contrast hover:bg-secondary`;
       break;

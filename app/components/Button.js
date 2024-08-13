@@ -13,6 +13,10 @@ const Button = ({
       typeClass = `border-primary text-contrast bg-primary ${locked ? "" : "hover:text-primary hover:bg-contrast"}`;
       break;
 
+    case "secondary":
+      typeClass = `border-secondary text-contrast bg-secondary ${locked ? "" : "hover:border-tertiary hover:text-primary hover:bg-tertiary"}`;
+      break;
+
     case "tertiary":
       typeClass = `border-tertiary text-primary bg-tertiary ${locked ? "" : "hover:border-secondary hover:text-contrast hover:bg-secondary"}`;
       break;

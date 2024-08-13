@@ -5,7 +5,7 @@ const Switch = ({ className = "", checked, onClick = () => {} }) => {
       onClick={onClick}
     >
       <div
-        className={`transform rounded-full bg-primary p-2.5 transition-transform duration-300 ${checked ? "translate-x-3/4" : "-translate-x-3/4"}`}
+        className={`transform rounded-full bg-primary p-2.5 transition-transform duration-300 ${checked ? "translate-x-3/4" : "-translate-x-3/4 opacity-60"}`}
       ></div>
     </div>
   );

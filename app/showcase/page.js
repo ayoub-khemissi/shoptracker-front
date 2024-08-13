@@ -23,13 +23,16 @@ import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import TextLabel from "../components/TextLabel";
+import SubscriptionInfo from "../components/SubscriptionInfo";
+import Modal from "../components/Modal";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
   const [checked, setChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <main className="h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:flex lg:px-40">
+    <main className="flex h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
       <Button type="primary" onClick={() => {}}>
         S'inscrire
       </Button>
@@ -64,13 +67,13 @@ export default function Showcase() {
       <Checkbox
         labelText="Traquer le restockage"
         checked={checked}
-        onChange={() => {
+        onClick={() => {
           setChecked(!checked);
         }}
       />
       <Switch
         checked={checked}
-        onChange={() => {
+        onClick={() => {
           setChecked(!checked);
         }}
       />
@@ -108,9 +111,9 @@ export default function Showcase() {
           price: 4.99,
           description: (
             <>
-              Our free plan to test our <br />
-              <span className="text-secondary">application with</span> <br />
-              confidence!
+              Parfait pour un suivi régulier <br />
+              <span className="text-secondary">et fiable de tes produits.</span> <br />
+              N'attends plus !
             </>
           ),
           trackCheckInterval: 21600000,
@@ -159,6 +162,74 @@ export default function Showcase() {
         }}
       />
       <TextLabel>Email</TextLabel>
+      <SubscriptionInfo
+        planInfo={{
+          monthlyAnnually: false,
+          title: "Basic Plan",
+          price: 4.99,
+          description: (
+            <>
+              Parfait pour un suivi régulier <br />
+              <span className="text-secondary">et fiable de tes produits.</span> <br />
+              N'attends plus !
+            </>
+          ),
+          trackCheckInterval: 21600000,
+          trackEnabledMaxProducts: 1,
+          trackDisabledMaxProducts: 5,
+          trackMaxUserSearchesPerDay: 5,
+        }}
+        subscriptionInfo={{
+          startDate: 1721920481470,
+          nextPaymentDate: 1724512481470,
+          paymentMethod: "Master Card (4242)",
+          paymentHistory: [
+            {
+              id: 1245,
+              created_at: 1721920481470,
+              price: 24.99,
+            },
+            {
+              id: 1175,
+              created_at: 1719328481470,
+              price: 24.99,
+            },
+          ],
+        }}
+      />
+      <Button
+        type="primary"
+        onClick={() => {
+          setModalVisible(true);
+        }}
+      >
+        Ouvrir la modale
+      </Button>
+      <Modal
+        isVisible={modalVisible}
+        onClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <Title className="pb-4 text-center text-3xl text-primary">
+          Personnalise
+          <br />
+          <span className="text-secondary">ton abonnement</span> !
+        </Title>
+        <div className="flex items-center justify-between">
+          <Button
+            type="contrast"
+            onClick={() => {
+              setModalVisible(false);
+            }}
+          >
+            Retour
+          </Button>
+          <Button type="primary" onClick={() => {}}>
+            Valider
+          </Button>
+        </div>
+      </Modal>
     </main>
   );
 }

@@ -10,7 +10,7 @@ const SubscriptionInfo = ({ className = "", planInfo, subscriptionInfo }) => {
   return (
     <div className={`flex w-full flex-wrap justify-evenly ${className}`}>
       <Subscription callToAction={false} planInfo={planInfo} />
-      <div className="h-full w-96 space-y-5 py-4 lg:py-0">
+      <div className="w-96 space-y-5 py-4 lg:py-0">
         <TextSeparator>Subscription</TextSeparator>
         <div className="flex items-center justify-between">
           <TextLabel>Start date</TextLabel>

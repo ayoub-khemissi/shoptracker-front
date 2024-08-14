@@ -4,6 +4,7 @@ import { useState } from "react";
 import Input from "../components/Input";
 import Checkbox from "../components/Checkbox";
 import Button from "../components/Button";
+import Title from "../components/Title";
 
 export default function Tracker() {
   const [url, setUrl] = useState("");
@@ -29,7 +30,12 @@ export default function Tracker() {
   };
 
   return (
-    <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
+    <main className="flex h-full flex-col items-center space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
+      <Title className="w-full pb-4 text-center text-3xl text-primary">
+        Fill in the product details to start tracking
+        <br />
+        <span className="text-secondary"> availability and price changes</span> !
+      </Title>
       <div className="w-full space-y-3">
         <Input
           type="url"
@@ -50,7 +56,7 @@ export default function Tracker() {
           value={additionalInfo}
         />
       </div>
-      <div className="space-y-4 lg:flex lg:space-y-0">
+      <div className="w-full space-y-4 lg:flex lg:space-y-0">
         <div className="space-y-2 lg:w-1/2">
           <Checkbox labelText="Track restocking" checked={trackStock} onClick={handleTrackStock} />
           <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
@@ -71,7 +77,7 @@ export default function Tracker() {
           </div>
         </div>
         <div className="flex items-start justify-end lg:w-1/2">
-          <Button onClick={() => {}}>Start tracking</Button>
+          <Button>Start tracking</Button>
         </div>
       </div>
     </main>

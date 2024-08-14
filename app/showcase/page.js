@@ -25,6 +25,7 @@ import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import TextLabel from "../components/TextLabel";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import Modal from "../components/Modal";
+import Constants from "@/utils/Constants";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -104,18 +105,12 @@ export default function Showcase() {
         <Image src={GoogleLogoSvg} alt="google sign" />
       </CircleButton>
       <Subscription
-        type="contrast"
+        type="primary"
         planInfo={{
+          id: Constants.SUBSCRIPTION_PLAN_ID_PRO,
           monthlyAnnually: false,
-          title: "Basic Plan",
-          price: 4.99,
-          description: (
-            <>
-              Parfait pour un suivi régulier <br />
-              <span className="text-secondary">et fiable de tes produits.</span> <br />
-              N'attends plus !
-            </>
-          ),
+          title: "Pro Plan",
+          price: 25.99,
           trackCheckInterval: 21600000,
           trackEnabledMaxProducts: 1,
           trackDisabledMaxProducts: 5,
@@ -164,16 +159,10 @@ export default function Showcase() {
       <TextLabel>Email</TextLabel>
       <SubscriptionInfo
         planInfo={{
+          id: Constants.SUBSCRIPTION_PLAN_ID_BASIC,
           monthlyAnnually: false,
           title: "Basic Plan",
           price: 4.99,
-          description: (
-            <>
-              Parfait pour un suivi régulier <br />
-              <span className="text-secondary">et fiable de tes produits.</span> <br />
-              N'attends plus !
-            </>
-          ),
           trackCheckInterval: 21600000,
           trackEnabledMaxProducts: 1,
           trackDisabledMaxProducts: 5,

@@ -105,7 +105,7 @@ export default function Settings() {
             </div>
           </div>
           <div className="flex w-full items-center justify-center">
-            <Button onClick={() => {}}>Save profile</Button>
+            <Button>Save profile</Button>
           </div>
         </div>
       )}
@@ -141,7 +141,7 @@ export default function Settings() {
               <Switch checked={notificationBrowser} />
             </div>
             <div className="flex w-full items-center justify-center">
-              <Button onClick={() => {}}>Save notifications</Button>
+              <Button>Save notifications</Button>
             </div>
           </div>
         </div>
@@ -154,14 +154,16 @@ export default function Settings() {
               subscriptionInfo={activeSubscription.subscriptionInfo}
               planInfo={activeSubscription.planInfo}
             />
-            <TextSeparator className="w-full">Canceled or expired</TextSeparator>
             {canceledOrExpiredSubscriptions.slice(0, 3).map((subscription) => {
               return (
-                <SubscriptionInfo
-                  key={`subscription-${subscription.id}`}
-                  subscriptionInfo={subscription.subscriptionInfo}
-                  planInfo={subscription.planInfo}
-                />
+                <>
+                  <TextSeparator className="w-full">Canceled or expired</TextSeparator>
+                  <SubscriptionInfo
+                    key={`subscription-${subscription.id}`}
+                    subscriptionInfo={subscription.subscriptionInfo}
+                    planInfo={subscription.planInfo}
+                  />
+                </>
               );
             })}
           </div>

@@ -120,7 +120,7 @@ export default function Settings() {
               }}
             >
               <TextLabel>By text message</TextLabel>
-              <Switch checked={notificationTextMessage} />
+              <Switch checked={notificationTextMessage} opacityWhenOff />
             </div>
             <div
               className="flex w-full items-center justify-between"
@@ -129,7 +129,7 @@ export default function Settings() {
               }}
             >
               <TextLabel>In your mailbox</TextLabel>
-              <Switch checked={notificationMailbox} />
+              <Switch checked={notificationMailbox} opacityWhenOff />
             </div>
             <div
               className="flex w-full items-center justify-between"
@@ -138,7 +138,7 @@ export default function Settings() {
               }}
             >
               <TextLabel>On your browser</TextLabel>
-              <Switch checked={notificationBrowser} />
+              <Switch checked={notificationBrowser} opacityWhenOff />
             </div>
             <div className="flex w-full items-center justify-center">
               <Button>Save notifications</Button>

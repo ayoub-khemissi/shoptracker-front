@@ -34,7 +34,11 @@ export default function Tracker() {
       <Title className="w-full pb-4 text-center text-3xl text-primary">
         Fill in the product details to start tracking
         <br />
-        <span className="text-secondary"> availability and price changes</span> !
+        <span className="text-secondary transition duration-200 hover:text-tertiary">
+          {" "}
+          availability and price changes 🚀
+        </span>
+        !
       </Title>
       <div className="w-full space-y-3">
         <Input

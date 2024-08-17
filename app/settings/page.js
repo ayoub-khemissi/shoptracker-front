@@ -78,7 +78,7 @@ export default function Settings() {
             />
           </div>
           <div className="flex w-full flex-wrap items-center justify-evenly">
-            <div className="flex w-60 flex-col items-center justify-center space-y-4 py-4 md:w-96">
+            <div className="flex w-96 flex-col items-center justify-center space-y-4 py-4">
               <TextSeparator className="w-full">Personnal Information</TextSeparator>
               <Input
                 labelText="Email"
@@ -96,7 +96,7 @@ export default function Settings() {
                 type="text"
               />
             </div>
-            <div className="flex w-60 flex-col items-center justify-center space-y-4 py-4 md:w-96">
+            <div className="flex w-96 flex-col items-center justify-center space-y-4 py-4">
               <TextSeparator className="w-full">Address Information</TextSeparator>
               <Input labelText="Country" className="w-full" placeholder="Country" type="text" />
               <Input labelText="City" className="w-full" placeholder="City" type="text" />
@@ -111,7 +111,7 @@ export default function Settings() {
       )}
       {tab === "notifications" && (
         <div className="flex w-full items-center justify-center py-4">
-          <div className="flex w-60 flex-col items-center justify-evenly space-y-5 md:w-96">
+          <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
             <TextSeparator className="w-full">Receive a notification</TextSeparator>
             <div
               className="flex w-full items-center justify-between"
@@ -148,7 +148,7 @@ export default function Settings() {
       )}
       {tab === "subscriptions" && (
         <div className="flex w-full items-center justify-center py-4">
-          <div className="flex w-60 flex-col items-center justify-center space-y-5 md:w-96">
+          <div className="flex w-96 flex-col items-center justify-center space-y-5">
             <TextSeparator className="w-full">Active</TextSeparator>
             <SubscriptionInfo
               subscriptionInfo={activeSubscription.subscriptionInfo}

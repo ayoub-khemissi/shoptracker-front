@@ -38,6 +38,21 @@ module.exports = {
           DEFAULT: "#A3A3A3",
           light: "#A0A0A0",
         },
+        success: {
+          dark: "#0BFF0B",
+          DEFAULT: "#0BFF0B",
+          light: "#0BFF0B",
+        },
+        warning: {
+          dark: "#FFCC00",
+          DEFAULT: "#FFCC00",
+          light: "#FFCC00",
+        },
+        error: {
+          dark: "#FF0B0B",
+          DEFAULT: "#FF0B0B",
+          light: "#FF0B0B",
+        },
       },
     },
   },

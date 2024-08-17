@@ -29,20 +29,20 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
     trackMaxUserSearchesPerDay,
   } = planInfo;
 
-  let billingTime;
+  let billingPeriodText;
 
   switch (monthlyAnnually) {
     case undefined:
     case null:
-      billingTime = "forever";
+      billingPeriodText = "forever";
       break;
 
     case true:
-      billingTime = "per year";
+      billingPeriodText = "per year";
       break;
 
     case false:
-      billingTime = "per month";
+      billingPeriodText = "per month";
       break;
   }
 
@@ -119,7 +119,7 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
         <Subtitle className="text-lg">{title}</Subtitle>
         <TextImportant className="text-2xl leading-4">
           {formatMonthlyAnnuallyPrice(monthlyAnnually, price)}
-          <span className="text-xs">€ {billingTime}</span>
+          <span className="text-xs">€ {billingPeriodText}</span>
         </TextImportant>
         <TextImportant className="leading-4">{getDescriptionByPlanId()}</TextImportant>
         {callToAction && (
@@ -134,28 +134,28 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
       <div className="space-y-3 px-4 py-4">
         <Subtitle className="text-sm">Features</Subtitle>
         <div className="flex items-center space-x-4">
-          <Image src={getCircleCheckSvgByType()} alt="circle check" />
+          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
           <TextNormal className="text-sm uppercase">
             Track <span className="font-bold">{trackEnabledMaxProducts} </span>
             {trackEnabledMaxProducts > 1 ? "products simultaneously" : "product at a time"}
           </TextNormal>
         </div>
         <div className="flex items-center space-x-4">
-          <Image src={getCircleCheckSvgByType()} alt="circle check" />
+          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
           <TextNormal className="text-sm uppercase">
             Check performed every
             <span className="font-bold"> {convertMilliseconds(trackCheckInterval)}</span>
           </TextNormal>
         </div>
         <div className="flex items-center space-x-4">
-          <Image src={getCircleCheckSvgByType()} alt="circle check" />
+          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
           <TextNormal className="text-sm uppercase">
             <span className="font-bold">{trackDisabledMaxProducts} products</span> maximum in the
             wishlist
           </TextNormal>
         </div>
         <div className="flex items-center space-x-4">
-          <Image src={getCircleCheckSvgByType()} alt="circle check" />
+          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
           <TextNormal className="text-sm uppercase">
             <span className="font-bold">{trackMaxUserSearchesPerDay} user searches</span> per day
           </TextNormal>

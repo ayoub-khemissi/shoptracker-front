@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Track from "../components/Track";
 import Constants from "@/utils/Constants";
 
-const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_HISTORY } = Constants;
+const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_ARCHIVED } = Constants;
 
 export default function Tracker() {
   const [tab, setTab] = useState("tracked-products");
@@ -23,8 +23,8 @@ export default function Tracker() {
         );
         break;
 
-      case "history":
-        list = tracklist.filter((product) => product.status === TRACK_STATUS_HISTORY);
+      case "archived-products":
+        list = tracklist.filter((product) => product.status === TRACK_STATUS_ARCHIVED);
     }
 
     return list.sort((a, b) => {
@@ -51,13 +51,13 @@ export default function Tracker() {
         </Button>
         <Button
           locked
-          type={tab === "history" ? "primary" : "contrast"}
+          type={tab === "archived-products" ? "primary" : "contrast"}
           defaultCursor={true}
           onClick={() => {
-            setTab("history");
+            setTab("archived-products");
           }}
         >
-          History
+          Archived products
         </Button>
       </div>
       <div className="flex flex-wrap items-center justify-evenly">

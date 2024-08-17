@@ -20,7 +20,7 @@ const SubscriptionPage = () => {
 
   return (
     <>
-      <Title className="text-center">
+      <Title className="text-center text-2xl lg:text-4xl">
         Choose your subscription plan and enjoy
         <br />{" "}
         <span className="text-secondary transition duration-200 hover:text-tertiary">

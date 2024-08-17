@@ -24,7 +24,7 @@ export default function Home() {
         id="top"
         className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40"
       >
-        <Title className="text-center">
+        <Title className="text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop
           <br />{" "}
           <span className="text-secondary transition duration-200 hover:text-tertiary">
@@ -58,7 +58,7 @@ export default function Home() {
         id="how-to"
         className="h-full bg-gradient-to-b from-contrast-alt from-90% to-contrast px-10 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
-        <Title className="text-center">
+        <Title className="text-center text-2xl lg:text-4xl">
           Track prices or availability of products from almost
           <br />{" "}
           <span className="text-tertiary transition duration-200 hover:text-secondary">

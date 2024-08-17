@@ -50,7 +50,7 @@ export default function Showcase() {
         Historique
       </Button>
       <ShopTrackerLogo />
-      <Title className="text-left text-3xl text-primary">
+      <Title className="text-center text-2xl lg:text-4xl">
         Choisis ton abonnement et profite dès
         <br />
         <span className="text-secondary">maintenant de nos services</span> !
@@ -200,7 +200,7 @@ export default function Showcase() {
           setModalVisible(false);
         }}
       >
-        <Title className="pb-4 text-center text-3xl text-primary">
+        <Title className="pb-4 text-center text-2xl lg:text-4xl">
           Personnalise
           <br />
           <span className="text-secondary">ton abonnement</span> !

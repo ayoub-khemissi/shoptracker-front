@@ -29,7 +29,7 @@ export default function Login() {
         </TextNormal>
       </section>
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
-        <Title className="text-center text-4xl">Sign In</Title>
+        <Title className="text-center text-2xl lg:text-4xl">Sign In</Title>
         <CircleButton onClick={() => {}}>
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>

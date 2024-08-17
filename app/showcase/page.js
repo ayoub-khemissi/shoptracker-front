@@ -33,7 +33,7 @@ export default function Showcase() {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <main className="flex h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
+    <main className="flex h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
       <Button type="primary" onClick={() => {}}>
         S'inscrire
       </Button>

@@ -30,7 +30,7 @@ export default function Tracker() {
   };
 
   return (
-    <main className="flex h-full flex-col items-center space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
+    <main className="flex h-full flex-col items-center space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
       <Title className="w-full pb-4 text-center text-3xl text-primary">
         Fill in the product info <br />
         <span className="text-secondary transition duration-200 hover:text-tertiary">

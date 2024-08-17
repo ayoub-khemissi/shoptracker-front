@@ -17,7 +17,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="h-full space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:flex lg:space-x-20 lg:space-y-0 lg:px-40">
+    <div className="h-full space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:flex lg:space-x-20 lg:space-y-0 lg:px-40">
       <section className="hidden justify-center space-y-4 text-center lg:flex lg:w-1/2 lg:flex-col lg:text-left">
         <ShopTrackerLogo className="text-5xl" />
         <TextNormal className="text-3xl">

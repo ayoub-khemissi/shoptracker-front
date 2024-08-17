@@ -22,7 +22,7 @@ export default function Home() {
     <main>
       <section
         id="top"
-        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40"
+        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40"
       >
         <Title className="text-center">
           Get an alert on the availability and price drop
@@ -95,7 +95,7 @@ export default function Home() {
       </section>
       <section
         id="subscribe"
-        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
+        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <SubscriptionPage />
         <div className="flex items-center justify-end py-6 md:py-2">

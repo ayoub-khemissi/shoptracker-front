@@ -30,7 +30,7 @@ export default function Settings() {
   const [canceledOrExpiredSubscriptions, setCanceledOrExpiredSubscriptions] = useState([]);
 
   return (
-    <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
+    <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
       <div className="flex flex-wrap items-center justify-center space-x-4">
         <Button
           className="mb-2"

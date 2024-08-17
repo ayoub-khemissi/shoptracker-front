@@ -32,13 +32,11 @@ export default function Tracker() {
   return (
     <main className="flex h-full flex-col items-center space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-10 md:px-20 lg:px-40">
       <Title className="w-full pb-4 text-center text-3xl text-primary">
-        Fill in the product details to start tracking
-        <br />
+        Fill in the product info <br />
         <span className="text-secondary transition duration-200 hover:text-tertiary">
-          {" "}
-          availability and price changes 🚀
-        </span>
-        !
+          to start the tracking
+        </span>{" "}
+        🚀 !
       </Title>
       <div className="w-full space-y-3">
         <Input
@@ -66,6 +64,7 @@ export default function Tracker() {
           <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
           <div className={`${trackPrice ? "opacity-100" : "opacity-50"} flex items-center`}>
             <Input
+              className="text-center"
               labelText="Notify me when price below:"
               step={10}
               min={0}

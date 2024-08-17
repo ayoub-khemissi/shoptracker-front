@@ -18,18 +18,18 @@ const SubscriptionInfo = ({ className = "", planInfo, subscriptionInfo }) => {
   return (
     <div className={`flex w-full flex-wrap justify-evenly ${className}`}>
       <Subscription callToAction={false} planInfo={planInfo} />
-      <div className="w-60 space-y-5 py-4 md:w-96 lg:py-0">
+      <div className="w-96 space-y-5 py-4 lg:py-0">
         <TextSeparator className="w-full">Subscription</TextSeparator>
         <div className="flex w-full items-center justify-between">
           <TextLabel>Start date</TextLabel>
           <TextImportant className="text-right">
-            {new Date(startDate).toLocaleString()}
+            {new Date(startDate).toLocaleDateString()}
           </TextImportant>
         </div>
         <div className="flex w-full items-center justify-between">
           <TextLabel>Next payment date</TextLabel>
           <TextImportant className="text-right">
-            {new Date(nextPaymentDate).toLocaleString()}
+            {new Date(nextPaymentDate).toLocaleDateString()}
           </TextImportant>
         </div>
         <div className="flex w-full items-center justify-between">

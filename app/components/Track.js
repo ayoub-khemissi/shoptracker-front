@@ -6,6 +6,10 @@ import NavLink from "./NavLink";
 import Constants from "@/utils/Constants";
 import Image from "next/image";
 import ClockPrimarySvg from "../../public/assets/svg/icons/clock-primary.svg";
+import StartSvg from "../../public/assets/svg/icons/start.svg";
+import PauseSvg from "../../public/assets/svg/icons/pause.svg";
+import EditSvg from "../../public/assets/svg/icons/edit.svg";
+import DeleteSvg from "../../public/assets/svg/icons/delete.svg";
 
 const { TRACK_STATUS_ENABLED } = Constants;
 
@@ -104,8 +108,8 @@ const Track = ({ className = "", number, product }) => {
 
   return (
     <div className={`mx-2 my-4 max-w-lg ${className}`}>
-      <div className="flex items-center justify-end">
-        <div className="flex w-1/2 items-center justify-between rounded-t-xl bg-tertiary px-2 py-1">
+      <div className="flex justify-between">
+        <div className="flex w-1/2 items-center justify-between rounded-t-xl bg-tertiary px-2 py-1.5">
           <div className="flex items-center justify-center">
             <Image className="h-5 w-5" src={ClockPrimarySvg} alt="next product check" />
           </div>
@@ -113,8 +117,24 @@ const Track = ({ className = "", number, product }) => {
             {convertMilliseconds(created_at - Date.now() + check_interval)}
           </TextImportant>
         </div>
+        <div className="flex items-start space-x-2">
+          <InvisibleButton className="flex w-full items-center justify-center">
+            <Image className="w-7" src={DeleteSvg} alt="delete" title="Delete the track" />
+          </InvisibleButton>
+          <InvisibleButton className="flex w-full items-center justify-center">
+            <Image className="w-7" src={EditSvg} alt="edit" title="Edit the track" />
+          </InvisibleButton>
+          <InvisibleButton className="flex w-full items-center justify-center">
+            <Image
+              className="w-7"
+              src={status !== TRACK_STATUS_ENABLED ? StartSvg : PauseSvg}
+              alt="start pause"
+              title={`${status !== TRACK_STATUS_ENABLED ? "Start" : "Stop"} the track`}
+            />
+          </InvisibleButton>
+        </div>
       </div>
-      <div className="rounded-b-lg rounded-tl-lg border-2 border-primary">
+      <div className="rounded-b-lg rounded-tr-lg border-2 border-primary">
         <div className="flex items-center justify-center bg-primary px-2 py-1.5">
           <NavLink
             target="_blank"
@@ -125,47 +145,44 @@ const Track = ({ className = "", number, product }) => {
             #{number + 1} {getSiteDomain()} 🔗
           </NavLink>
         </div>
-        <div className="space-y-2 border-b-2 border-primary px-5 py-4">
-          <Title className="text-center text-lg leading-5">{truncateString(name.value, 50)}</Title>
-          <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
-            {truncateString(description.value, 80)}
-          </TextImportant>
-          <div className="flex w-full flex-wrap items-center justify-evenly">
-            <div className="flex items-center justify-center space-x-4">
-              <TextImportant className="w-1/2 text-center text-lg leading-3">
-                {formatFullPrice()}
-              </TextImportant>
-              <div className="flex items-center justify-center">
-                <Image
-                  width={40}
-                  height={40}
-                  src={`assets/svg/icons/${getPriceStatusSvgName(price_status)}.svg`}
-                  alt="price status"
-                />
+        <InvisibleButton>
+          <div className="space-y-2 border-primary px-5 py-4" title="Click here to see details">
+            <Title className="text-center text-lg leading-5">
+              {truncateString(name.value, 50)}
+            </Title>
+            <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
+              {truncateString(description.value, 80)}
+            </TextImportant>
+            <div className="flex w-full flex-wrap items-center justify-evenly">
+              <div className="flex items-center justify-center space-x-4">
+                <TextImportant className="w-1/2 text-center text-lg leading-3">
+                  {formatFullPrice()}
+                </TextImportant>
+                <div className="flex items-center justify-center">
+                  <Image
+                    width={40}
+                    height={40}
+                    src={`assets/svg/icons/${getPriceStatusSvgName(price_status)}.svg`}
+                    alt="price status"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex items-center justify-center space-x-4">
-              <div className="flex items-center justify-center">
-                <Image
-                  width={40}
-                  height={40}
-                  src={`assets/svg/icons/${getAvailabilitySvgName(availability.value)}.svg`}
-                  alt="availability status"
-                />
+              <div className="flex items-center justify-center space-x-4">
+                <div className="flex items-center justify-center">
+                  <Image
+                    width={40}
+                    height={40}
+                    src={`assets/svg/icons/${getAvailabilitySvgName(availability.value)}.svg`}
+                    alt="availability status"
+                  />
+                </div>
+                <TextImportant className="py-1 text-center leading-4 text-primary">
+                  {getAvailabilityText(availability.value)}
+                </TextImportant>
               </div>
-              <TextImportant className="py-1 text-center leading-4 text-primary">
-                {getAvailabilityText(availability.value)}
-              </TextImportant>
             </div>
           </div>
-        </div>
-        <div className="bg-primary py-2">
-          <InvisibleButton className="flex w-full items-center justify-center">
-            <TextImportant className="text-center leading-4 text-contrast">
-              {status === TRACK_STATUS_ENABLED ? "Stop tracking ❌" : "Start tracking 🏁"}
-            </TextImportant>
-          </InvisibleButton>
-        </div>
+        </InvisibleButton>
       </div>
     </div>
   );

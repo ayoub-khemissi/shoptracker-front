@@ -123,33 +123,16 @@ export default function Showcase() {
         number={0}
         product={{
           id: 1,
-          name: {
-            value: "1 Million - Coffret Eau de toilette ambrée",
-            accuracy: 0.9,
-          },
-          description: {
-            value:
-              "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
-            accuracy: 0.9,
-          },
-          normal_price: {
-            value: 75.99,
-            accuracy: 0.8,
-          },
-          discounted_price: {
-            value: 65.99,
-            accuracy: 0.5,
-          },
-          currency: {
-            value: "EUR",
-            accuracy: 1,
-          },
-          availability: {
-            value: false,
-            accuracy: 0.7,
-          },
-          price_status: 1,
-          created_at: 1721682389515,
+          name: "1 Million - Coffret Eau de toilette ambrée",
+          description:
+            "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
+          normal_price: 75.99,
+          discounted_price: 65.99,
+          currency: "EUR",
+          availability: false,
+          price_status: 0,
+          created_at: 1721682189515,
+          updated_at: 1721682389515,
           check_interval: 1800000,
           status: 2,
           url: "https://www.rabanne.com/fr/fr/fragrance/c/frag-men-onemillion",

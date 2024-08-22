@@ -25,6 +25,7 @@ const Track = ({ className = "", number, product }) => {
     availability,
     price_status,
     created_at,
+    updated_at,
     check_interval,
     status,
   } = product;
@@ -36,20 +37,22 @@ const Track = ({ className = "", number, product }) => {
       return (
         <>
           {formatPrice(price)}
-          <span className="text-xs">{currency.value}</span>{" "}
-          <span className="text-xs line-through">
-            {formatPrice(initial_price) + currency.value}
-          </span>
+          <span className="text-xs">{currency}</span>{" "}
+          <span className="text-xs line-through">{formatPrice(initial_price) + currency}</span>
         </>
       );
     } else {
       return (
         <>
-          {formatPrice(price.value)}
-          <span className="text-xs">{currency.value}</span>
+          {formatPrice(price)}
+          <span className="text-xs">{currency}</span>
         </>
       );
     }
+  };
+
+  const getLastCheckTimeTitle = () => {
+    return new Date(updated_at).toLocaleString();
   };
 
   const getPriceStatusSvgName = () => {
@@ -66,8 +69,22 @@ const Track = ({ className = "", number, product }) => {
     }
   };
 
+  const getPriceStatusSvgTitle = () => {
+    switch (price_status) {
+      case 1:
+        return "Price decreased";
+
+      case 2:
+        return "Price increased";
+
+      case 3:
+      default:
+        return "Price stable";
+    }
+  };
+
   const getAvailabilitySvgName = () => {
-    switch (availability.value) {
+    switch (availability) {
       case true:
         return "circle-check-success";
 
@@ -77,8 +94,19 @@ const Track = ({ className = "", number, product }) => {
     }
   };
 
+  const getAvailabilitySvgTitle = () => {
+    switch (availability) {
+      case true:
+        return "Product available";
+
+      case false:
+      default:
+        return "Product out of stock";
+    }
+  };
+
   const getAvailabilityText = () => {
-    switch (availability.value) {
+    switch (availability) {
       case true:
         return "In stock";
 
@@ -89,9 +117,7 @@ const Track = ({ className = "", number, product }) => {
   };
 
   const getLowestPrice = () => {
-    return discounted_price.value < normal_price.value
-      ? discounted_price.value
-      : normal_price.value;
+    return discounted_price < normal_price ? discounted_price : normal_price;
   };
 
   const getSiteDomain = () => {
@@ -109,24 +135,29 @@ const Track = ({ className = "", number, product }) => {
   return (
     <div className={`mx-2 my-4 max-w-lg ${className}`}>
       <div className="flex justify-between">
-        <div className="flex w-1/2 items-center justify-between rounded-t-xl bg-tertiary px-2 py-1.5">
+        <div
+          className="flex w-1/2 items-center justify-between rounded-t-xl bg-tertiary px-2 py-1.5"
+          title={`Last check: ${getLastCheckTimeTitle()}`}
+        >
           <div className="flex items-center justify-center">
             <Image className="h-5 w-5" src={ClockPrimarySvg} alt="next product check" />
           </div>
-          <TextImportant className="w-5/6 text-center text-sm leading-4 text-primary">
-            {convertMilliseconds(created_at - Date.now() + check_interval)}
+          <TextImportant className="w-full text-center text-sm leading-4 text-primary">
+            {status === TRACK_STATUS_ENABLED
+              ? convertMilliseconds(created_at - Date.now() + check_interval)
+              : getLastCheckTimeTitle()}
           </TextImportant>
         </div>
         <div className="flex items-start space-x-2">
-          <InvisibleButton className="flex w-full items-center justify-center">
-            <Image className="w-7" src={DeleteSvg} alt="delete" title="Delete the track" />
+          <InvisibleButton className="flex w-fit items-center justify-center">
+            <Image className="w-9 sm:w-7" src={DeleteSvg} alt="delete" title="Delete the track" />
           </InvisibleButton>
-          <InvisibleButton className="flex w-full items-center justify-center">
-            <Image className="w-7" src={EditSvg} alt="edit" title="Edit the track" />
+          <InvisibleButton className="flex w-fit items-center justify-center">
+            <Image className="w-9 sm:w-7" src={EditSvg} alt="edit" title="Edit the track" />
           </InvisibleButton>
-          <InvisibleButton className="flex w-full items-center justify-center">
+          <InvisibleButton className="flex w-fit items-center justify-center">
             <Image
-              className="w-7"
+              className="w-9 sm:w-7"
               src={status !== TRACK_STATUS_ENABLED ? StartSvg : PauseSvg}
               alt="start pause"
               title={`${status !== TRACK_STATUS_ENABLED ? "Start" : "Stop"} the track`}
@@ -147,23 +178,22 @@ const Track = ({ className = "", number, product }) => {
         </div>
         <InvisibleButton>
           <div className="space-y-2 border-primary px-5 py-4" title="Click here to see details">
-            <Title className="text-center text-lg leading-5">
-              {truncateString(name.value, 50)}
-            </Title>
+            <Title className="text-center text-lg leading-5">{truncateString(name, 50)}</Title>
             <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
-              {truncateString(description.value, 120)}
+              {truncateString(description, 120)}
             </TextImportant>
             <div className="flex w-full flex-wrap items-center justify-evenly">
               <div className="flex items-center justify-center space-x-4">
-                <TextImportant className="w-1/2 text-center text-lg leading-3">
+                <TextImportant className="text-center text-lg leading-3">
                   {formatFullPrice()}
                 </TextImportant>
                 <div className="flex items-center justify-center">
                   <Image
                     width={40}
                     height={40}
-                    src={`assets/svg/icons/${getPriceStatusSvgName(price_status)}.svg`}
+                    src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
                     alt="price status"
+                    title={getPriceStatusSvgTitle()}
                   />
                 </div>
               </div>
@@ -172,12 +202,13 @@ const Track = ({ className = "", number, product }) => {
                   <Image
                     width={40}
                     height={40}
-                    src={`assets/svg/icons/${getAvailabilitySvgName(availability.value)}.svg`}
+                    src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
                     alt="availability status"
+                    title={getAvailabilitySvgTitle()}
                   />
                 </div>
                 <TextImportant className="py-1 text-center leading-4 text-primary">
-                  {getAvailabilityText(availability.value)}
+                  {getAvailabilityText(availability)}
                 </TextImportant>
               </div>
             </div>

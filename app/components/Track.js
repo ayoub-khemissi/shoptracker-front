@@ -151,7 +151,7 @@ const Track = ({ className = "", number, product }) => {
               {truncateString(name.value, 50)}
             </Title>
             <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
-              {truncateString(description.value, 80)}
+              {truncateString(description.value, 120)}
             </TextImportant>
             <div className="flex w-full flex-wrap items-center justify-evenly">
               <div className="flex items-center justify-center space-x-4">

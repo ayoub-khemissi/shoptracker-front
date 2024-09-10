@@ -9,7 +9,7 @@ const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_ARCHIVED } = C
 
 export default function Tracker() {
   const [tab, setTab] = useState("tracked-products");
-  const [tracklist, setTracklist] = useState([]);
+  const [tracklist] = useState([]);
 
   const getFilteredAndSortedTracklist = () => {
     let list;

@@ -15,7 +15,7 @@ export default function Settings() {
   const [notificationMailbox, setNotificationMailbox] = useState(true);
   const [notificationTextMessage, setNotificationTextMessage] = useState(true);
   const [notificationBrowser, setNotificationBrowser] = useState(true);
-  const [activeSubscription, setActiveSubscription] = useState({
+  const [activeSubscription] = useState({
     planInfo: {
       id: Constants.SUBSCRIPTION_PLAN_ID_FREE,
       monthlyAnnually: false,
@@ -27,7 +27,7 @@ export default function Settings() {
       trackMaxUserSearchesPerDay: 5,
     },
   });
-  const [canceledOrExpiredSubscriptions, setCanceledOrExpiredSubscriptions] = useState([]);
+  const [canceledOrExpiredSubscriptions] = useState([]);
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">

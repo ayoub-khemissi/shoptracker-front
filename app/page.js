@@ -15,8 +15,8 @@ import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrow
 import SubscriptionPage from "./components/SubscriptionPage";
 
 export default function Home() {
-  const [productsTracked, setProductsTracked] = useState(0);
-  const [checksPerformed, setChecksPerformed] = useState(0);
+  const [productsTracked] = useState(0);
+  const [checksPerformed] = useState(0);
 
   return (
     <main>

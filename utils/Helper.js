@@ -27,7 +27,10 @@ export function formatMonthlyAnnuallyPrice(monthlyAnnually, price) {
 }
 
 export function formatPrice(price) {
-  return String(price).replace(".", ",");
+  let [integerPart, decimalPart] = String(price).replace(".", ",").split(",");
+
+  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
 }
 
 export function truncateString(str, num) {

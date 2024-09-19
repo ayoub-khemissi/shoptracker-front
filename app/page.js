@@ -76,7 +76,8 @@ export default function Home() {
           <div className="flex flex-col items-center justify-between space-y-10 lg:w-1/3">
             <Image className="h-72" src={ConfirmationSvg} alt="product confirmation" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              Validate the product information and follow the instructions to start tracking 🕵.
+              Wait a few seconds while the agent retrieves the product information and start the
+              track 🕵.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-10 lg:w-1/3">
@@ -98,7 +99,7 @@ export default function Home() {
         className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <SubscriptionPage />
-        <div className="flex items-center justify-end py-6 md:py-2">
+        <div className="flex items-center justify-end py-10">
           <Link href="#top" className="animate-bounce">
             <Image
               className="rotate-180"

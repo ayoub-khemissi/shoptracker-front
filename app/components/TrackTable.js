@@ -125,56 +125,60 @@ const TrackTable = ({ className = "", tracks }) => {
     <table className={`${className} w-full`}>
       <thead className="text-nowrap rounded-full border-b">
         <tr className={`${lexend.className} text-xl uppercase`}>
+          <th className="py-2"></th>
           <th className="py-2">Product</th>
           <th className="py-2">Price</th>
           <th className="py-2">Availability</th>
-          <th className="py-2">Check</th>
+          <th className="py-2">Check Time</th>
           <th className="py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
-        {tracks.map((track) => {
+        {tracks.map((track, index) => {
           return (
             <tr
-              className={`${montserrat.className} text-md rounded-full border-b uppercase`}
+              className={`${montserrat.className} rounded-full border-b uppercase`}
               key={`track-${track.id}`}
             >
+              <td className="py-4 text-center">#{index + 1}</td>
               <td className="py-4 text-center">
                 <NavLink
                   target="_blank"
                   type="contrast"
                   href={track.url}
-                  className="text-nowrap text-center text-sm text-primary"
+                  className="text-nowrap text-center text-primary"
                 >
-                  <p title={getSiteDomain(track)}>{truncateString(track.name, 50)} 🔗</p>
+                  <p>
+                    [{getSiteDomain(track)}] | {truncateString(track.name, 50)} 🔗
+                  </p>
                 </NavLink>
               </td>
-              <td className="py-4">
-                <div className="flex items-center justify-center space-x-2 text-nowrap text-center text-2xl">
+              <td className="py-4 underline">
+                <InvisibleButton className="flex w-full items-center justify-center space-x-3 text-nowrap text-center text-2xl">
+                  <p title="Show price history">{formatFullPrice(track)}</p>
                   <div className="flex flex-shrink-0 items-center justify-center">
                     <Image
-                      width={40}
-                      height={40}
+                      width={30}
+                      height={30}
                       src={`assets/svg/icons/${getPriceStatusSvgName(track)}.svg`}
                       alt="price status"
                       title={getPriceStatusSvgTitle(track)}
                     />
                   </div>
-                  <p>{formatFullPrice(track)}</p>
-                </div>
+                </InvisibleButton>
               </td>
               <td className="py-4">
-                <div className="flex items-center justify-center space-x-2 text-nowrap text-center">
+                <div className="flex items-center justify-center space-x-3 text-nowrap text-center">
+                  <p>{getAvailabilityText(track)}</p>
                   <div className="flex flex-shrink-0 items-center justify-center">
                     <Image
-                      width={26}
-                      height={26}
+                      width={30}
+                      height={30}
                       src={`assets/svg/icons/${getAvailabilitySvgName(track)}.svg`}
                       alt="availability status"
                       title={getAvailabilitySvgTitle(track)}
                     />
                   </div>
-                  <p>{getAvailabilityText(track)}</p>
                 </div>
               </td>
               <td
@@ -187,15 +191,22 @@ const TrackTable = ({ className = "", tracks }) => {
               </td>
               <td className="py-4">
                 <div className="flex items-center justify-center space-x-3">
-                  <InvisibleButton className="flex w-fit items-center justify-center">
-                    <Image className="w-7" src={DeleteSvg} alt="delete" title="Delete the track" />
-                  </InvisibleButton>
-                  <InvisibleButton className="flex w-fit items-center justify-center">
-                    <Image className="w-7" src={EditSvg} alt="edit" title="Edit the track" />
-                  </InvisibleButton>
-                  <InvisibleButton className="flex w-fit items-center justify-center">
+                  <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
                     <Image
-                      className="w-7"
+                      width={30}
+                      height={30}
+                      src={DeleteSvg}
+                      alt="delete"
+                      title="Delete the track"
+                    />
+                  </InvisibleButton>
+                  <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
+                    <Image width={30} height={30} src={EditSvg} alt="edit" title="Edit the track" />
+                  </InvisibleButton>
+                  <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
+                    <Image
+                      width={30}
+                      height={30}
                       src={track.status !== TRACK_STATUS_ENABLED ? StartSvg : PauseSvg}
                       alt="start pause"
                       title={`${track.status !== TRACK_STATUS_ENABLED ? "Start" : "Stop"} the track`}

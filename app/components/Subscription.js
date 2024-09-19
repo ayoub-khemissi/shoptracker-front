@@ -1,5 +1,4 @@
-import { convertMilliseconds, formatMonthlyAnnuallyPrice } from "@/utils/Helper";
-import ButtonLink from "./ButtonLink";
+import { convertMillisecondsToText, formatMonthlyAnnuallyPrice } from "@/utils/Helper";
 import Separator from "./Separator";
 import Subtitle from "./Subtitle";
 import TextImportant from "./TextImportant";
@@ -8,13 +7,17 @@ import Image from "next/image";
 import CircleCheckSecondarySvg from "../../public/assets/svg/icons/circle-check-secondary.svg";
 import CircleCheckTertiarySvg from "../../public/assets/svg/icons/circle-check-tertiary.svg";
 import Constants from "@/utils/Constants";
+import Button from "./Button";
 
 const {
   SUBSCRIPTION_PLAN_ID_FREE,
   SUBSCRIPTION_PLAN_ID_BASIC,
   SUBSCRIPTION_PLAN_ID_PRO,
   SUBSCRIPTION_PLAN_ID_PREMIUM,
-  SUBSCRIPTION_PLAN_ID_CUSTOM,
+  SUBSCRIPTION_PLAN_ID_ENTREPRISE,
+  SUBSCRIPTION_PLAN_ID_BUSINESS,
+  SUBSCRIPTION_PLAN_ID_ELITE,
+  SUBSCRIPTION_PLAN_ID_ULTIMATE,
 } = Constants;
 
 const Subscription = ({ className = "", type = "contrast", callToAction = true, planInfo }) => {
@@ -91,12 +94,39 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
           </>
         );
 
-      case SUBSCRIPTION_PLAN_ID_CUSTOM:
+      case SUBSCRIPTION_PLAN_ID_ENTREPRISE:
         return (
           <>
-            Select a plan that fits <br />
-            <span className={spanTextColor}>your needs by clicking here.</span> <br />
-            Get your custom tracking!
+            Perfect for starting <br />
+            <span className={spanTextColor}>your business with a</span> <br />
+            generous offer!
+          </>
+        );
+
+      case SUBSCRIPTION_PLAN_ID_BUSINESS:
+        return (
+          <>
+            A business offer that will <br />
+            <span className={spanTextColor}>meet your expectations</span> <br />
+            and unique needs!
+          </>
+        );
+
+      case SUBSCRIPTION_PLAN_ID_ELITE:
+        return (
+          <>
+            A perfect balance between <br />
+            <span className={spanTextColor}>quality and quantity! Take it</span> <br />
+            to the next level!
+          </>
+        );
+
+      case SUBSCRIPTION_PLAN_ID_ULTIMATE:
+        return (
+          <>
+            Simply the best <br />
+            <span className={spanTextColor}>offer we can</span> <br />
+            offer you today!
           </>
         );
     }
@@ -124,9 +154,7 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
         <TextImportant className="leading-4">{getDescriptionByPlanId()}</TextImportant>
         {callToAction && (
           <div className="flex items-center justify-center">
-            <ButtonLink href="/checkout" type={type === "contrast" ? "primary" : "secondary"}>
-              Select this plan
-            </ButtonLink>
+            <Button type={type === "contrast" ? "primary" : "secondary"}>Select this plan</Button>
           </div>
         )}
       </div>
@@ -144,7 +172,7 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
           <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
           <TextNormal className="text-sm uppercase">
             Check performed every
-            <span className="font-bold"> {convertMilliseconds(trackCheckInterval)}</span>
+            <span className="font-bold"> {convertMillisecondsToText(trackCheckInterval)}</span>
           </TextNormal>
         </div>
         <div className="flex items-center space-x-4">

@@ -60,7 +60,7 @@ export default function Register() {
               Already have an account? <UnderlineLink href="/login">Sign In</UnderlineLink>
             </TextNormal>
             <div>
-              <UnderlineLink href="/password-recovery">Forgot password?</UnderlineLink>
+              <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
             </div>
           </div>
           <Button type="primary" onClick={() => {}}>

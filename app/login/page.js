@@ -60,7 +60,7 @@ export default function Login() {
               Don't have an account yet? <UnderlineLink href="/register">Sign Up</UnderlineLink>
             </TextNormal>
             <div>
-              <UnderlineLink href="/password-recovery">Forgot password?</UnderlineLink>
+              <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
             </div>
           </div>
           <Button type="primary" onClick={() => {}}>

@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Button from "../components/Button";
-import Track from "../components/Track";
 import Constants from "@/utils/Constants";
+import TrackTable from "../components/TrackTable";
 
 const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_ARCHIVED } = Constants;
 
 export default function Tracker() {
   const [tab, setTab] = useState("tracked-products");
-  const [tracklist] = useState([]);
+  const [tracks] = useState([]);
 
   const getFilteredAndSortedTracklist = () => {
     let list;
@@ -17,14 +17,14 @@ export default function Tracker() {
     switch (tab) {
       case "tracked-products":
       default:
-        list = tracklist.filter(
+        list = tracks.filter(
           (product) =>
             product.status === TRACK_STATUS_ENABLED || product.status === TRACK_STATUS_DISABLED,
         );
         break;
 
       case "archived-products":
-        list = tracklist.filter((product) => product.status === TRACK_STATUS_ARCHIVED);
+        list = tracks.filter((product) => product.status === TRACK_STATUS_ARCHIVED);
     }
 
     return list.sort((a, b) => {
@@ -61,9 +61,7 @@ export default function Tracker() {
         </Button>
       </div>
       <div className="flex flex-wrap items-center justify-evenly">
-        {getFilteredAndSortedTracklist().map((product, index) => {
-          return <Track number={index} key={`track-${product.id}`} product={product} />;
-        })}
+        <TrackTable tracks={getFilteredAndSortedTracklist()} />
       </div>
     </main>
   );

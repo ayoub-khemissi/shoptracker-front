@@ -19,13 +19,13 @@ import Subscription from "../components/Subscription";
 import CircleButton from "../components/CircleButton";
 import ButtonLink from "../components/ButtonLink";
 import TextSeparator from "../components/TextSeparator";
-import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import TextLabel from "../components/TextLabel";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
+import TrackTable from "../components/TrackTable";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -34,19 +34,13 @@ export default function Showcase() {
 
   return (
     <main className="flex h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-      <Button type="primary" onClick={() => {}}>
-        S'inscrire
-      </Button>
-      <Button type="contrast" onClick={() => {}}>
-        Retour
-      </Button>
-      <Button type="tertiary" onClick={() => {}}>
-        Sélectionner
-      </Button>
-      <Button type="primary" defaultCursor onClick={() => {}}>
+      <Button type="primary">S'inscrire</Button>
+      <Button type="contrast">Retour</Button>
+      <Button type="tertiary">Sélectionner</Button>
+      <Button type="primary" defaultCursor>
         Liste de souhaits
       </Button>
-      <Button type="contrast" defaultCursor onClick={() => {}}>
+      <Button type="contrast" defaultCursor>
         Historique
       </Button>
       <ShopTrackerLogo />
@@ -119,25 +113,26 @@ export default function Showcase() {
       />
       <ButtonLink href="/checkout">Sélectionner</ButtonLink>
       <TextSeparator>Or</TextSeparator>
-      <Track
-        number={0}
-        product={{
-          id: 1,
-          name: "1 Million - Coffret Eau de toilette ambrée",
-          description:
-            "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
-          normal_price: 75.99,
-          discounted_price: 65.99,
-          currency: "EUR",
-          availability: false,
-          price_status: 0,
-          created_at: 1721682189515,
-          updated_at: 1721682389515,
-          check_interval: 1800000,
-          status: 2,
-          url: "https://www.rabanne.com/fr/fr/fragrance/c/frag-men-onemillion",
-          initial_price: 75.99,
-        }}
+      <TrackTable
+        tracks={[
+          {
+            id: 1,
+            name: "1 Million - Coffret Eau de toilette ambrée",
+            description:
+              "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté ? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
+            initial_price: 75.99,
+            normal_price: 75.99,
+            discounted_price: 65.99,
+            currency: "EUR",
+            availability: true,
+            price_status: 1,
+            created_at: 1721682189515,
+            updated_at: 1721682389515,
+            check_interval: 1800000,
+            status: 2,
+            url: "https://www.rabanne.com/fr/fr/fragrance/c/frag-men-onemillion",
+          },
+        ]}
       />
       <TextLabel>Email</TextLabel>
       <SubscriptionInfo

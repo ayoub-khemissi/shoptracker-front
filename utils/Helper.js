@@ -1,4 +1,4 @@
-export function convertMilliseconds(ms) {
+export function convertMillisecondsToText(ms) {
   const second = 1000;
   const minute = 60 * second;
   const hour = 60 * minute;

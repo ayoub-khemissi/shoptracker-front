@@ -26,6 +26,7 @@ import SubscriptionInfo from "../components/SubscriptionInfo";
 import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
 import TrackTable from "../components/TrackTable";
+import Spinner from "../components/Spinner";
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -195,6 +196,7 @@ export default function Showcase() {
           <Button type="primary">Valider</Button>
         </div>
       </Modal>
+      <Spinner />
     </main>
   );
 }

@@ -95,7 +95,7 @@ export default function Showcase() {
         N'attends plus !
       </TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
-      <CircleButton onClick={() => {}}>
+      <CircleButton>
         <Image src={GoogleLogoSvg} alt="google sign" />
       </CircleButton>
       <Subscription
@@ -192,9 +192,7 @@ export default function Showcase() {
           >
             Retour
           </Button>
-          <Button type="primary" onClick={() => {}}>
-            Valider
-          </Button>
+          <Button type="primary">Valider</Button>
         </div>
       </Modal>
     </main>

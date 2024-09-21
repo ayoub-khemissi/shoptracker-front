@@ -38,51 +38,60 @@ export default function Tracker() {
         </span>{" "}
         🚀 !
       </Title>
-      <div className="w-full space-y-3">
-        <Input
-          type="url"
-          labelText="Url of the product page"
-          placeholder="https://www.e-commerce.com/product/123456789"
-          onChange={(e) => {
-            setUrl(e.target.value);
-          }}
-          value={url}
-        />
-        <Input
-          type="text"
-          labelText="Product details (optional)"
-          placeholder="Name, description, color..."
-          onChange={(e) => {
-            setAdditionalInfo(e.target.value);
-          }}
-          value={additionalInfo}
-        />
-      </div>
-      <div className="w-full space-y-4 lg:flex lg:space-y-0">
-        <div className="space-y-2 lg:w-1/2">
-          <Checkbox labelText="Track restocking" checked={trackStock} onClick={handleTrackStock} />
-          <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
-          <div className={`${trackPrice ? "opacity-100" : "opacity-50"} flex items-center`}>
-            <Input
-              className="text-center"
-              labelText="Notify me when price below:"
-              step={10}
-              min={0}
-              max={100000000}
-              type="number"
-              placeholder="1000 €, £, $, ₩, ¥..."
-              onChange={(e) => {
-                setTrackPriceThreshold(e.target.value);
-              }}
-              value={trackPriceThreshold}
-              disabled={!trackPrice}
+      <form>
+        <div className="w-full space-y-3">
+          <Input
+            id="url"
+            type="url"
+            labelText="Url of the product page"
+            placeholder="https://www.e-commerce.com/product/123456789"
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
+            value={url}
+          />
+          <Input
+            id="details"
+            type="text"
+            labelText="Product details (optional)"
+            placeholder="Name, description, color..."
+            onChange={(e) => {
+              setAdditionalInfo(e.target.value);
+            }}
+            value={additionalInfo}
+          />
+        </div>
+        <div className="w-full space-y-4 lg:flex lg:space-y-0">
+          <div className="space-y-2 lg:w-1/2">
+            <Checkbox
+              labelText="Track restocking"
+              checked={trackStock}
+              onClick={handleTrackStock}
             />
+            <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
+            <div className={`${trackPrice ? "opacity-100" : "opacity-50"} flex items-center`}>
+              <Input
+                id="price-below"
+                className="text-center"
+                labelText="Notify me when price below:"
+                step={10}
+                min={0}
+                max={100000000}
+                type="number"
+                placeholder="1000 €, £, $, ₩, ¥..."
+                onChange={(e) => {
+                  setTrackPriceThreshold(e.target.value);
+                }}
+                value={trackPriceThreshold}
+                disabled={!trackPrice}
+              />
+            </div>
+          </div>
+          <div className="flex items-start justify-end lg:w-1/2">
+            <Button>Start tracking</Button>
           </div>
         </div>
-        <div className="flex items-start justify-end lg:w-1/2">
-          <Button>Start tracking</Button>
-        </div>
-      </div>
+      </form>
     </main>
   );
 }

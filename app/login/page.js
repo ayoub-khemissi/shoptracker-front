@@ -30,43 +30,45 @@ export default function Login() {
       </section>
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
         <Title className="text-center text-2xl lg:text-4xl">Sign In</Title>
-        <CircleButton onClick={() => {}}>
+        <CircleButton>
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
-        <Input
-          className="w-full"
-          labelText="Email"
-          type="email"
-          placeholder="xyz@mail.com"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <Input
-          className="w-full"
-          labelText="Password"
-          type="password"
-          placeholder="••••••••••••"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="flex w-full items-start justify-between">
-          <div className="flex w-full flex-col space-y-4">
-            <TextNormal>
-              Don't have an account yet? <UnderlineLink href="/register">Sign Up</UnderlineLink>
-            </TextNormal>
-            <div>
-              <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
+        <form>
+          <Input
+            id="email"
+            className="w-full"
+            labelText="Email"
+            type="email"
+            placeholder="xyz@mail.com"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            id="password"
+            className="w-full"
+            labelText="Password"
+            type="password"
+            placeholder="••••••••••••"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <div className="flex w-full items-start justify-between">
+            <div className="flex w-full flex-col space-y-4">
+              <TextNormal>
+                Don't have an account yet? <UnderlineLink href="/register">Sign Up</UnderlineLink>
+              </TextNormal>
+              <div>
+                <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
+              </div>
             </div>
+            <Button type="primary">Sign In</Button>
           </div>
-          <Button type="primary" onClick={() => {}}>
-            Sign In
-          </Button>
-        </div>
+        </form>
       </section>
     </div>
   );

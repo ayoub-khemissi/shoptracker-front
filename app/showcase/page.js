@@ -51,6 +51,7 @@ export default function Showcase() {
         <span className="text-secondary">maintenant de nos services</span> !
       </Title>
       <Input
+        id="email"
         className="w-full"
         labelText="Adresse email"
         type="email"
@@ -75,6 +76,7 @@ export default function Showcase() {
       />
       <TextLink href="/register">S'inscrire</TextLink>
       <Input
+        id="price"
         className="w-full"
         type="text"
         placeholder="0.00€"

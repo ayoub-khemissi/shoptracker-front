@@ -30,11 +30,12 @@ export default function Register() {
       </section>
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
         <Title className="text-center text-2xl lg:text-4xl">Sign Up</Title>
-        <CircleButton onClick={() => {}}>
+        <CircleButton>
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
         <Input
+          id="email"
           className="w-full"
           labelText="Email"
           type="email"
@@ -45,6 +46,7 @@ export default function Register() {
           }}
         />
         <Input
+          id="password"
           className="w-full"
           labelText="Password"
           type="password"
@@ -63,9 +65,7 @@ export default function Register() {
               <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
             </div>
           </div>
-          <Button type="primary" onClick={() => {}}>
-            Sign Up
-          </Button>
+          <Button type="primary">Sign Up</Button>
         </div>
       </section>
     </div>

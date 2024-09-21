@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import Button from "../components/Button";
-import Input from "../components/Input";
 import TextLabel from "../components/TextLabel";
-import Image from "next/image";
 import TextSeparator from "../components/TextSeparator";
 import Switch from "../components/Switch";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import Constants from "@/utils/Constants";
 
 export default function Settings() {
-  const [tab, setTab] = useState("profile");
+  const [tab, setTab] = useState("notifications");
   const [notificationMailbox, setNotificationMailbox] = useState(true);
   const [notificationTextMessage, setNotificationTextMessage] = useState(true);
   const [notificationBrowser, setNotificationBrowser] = useState(true);
@@ -35,17 +33,6 @@ export default function Settings() {
         <Button
           className="mb-2"
           locked
-          type={tab === "profile" ? "primary" : "contrast"}
-          defaultCursor={true}
-          onClick={() => {
-            setTab("profile");
-          }}
-        >
-          Profile
-        </Button>
-        <Button
-          className="mb-2"
-          locked
           type={tab === "notifications" ? "primary" : "contrast"}
           defaultCursor={true}
           onClick={() => {
@@ -66,49 +53,6 @@ export default function Settings() {
           Subscriptions
         </Button>
       </div>
-      {tab === "profile" && (
-        <div className="flex flex-col items-center justify-center space-y-5">
-          <div className="flex items-center justify-center">
-            <Image
-              className="rounded-full"
-              src="https://lh3.googleusercontent.com/a/ACg8ocLYaqsM5UXK9HxKhvBQL_koiF-ceLh9FBRL513Y0zNHXo776OZI=s288-c-no"
-              width={70}
-              height={70}
-              alt="profile picture"
-            />
-          </div>
-          <div className="flex w-full flex-wrap items-center justify-evenly">
-            <div className="flex w-96 flex-col items-center justify-center space-y-4 py-4">
-              <TextSeparator className="w-full">Personnal Information</TextSeparator>
-              <Input
-                labelText="Email"
-                className="w-full"
-                placeholder="xyz@mail.com"
-                disabled
-                type="email"
-              />
-              <Input labelText="Firstname" className="w-full" placeholder="Jane" type="text" />
-              <Input labelText="Lastname" className="w-full" placeholder="Doe" type="text" />
-              <Input
-                labelText="Phone number"
-                className="w-full"
-                placeholder="+000123456789"
-                type="text"
-              />
-            </div>
-            <div className="flex w-96 flex-col items-center justify-center space-y-4 py-4">
-              <TextSeparator className="w-full">Address Information</TextSeparator>
-              <Input labelText="Country" className="w-full" placeholder="Country" type="text" />
-              <Input labelText="City" className="w-full" placeholder="City" type="text" />
-              <Input labelText="Address" className="w-full" placeholder="Address" type="text" />
-              <Input labelText="Zipcode" className="w-full" placeholder="Zipcode" type="text" />
-            </div>
-          </div>
-          <div className="flex w-full items-center justify-center">
-            <Button>Save profile</Button>
-          </div>
-        </div>
-      )}
       {tab === "notifications" && (
         <div className="flex w-full items-center justify-center py-4">
           <div className="flex w-96 flex-col items-center justify-evenly space-y-5">

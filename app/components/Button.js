@@ -4,6 +4,7 @@ const Button = ({
   onClick = () => {},
   type = "primary",
   locked = false,
+  buttonType = "button",
   defaultCursor = false,
 }) => {
   let typeClass;
@@ -28,6 +29,7 @@ const Button = ({
 
   return (
     <button
+      type={buttonType}
       className={`${typeClass} text-nowrap rounded-full border-2 px-5 py-2 text-sm font-semibold uppercase transition duration-200 ${defaultCursor ? "cursor-default" : ""} ${className}`}
       onClick={onClick}
     >

@@ -1,4 +1,4 @@
-import { convertMillisecondsToText, formatPrice, truncateString } from "@/utils/Helper";
+import { convertMillisecondsToText, formatPrice, truncateString } from "@/modules/TextFormatter";
 import InvisibleButton from "./InvisibleButton";
 import NavLink from "./NavLink";
 import Constants from "@/utils/Constants";

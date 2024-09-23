@@ -1,4 +1,4 @@
-import { formatPrice } from "@/utils/Helper";
+import { formatPrice } from "@/modules/TextFormatter";
 import Subscription from "./Subscription";
 import TextImportant from "./TextImportant";
 import TextLabel from "./TextLabel";

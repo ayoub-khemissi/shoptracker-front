@@ -1,4 +1,4 @@
-import { convertMillisecondsToText, formatMonthlyAnnuallyPrice } from "@/utils/Helper";
+import { convertMillisecondsToText, formatMonthlyAnnuallyPrice } from "@/modules/TextFormatter";
 import Separator from "./Separator";
 import Subtitle from "./Subtitle";
 import TextImportant from "./TextImportant";

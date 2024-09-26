@@ -34,7 +34,7 @@ export default function Login() {
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
-        <form>
+        <form className="w-full space-y-4">
           <Input
             id="email"
             className="w-full"

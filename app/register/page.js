@@ -34,39 +34,41 @@ export default function Register() {
           <Image src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
-        <Input
-          id="email"
-          className="w-full"
-          labelText="Email"
-          type="email"
-          placeholder="xyz@mail.com"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <Input
-          id="password"
-          className="w-full"
-          labelText="Password"
-          type="password"
-          placeholder="••••••••••••"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="flex w-full items-start justify-between">
-          <div className="flex w-full flex-col space-y-4">
-            <TextNormal>
-              Already have an account? <UnderlineLink href="/login">Sign In</UnderlineLink>
-            </TextNormal>
-            <div>
-              <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
+        <form className="w-full space-y-4">
+          <Input
+            id="email"
+            className="w-full"
+            labelText="Email"
+            type="email"
+            placeholder="xyz@mail.com"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            id="password"
+            className="w-full"
+            labelText="Password"
+            type="password"
+            placeholder="••••••••••••"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <div className="flex w-full items-start justify-between">
+            <div className="flex w-full flex-col space-y-4">
+              <TextNormal>
+                Already have an account? <UnderlineLink href="/login">Sign In</UnderlineLink>
+              </TextNormal>
+              <div>
+                <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
+              </div>
             </div>
+            <Button type="primary">Sign Up</Button>
           </div>
-          <Button type="primary">Sign Up</Button>
-        </div>
+        </form>
       </section>
     </div>
   );

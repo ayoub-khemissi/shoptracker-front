@@ -38,8 +38,8 @@ export default function Tracker() {
         </span>{" "}
         🚀 !
       </Title>
-      <form>
-        <div className="w-full space-y-3">
+      <form className="w-full space-y-4">
+        <div className="w-full space-y-4">
           <Input
             id="url"
             type="url"

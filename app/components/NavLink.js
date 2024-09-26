@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const lexend = Lexend({ weight: "700", subsets: ["latin"] });
 
-const NavLink = ({ children, type = "primary", className = "", href, target = "_self" }) => {
+const NavLink = ({ children, href, className = "", type = "primary", target = "_self" }) => {
   let typeClass;
 
   switch (type) {

@@ -18,17 +18,21 @@ export const fetchData = async (path, body, method = "GET", authentified = false
     });
 
     if (response.status === 401) {
-      await fetch(apiUrl + "/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      await fetchLogout();
     }
 
     return response;
   } catch (error) {
     console.error("Fetch error:", error);
   }
+};
+
+export const fetchLogout = async () => {
+  await fetch(apiUrl + "/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
 };

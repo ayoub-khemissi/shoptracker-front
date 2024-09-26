@@ -1,8 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import ShopTrackerLogo from "./ShopTrackerLogo";
 import NavLink from "./NavLink";
+import { useAuthContext } from "../contexts/AuthContext";
+import { fetchLogout } from "@/modules/Fetch";
+import ShoptrackerIconSvg from "../../public/assets/svg/icons/shoptracker-icon.svg";
+import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Avatar } from "@nextui-org/react";
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({ weight: "700", subsets: ["latin"] });
 
 const Header = () => {
+  const { user, localLogout } = useAuthContext();
+
   return (
     <header className="flex flex-wrap items-center justify-center px-20 py-6 sm:justify-between lg:px-40 lg:py-10">
       <div>
@@ -10,13 +21,55 @@ const Header = () => {
           <ShopTrackerLogo />
         </Link>
       </div>
-      <nav className="flex items-center justify-center space-x-4 sm:justify-end">
-        <NavLink className="text-xl" href="/register">
-          Sign Up
-        </NavLink>
-        <NavLink className="text-xl" href="/login">
-          Sign In
-        </NavLink>
+      <nav className="flex items-center justify-center space-x-12 sm:justify-end">
+        {user ? (
+          <>
+            <NavLink className="text-xl" href="/tracker">
+              Tracker
+            </NavLink>
+            <NavLink className="text-xl" href="/tracklist">
+              Tracklist
+            </NavLink>
+            <Dropdown className={`${montserrat.className} bg-contrast uppercase`}>
+              <DropdownTrigger className="cursor-pointer">
+                <div className="flex flex-shrink-0 items-center justify-center rounded-full border-[3px] border-primary">
+                  <Avatar
+                    isBordered
+                    src={user.photo ? user.photo : ShoptrackerIconSvg}
+                    width={48}
+                    height={48}
+                    alt="profile picture"
+                  />
+                </div>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="settings">
+                  <Link href="/settings">Settings</Link>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  className={`text-error`}
+                  color="danger"
+                  onClick={async () => {
+                    await fetchLogout();
+                    await localLogout();
+                  }}
+                >
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </>
+        ) : (
+          <>
+            <NavLink className="text-xl" href="/register">
+              Sign Up
+            </NavLink>
+            <NavLink className="text-xl" href="/login">
+              Sign In
+            </NavLink>
+          </>
+        )}
       </nav>
     </header>
   );

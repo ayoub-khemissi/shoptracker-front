@@ -31,7 +31,7 @@ export default function Login() {
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
         <Title className="text-center text-2xl lg:text-4xl">Sign In</Title>
         <CircleButton>
-          <Image src={GoogleLogoSvg} alt="google sign" />
+          <Image className="h-6 w-6" src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
         <form className="w-full space-y-4">

@@ -193,20 +193,18 @@ const TrackTable = ({ className = "", tracks }) => {
                 <div className="flex items-center justify-center space-x-3">
                   <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
                     <Image
-                      width={30}
-                      height={30}
+                      className="h-7 w-7"
                       src={DeleteSvg}
                       alt="delete"
                       title="Delete the track"
                     />
                   </InvisibleButton>
                   <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
-                    <Image width={30} height={30} src={EditSvg} alt="edit" title="Edit the track" />
+                    <Image className="h-7 w-7" src={EditSvg} alt="edit" title="Edit the track" />
                   </InvisibleButton>
                   <InvisibleButton className="flex w-fit flex-shrink-0 items-center justify-center">
                     <Image
-                      width={30}
-                      height={30}
+                      className="h-7 w-7"
                       src={track.status !== TRACK_STATUS_ENABLED ? StartSvg : PauseSvg}
                       alt="start pause"
                       title={`${track.status !== TRACK_STATUS_ENABLED ? "Start" : "Stop"} the track`}

@@ -42,9 +42,9 @@ module.exports = {
           light: "#A0A0A0",
         },
         success: {
-          dark: "#0BFF0B",
-          DEFAULT: "#0BFF0B",
-          light: "#0BFF0B",
+          dark: "#4ADE80",
+          DEFAULT: "#4ADE80",
+          light: "#4ADE80",
         },
         warning: {
           dark: "#FFCC00",
@@ -52,9 +52,9 @@ module.exports = {
           light: "#FFCC00",
         },
         error: {
-          dark: "#FF0B0B",
-          DEFAULT: "#FF0B0B",
-          light: "#FF0B0B",
+          dark: "#DC2626",
+          DEFAULT: "#DC2626",
+          light: "#DC2626",
         },
       },
     },

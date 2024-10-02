@@ -85,6 +85,19 @@ export default function Showcase() {
           setInput(e.target.value);
         }}
       />
+      <Input
+        id="password"
+        className="w-full"
+        labelText="Mot de passe"
+        type="password"
+        placeholder="••••••••••"
+        value={input}
+        isError={true}
+        errorText="Le mot de passe doit contenir au minimum 8 caractères, 1 minuscule, 1 majuscule, 1 caractère spécial"
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
+      />
       <TextNormal>Tu n'as pas de compte ?</TextNormal>
       <NavLink className="text-xl" href="/contact">
         Contact
@@ -99,7 +112,7 @@ export default function Showcase() {
       </TextImportant>
       <FooterLink href="cgv">CGV</FooterLink>
       <CircleButton>
-        <Image src={GoogleLogoSvg} alt="google sign" />
+        <Image className="h-6 w-6" src={GoogleLogoSvg} alt="google sign" />
       </CircleButton>
       <Subscription
         type="primary"

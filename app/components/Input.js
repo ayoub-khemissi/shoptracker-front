@@ -31,7 +31,11 @@ const Input = ({
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
       {labelText && (
-        <label id={`label-${id}`} htmlFor={id} className={`${montserrat.className} uppercase`}>
+        <label
+          id={`label-${id}`}
+          htmlFor={id}
+          className={`${montserrat.className} uppercase ${isError ? "text-error" : "text-primary"}`}
+        >
           {labelText}
         </label>
       )}

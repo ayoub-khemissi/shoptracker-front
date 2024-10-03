@@ -32,6 +32,8 @@ export default function Login() {
     });
 
     if (!response || !response.status) {
+      setIsErrorEmail(false);
+      setIsErrorPassword(false);
       showToast("An error occurred. Please try again later.", "error");
       return;
     }
@@ -39,6 +41,8 @@ export default function Login() {
     switch (response.status) {
       case 200:
         showToast("Logged in successfully!", "success");
+        setIsErrorEmail(false);
+        setIsErrorPassword(false);
         localLogin((await response.json()).data);
         break;
 
@@ -50,6 +54,8 @@ export default function Login() {
         break;
 
       default:
+        setIsErrorEmail(false);
+        setIsErrorPassword(false);
         showToast("An error occurred. Please try again later.", "error");
         break;
     }

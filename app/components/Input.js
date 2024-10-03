@@ -27,9 +27,6 @@ const Input = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
-  const classNames = `py-2 px-4 border-2 rounded-md ${
-    isError ? "border-error text-error" : "border-primary text-primary"
-  } bg-contrast placeholder-gray ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`;
 
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
@@ -42,11 +39,13 @@ const Input = ({
         <input
           id={id}
           name={id}
-          className={classNames}
-          placeholder={placeholder}
+          className={`w-full rounded-md border-2 px-4 py-2 ${
+            isError ? "border-error text-error" : "border-primary text-primary"
+          } bg-contrast placeholder-gray ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
           value={value}
           type={isPassword && showPassword ? "text" : type}
           onChange={onChange}
+          {...(placeholder && { placeholder: placeholder })}
           {...(pattern && { pattern: pattern })}
           {...(step && { step: step })}
           {...(disabled && { disabled: disabled })}

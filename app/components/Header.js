@@ -7,9 +7,6 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { fetchLogout } from "@/modules/Fetch";
 import ShoptrackerIconSvg from "../../public/assets/svg/icons/shoptracker-icon.svg";
 import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Avatar } from "@nextui-org/react";
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({ weight: "700", subsets: ["latin"] });
 
 const Header = () => {
   const { user, localLogout } = useAuthContext();
@@ -30,7 +27,7 @@ const Header = () => {
             <NavLink className="text-xl" href="/tracklist">
               Tracklist
             </NavLink>
-            <Dropdown className={`${montserrat.className} bg-contrast uppercase`}>
+            <Dropdown className="bg-contrast uppercase">
               <DropdownTrigger className="cursor-pointer">
                 <div className="flex flex-shrink-0 items-center justify-center rounded-full border-[3px] border-primary">
                   <Avatar

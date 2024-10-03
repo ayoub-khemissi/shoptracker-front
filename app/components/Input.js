@@ -20,6 +20,7 @@ const Input = ({
   max,
   disabled,
   required,
+  pattern = null,
   errorText = null,
   isError = false,
   onChange = () => {},
@@ -46,6 +47,7 @@ const Input = ({
           value={value}
           type={isPassword && showPassword ? "text" : type}
           onChange={onChange}
+          {...(pattern && { pattern: pattern })}
           {...(step && { step: step })}
           {...(disabled && { disabled: disabled })}
           {...(required && { required: required, "aria-required": required })}
@@ -67,7 +69,7 @@ const Input = ({
           </InvisibleButton>
         )}
       </div>
-      {isError && <TextNormal className="text-sm text-error">{errorText}</TextNormal>}
+      {isError && errorText && <TextNormal className="text-sm text-error">{errorText}</TextNormal>}
     </div>
   );
 };

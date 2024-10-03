@@ -6,14 +6,12 @@ import {
 
 const apiUrl = `http${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "s" : ""}://${NEXT_PUBLIC_SHOPTRACKER_API_HOSTNAME}${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "" : `:${NEXT_PUBLIC_SHOPTRACKER_API_PORT}`}`;
 
-export const fetchData = async (path, body, method = "GET", authentified = false) => {
+export const fetchData = async (path, method = "GET", body = null, authentified = false) => {
   try {
     const response = await fetch(apiUrl + path, {
       method: method,
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: body ? JSON.stringify(body) : null,
+      headers: { "Content-Type": "application/json" },
       credentials: authentified ? "include" : "omit",
     });
 
@@ -24,6 +22,7 @@ export const fetchData = async (path, body, method = "GET", authentified = false
     return response;
   } catch (error) {
     console.error("Fetch error:", error);
+    return null;
   }
 };
 
@@ -33,6 +32,5 @@ export const fetchLogout = async () => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
   });
 };

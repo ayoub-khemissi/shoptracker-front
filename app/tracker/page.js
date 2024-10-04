@@ -5,6 +5,9 @@ import Input from "../components/Input";
 import Checkbox from "../components/Checkbox";
 import Button from "../components/Button";
 import Title from "../components/Title";
+import { useToast } from "../contexts/ToastContext";
+import { fetchData } from "@/modules/Fetch";
+import { useRouter } from "next/navigation";
 
 export default function Tracker() {
   const [url, setUrl] = useState("");
@@ -12,9 +15,12 @@ export default function Tracker() {
   const [trackStock, setTrackStock] = useState(true);
   const [trackPrice, setTrackPrice] = useState(true);
   const [trackPriceThreshold, setTrackPriceThreshold] = useState("");
+  const { showToast } = useToast();
+  const router = useRouter();
 
   const handleTrackPrice = () => {
-    if (!trackStock && trackPrice) {
+    if (trackPrice && !trackStock) {
+      showToast("You must choose at least one tracking option.", "error");
       return;
     }
 
@@ -22,11 +28,47 @@ export default function Tracker() {
   };
 
   const handleTrackStock = () => {
-    if (!trackPrice && trackStock) {
+    if (trackStock && !trackPrice) {
+      showToast("You must choose at least one tracking option.", "error");
       return;
     }
 
     setTrackStock(!trackStock);
+  };
+
+  const handleSubmitTrack = async (e) => {
+    e.preventDefault();
+
+    const response = await fetchData("/track", "POST", {
+      url: url,
+      additionalInfo: additionalInfo,
+      trackStock: trackStock,
+      trackPrice: trackPrice,
+      trackPriceThreshold: Number(trackPriceThreshold) || 0,
+    });
+
+    if (!response || !response.status) {
+      showToast("Failed to track the product. Please try again later.", "error");
+      return;
+    }
+
+    const msg = (await response.json()).msg;
+
+    switch (response.status) {
+      case 201:
+        showToast("Product added to the tracking list! 🎉", "success");
+        router.push("/tracklist");
+        break;
+
+      case 403:
+      case 409:
+        showToast(msg, "error");
+        break;
+
+      default:
+        showToast("An error occurred. Please try again later.", "error");
+        break;
+    }
   };
 
   return (
@@ -38,17 +80,19 @@ export default function Tracker() {
         </span>{" "}
         🚀 !
       </Title>
-      <form className="w-full space-y-4">
+      <form className="w-full space-y-4" onSubmit={handleSubmitTrack}>
         <div className="w-full space-y-4">
           <Input
             id="url"
             type="url"
+            pattern="https://.*"
             labelText="Url of the product page"
-            placeholder="https://www.e-commerce.com/product/123456789"
+            placeholder="https://www.e-commerce.com/product/id/123456789"
             onChange={(e) => {
               setUrl(e.target.value);
             }}
             value={url}
+            required
           />
           <Input
             id="details"
@@ -78,17 +122,18 @@ export default function Tracker() {
                 min={0}
                 max={100000000}
                 type="number"
-                placeholder="1000 €, £, $, ₩, ¥..."
+                placeholder="99 €"
                 onChange={(e) => {
                   setTrackPriceThreshold(e.target.value);
                 }}
                 value={trackPriceThreshold}
                 disabled={!trackPrice}
+                required={trackPrice}
               />
             </div>
           </div>
           <div className="flex items-start justify-end lg:w-1/2">
-            <Button>Start tracking</Button>
+            <Button buttonType="submit">Start tracking</Button>
           </div>
         </div>
       </form>

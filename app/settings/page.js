@@ -7,12 +7,13 @@ import TextSeparator from "../components/TextSeparator";
 import Switch from "../components/Switch";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import Constants from "@/utils/Constants";
+import { fetchData } from "@/modules/Fetch";
+import { useToast } from "../contexts/ToastContext";
 
 export default function Settings() {
   const [tab, setTab] = useState("notifications");
   const [notificationMailbox, setNotificationMailbox] = useState(true);
   const [notificationTextMessage, setNotificationTextMessage] = useState(true);
-  const [notificationBrowser, setNotificationBrowser] = useState(true);
   const [activeSubscription] = useState({
     planInfo: {
       id: Constants.SUBSCRIPTION_PLAN_ID_FREE,
@@ -26,6 +27,26 @@ export default function Settings() {
     },
   });
   const [canceledOrExpiredSubscriptions] = useState([]);
+  const { showToast } = useToast();
+
+  const handleUpdateNotifications = async () => {
+    const response = await fetchData("/notifications/update", "PATCH", {
+      alertEmail: notificationMailbox,
+      alertText: notificationTextMessage,
+      alertBrowserNotification: false,
+      alertPushNotification: true,
+    });
+
+    if (!response || response.status !== 200) {
+      showToast(
+        "An error occurred while saving your notifications settings. Please try again later.",
+        "error",
+      );
+      return;
+    }
+
+    showToast("Notifications settings saved! 🥳", "success");
+  };
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
@@ -60,6 +81,11 @@ export default function Settings() {
             <div
               className="flex w-full items-center justify-between"
               onClick={() => {
+                if (notificationTextMessage && !notificationMailbox) {
+                  showToast("You must choose at least one notification method.", "error");
+                  return;
+                }
+
                 setNotificationTextMessage(!notificationTextMessage);
               }}
             >
@@ -69,23 +95,19 @@ export default function Settings() {
             <div
               className="flex w-full items-center justify-between"
               onClick={() => {
+                if (notificationMailbox && !notificationTextMessage) {
+                  showToast("You must choose at least one notification method.", "error");
+                  return;
+                }
+
                 setNotificationMailbox(!notificationMailbox);
               }}
             >
               <TextLabel>In your mailbox</TextLabel>
               <Switch checked={notificationMailbox} opacityWhenOff />
             </div>
-            <div
-              className="flex w-full items-center justify-between"
-              onClick={() => {
-                setNotificationBrowser(!notificationBrowser);
-              }}
-            >
-              <TextLabel>On your browser</TextLabel>
-              <Switch checked={notificationBrowser} opacityWhenOff />
-            </div>
             <div className="flex w-full items-center justify-center">
-              <Button>Save notifications</Button>
+              <Button onClick={handleUpdateNotifications}>Save notifications</Button>
             </div>
           </div>
         </div>

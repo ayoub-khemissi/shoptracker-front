@@ -8,9 +8,11 @@ import { fetchLogout } from "@/modules/Fetch";
 import ShoptrackerIconSvg from "../../public/assets/svg/icons/shoptracker-icon.svg";
 import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
+import { useToast } from "../contexts/ToastContext";
 
 const Header = () => {
   const { user, localLogout } = useAuthContext();
+  const { showToast } = useToast();
 
   return (
     <header className="flex flex-wrap items-center justify-center px-20 py-6 sm:justify-between lg:px-40 lg:py-10">
@@ -49,7 +51,13 @@ const Header = () => {
                   className={`text-error`}
                   color="danger"
                   onClick={async () => {
-                    await fetchLogout();
+                    const response = await fetchLogout();
+
+                    if (!response || response.status !== 200) {
+                      showToast("Failed to logout. Please try again later.", "error");
+                      return;
+                    }
+
                     await localLogout();
                   }}
                 >

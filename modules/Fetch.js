@@ -6,16 +6,16 @@ import {
 
 const apiUrl = `http${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "s" : ""}://${NEXT_PUBLIC_SHOPTRACKER_API_HOSTNAME}${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "" : `:${NEXT_PUBLIC_SHOPTRACKER_API_PORT}`}`;
 
-export const fetchData = async (path, method = "GET", body = null, authentified = false) => {
+export const fetchData = async (path, method = "GET", body = null) => {
   try {
     const response = await fetch(apiUrl + path, {
       method: method,
       body: body ? JSON.stringify(body) : null,
       headers: { "Content-Type": "application/json" },
-      credentials: authentified ? "include" : "omit",
+      credentials: "include",
     });
 
-    if (response.status === 401) {
+    if (path !== "/logout" && response.status === 401) {
       await fetchLogout();
     }
 
@@ -27,10 +27,5 @@ export const fetchData = async (path, method = "GET", body = null, authentified 
 };
 
 export const fetchLogout = async () => {
-  await fetch(apiUrl + "/logout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  return await fetchData("/logout", "POST");
 };

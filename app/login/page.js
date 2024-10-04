@@ -40,7 +40,7 @@ export default function Login() {
 
     switch (response.status) {
       case 200:
-        showToast("Logged in successfully!", "success");
+        showToast("Logged in successfully! 🎉", "success");
         setIsErrorEmail(false);
         setIsErrorPassword(false);
         localLogin((await response.json()).data);

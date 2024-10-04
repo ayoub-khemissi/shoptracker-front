@@ -6,7 +6,8 @@ import NavLink from "./NavLink";
 import { useAuthContext } from "../contexts/AuthContext";
 import { fetchLogout } from "@/modules/Fetch";
 import ShoptrackerIconSvg from "../../public/assets/svg/icons/shoptracker-icon.svg";
-import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu, Avatar } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/dropdown";
+import { Avatar } from "@nextui-org/avatar";
 
 const Header = () => {
   const { user, localLogout } = useAuthContext();

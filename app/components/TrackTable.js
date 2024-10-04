@@ -1,3 +1,5 @@
+"use client";
+
 import { convertMillisecondsToText, formatPrice, truncateString } from "@/modules/TextFormatter";
 import InvisibleButton from "./InvisibleButton";
 import NavLink from "./NavLink";

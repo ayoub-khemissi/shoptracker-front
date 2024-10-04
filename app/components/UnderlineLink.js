@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 const UnderlineLink = ({ children, className = "", href, target = "_self" }) => {

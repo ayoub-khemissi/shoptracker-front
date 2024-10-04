@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 const ButtonLink = ({ children, className = "", href, type = "primary", target = "_self" }) => {

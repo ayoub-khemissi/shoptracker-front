@@ -1,3 +1,5 @@
+"use client";
+
 import { formatPrice } from "@/modules/TextFormatter";
 import Subscription from "./Subscription";
 import TextImportant from "./TextImportant";

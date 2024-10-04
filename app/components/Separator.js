@@ -1,3 +1,5 @@
+"use client";
+
 const Separator = ({ className = "", type = "primary" }) => {
   return (
     <div

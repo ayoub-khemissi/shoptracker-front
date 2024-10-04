@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import SpinnerSvg from "../../public/assets/svg/icons/spinner.svg";
 

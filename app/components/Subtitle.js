@@ -1,3 +1,5 @@
+"use client";
+
 import { Lexend } from "next/font/google";
 
 const lexend = Lexend({ weight: "800", subsets: ["latin"] });

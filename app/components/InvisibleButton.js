@@ -1,3 +1,5 @@
+"use client";
+
 const InvisibleButton = ({ children, className = "", onClick = () => {} }) => {
   return (
     <button

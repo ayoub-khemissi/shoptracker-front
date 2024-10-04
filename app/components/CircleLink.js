@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 const CircleLink = ({ children, className = "", href, target = "_self" }) => {

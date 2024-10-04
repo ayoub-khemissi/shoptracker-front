@@ -1,3 +1,5 @@
+"use client";
+
 const Switch = ({ className = "", checked, opacityWhenOff = false, onClick = () => {} }) => {
   return (
     <div

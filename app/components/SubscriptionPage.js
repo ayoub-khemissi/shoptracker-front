@@ -1,3 +1,5 @@
+"use client";
+
 import TextImportant from "./TextImportant";
 import Subscription from "./Subscription";
 import { useState } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 import Separator from "./Separator";
 import Subtitle from "./Subtitle";
 

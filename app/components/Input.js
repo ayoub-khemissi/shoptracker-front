@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Montserrat } from "next/font/google";
 import TextNormal from "./TextNormal";

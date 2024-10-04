@@ -1,3 +1,5 @@
+"use client";
+
 import FooterLink from "./FooterLink";
 import ShopTrackerLogo from "./ShopTrackerLogo";
 

@@ -1,3 +1,5 @@
+"use client";
+
 const CircleButton = ({ children, className = "", onClick = () => {} }) => {
   return (
     <button

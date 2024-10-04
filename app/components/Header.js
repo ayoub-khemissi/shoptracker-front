@@ -58,6 +58,7 @@ const Header = () => {
                       return;
                     }
 
+                    showToast("See you later 👋", "info");
                     await localLogout();
                   }}
                 >

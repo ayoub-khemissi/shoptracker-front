@@ -8,7 +8,7 @@ export function middleware(req) {
     jwt &&
     (url.startsWith("/login") || url.startsWith("/register") || url.startsWith("/account-recovery"))
   ) {
-    return NextResponse.redirect(new URL("/tracklist", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (

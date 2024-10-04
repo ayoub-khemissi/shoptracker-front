@@ -26,7 +26,7 @@ const Toast = ({ message, type, show, onClose }) => {
         return "bg-yellow-500 text-contrast";
       case "info":
       default:
-        return "bg-blue-500 text-primary";
+        return "bg-blue-600 text-primary";
     }
   };
 

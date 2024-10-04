@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextNormal from "./components/TextNormal";
 import Title from "./components/Title";
 import Link from "next/link";
@@ -13,10 +13,26 @@ import ConfirmationSvg from "../public/assets/svg/illustrations/confirmation.svg
 import NotificationSvg from "../public/assets/svg/illustrations/notification.svg";
 import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrows-down-tertiary.svg";
 import SubscriptionPage from "./components/SubscriptionPage";
+import { fetchData } from "@/modules/Fetch";
 
 export default function Home() {
-  const [productsTracked] = useState(0);
-  const [checksPerformed] = useState(0);
+  const [productsTracked, setProductsTracked] = useState(0);
+  const [checksPerformed, setChecksPerformed] = useState(0);
+
+  const fetchTrackStats = async () => {
+    const response = await fetchData("/track/stats");
+    if (!response || response.status !== 200) {
+      return;
+    }
+
+    const data = (await response.json()).data;
+    setProductsTracked(data.totalTracksEnabled);
+    setChecksPerformed(data.totalTrackChecks);
+  };
+
+  useEffect(() => {
+    fetchTrackStats();
+  }, []);
 
   return (
     <main>

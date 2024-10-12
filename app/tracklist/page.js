@@ -1,38 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Constants from "@/utils/Constants";
-import TrackTable from "../components/TrackTable";
+import Track from "../components/Track";
+import { fetchData } from "@/modules/Fetch";
 
 const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_ARCHIVED } = Constants;
 
 export default function Tracker() {
   const [tab, setTab] = useState("tracked-products");
-  const [tracks] = useState([]);
+  const [tracklist, setTracklist] = useState([]);
+
+  const fetchTracks = async () => {
+    const response = await fetchData("/tracklist");
+
+    if (!response || response.status !== 200) {
+      return;
+    }
+
+    const data = (await response.json()).data;
+    setTracklist(data);
+  };
+
+  useEffect(() => {
+    fetchTracks();
+  }, []);
 
   const getFilteredAndSortedTracklist = () => {
-    let list;
+    let list = [];
 
     switch (tab) {
       case "tracked-products":
       default:
-        list = tracks.filter(
-          (product) =>
-            product.status === TRACK_STATUS_ENABLED || product.status === TRACK_STATUS_DISABLED,
+        list = tracklist.filter(
+          (track) =>
+            track.status_id === TRACK_STATUS_ENABLED || track.status_id === TRACK_STATUS_DISABLED,
         );
         break;
 
       case "archived-products":
-        list = tracks.filter((product) => product.status === TRACK_STATUS_ARCHIVED);
+        list = tracklist.filter((track) => track.status_id === TRACK_STATUS_ARCHIVED);
+        break;
     }
 
     return list.sort((a, b) => {
-      if (a.status === b.status) {
+      if (a.status_id === b.status_id) {
         return b.created_at - a.created_at;
       }
 
-      return a.status - b.status;
+      return a.status_id - b.status_id;
     });
   };
 
@@ -60,8 +77,10 @@ export default function Tracker() {
           Archived products
         </Button>
       </div>
-      <div className="flex flex-wrap items-center justify-evenly">
-        <TrackTable tracks={getFilteredAndSortedTracklist()} />
+      <div className="flex flex-wrap justify-evenly">
+        {getFilteredAndSortedTracklist().map((track, index) => {
+          return <Track data={track} number={index} key={`track-${index}`} />;
+        })}
       </div>
     </main>
   );

@@ -19,13 +19,13 @@ import Subscription from "../components/Subscription";
 import CircleButton from "../components/CircleButton";
 import ButtonLink from "../components/ButtonLink";
 import TextSeparator from "../components/TextSeparator";
+import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import TextLabel from "../components/TextLabel";
 import SubscriptionInfo from "../components/SubscriptionInfo";
 import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
-import TrackTable from "../components/TrackTable";
 import Spinner from "../components/Spinner";
 
 export default function Showcase() {
@@ -129,26 +129,26 @@ export default function Showcase() {
       />
       <ButtonLink href="/checkout">Sélectionner</ButtonLink>
       <TextSeparator>Or</TextSeparator>
-      <TrackTable
-        tracks={[
-          {
-            id: 1,
-            name: "1 Million - Coffret Eau de toilette ambrée",
-            description:
-              "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté ? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
-            initial_price: 95.99,
-            normal_price: 95.99,
-            discounted_price: 65.99,
-            currency: "EUR",
-            availability: true,
-            price_status: 1,
-            created_at: 1721682189515,
-            updated_at: 1721682389515,
-            check_interval: 1800000,
-            status: 1,
-            url: "https://www.rabanne.com/fr/fr/fragrance/c/frag-men-onemillion",
-          },
-        ]}
+      <Track
+        number={0}
+        data={{
+          id: 1,
+          name: "1 Million - Coffret Eau de toilette ambrée",
+          description:
+            "1 Million, les parfums homme signés par Rabanne. Eau de toilette ou eau de parfum, best seller ou nouveauté ? Choisissez votre nouvelle signature olfactive. Optez pour un parfum au cuir epicé frais, ambré boisé ou un cuir floral. Le lingot d'or est travaillé dans l'épure. Massif, précieux, parfaitement lisse.",
+          first_normal_price: 108.99,
+          first_dicounted_price: 88.99,
+          currency: "EUR",
+          availability: true,
+          price_status: 1,
+          track_checks: [
+            { availability: 1, created_at: 1820744029719, discounted_price: 25, normal_price: 18 },
+          ],
+          created_at: 1721682189515,
+          updated_at: 1721682389515,
+          status_id: 1,
+          url: "https://www.rabanne.com/fr/fr/fragrance/c/frag-men-onemillion",
+        }}
       />
       <TextLabel>Email</TextLabel>
       <SubscriptionInfo

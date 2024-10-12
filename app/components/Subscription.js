@@ -68,8 +68,8 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
       case SUBSCRIPTION_PLAN_ID_BASIC:
         return (
           <>
-            Perfect for regular and reliable tracking <br />
-            <span className={spanTextColor}>of your products.</span>
+            Perfect for a regular and <br />
+            <span className={spanTextColor}>reliable tracking.</span>
             <br />
             Don't wait any longer!
           </>
@@ -78,11 +78,11 @@ const Subscription = ({ className = "", type = "contrast", callToAction = true, 
       case SUBSCRIPTION_PLAN_ID_PRO:
         return (
           <>
-            Interested in multiple products at once?
+            Interested in multiple
             <br />
-            <span className={spanTextColor}> Then this plan </span>
+            <span className={spanTextColor}> products at once? </span>
             <br />
-            is made for you!
+            Then click here!
           </>
         );
 

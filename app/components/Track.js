@@ -6,7 +6,7 @@ import NavLink from "./NavLink";
 import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/dropdown";
 import Constants from "@/utils/Constants";
 import Image from "next/image";
-import ClockContrastSvg from "../../public/assets/svg/icons/clock-contrast.svg";
+import ClockPrimarySvg from "../../public/assets/svg/icons/clock-primary.svg";
 import Spinner from "./Spinner";
 import { useAuthContext } from "../contexts/AuthContext";
 
@@ -24,7 +24,6 @@ const Track = ({ className = "", number, data }) => {
     availability,
     price_status,
     created_at,
-    updated_at,
     status_id,
     track_checks,
   } = data;
@@ -48,10 +47,6 @@ const Track = ({ className = "", number, data }) => {
         </>
       );
     }
-  };
-
-  const getLastCheckTimeTitle = () => {
-    return new Date(updated_at).toLocaleString();
   };
 
   const getPriceStatusSvgName = () => {
@@ -137,6 +132,12 @@ const Track = ({ className = "", number, data }) => {
       : first_normal_price;
   };
 
+  const getLastCheckTimeText = () => {
+    return convertMillisecondsToText(
+      created_at - Date.now() + (user ? user.subscription.track_check_interval : 0),
+    );
+  };
+
   const getSiteDomain = () => {
     try {
       const cleanedUrl = url.replace(/^[a-zA-Z]+:\/\//, "");
@@ -151,75 +152,59 @@ const Track = ({ className = "", number, data }) => {
 
   return (
     <div className={`mx-2 my-4 w-[512px] flex-auto ${className}`}>
-      <div className="flex justify-between">
-        <div
-          className="flex cursor-default items-center justify-between space-x-1 rounded-t-xl bg-secondary px-2 py-1"
-          title={`Last check: ${getLastCheckTimeTitle()}`}
-        >
-          <div className="flex items-center justify-center">
-            <Image className="h-6 w-6" src={ClockContrastSvg} alt="next product check" />
-          </div>
-          <TextImportant className="w-full text-center text-sm leading-4 text-contrast">
-            {status_id === TRACK_STATUS_ENABLED
-              ? convertMillisecondsToText(
-                  created_at - Date.now() + (user ? user.subscription.track_check_interval : 0),
-                )
-              : getLastCheckTimeTitle()}
-          </TextImportant>
-        </div>
-        <div className="flex items-start space-x-2">
-          <Dropdown className="bg-contrast uppercase">
-            <DropdownTrigger className="cursor-pointer">• • •</DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="start-stop">
-                {status_id === TRACK_STATUS_ENABLED ? "Stop" : "Start"}
-              </DropdownItem>
-              <DropdownItem key="edit">Edit</DropdownItem>
-              <DropdownItem key="delete" className={`text-error`} color="danger">
-                Delete
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-      </div>
-      <div className="rounded-b-lg rounded-tr-lg border-2 border-primary">
+      <div className="rounded-lg border-2 border-primary">
         <div className="flex items-center justify-center bg-primary px-2 py-1.5">
+          <div className="w-1/6"></div>
           <NavLink
             target="_blank"
             type="contrast"
             href={url}
-            className="w-full text-center text-base text-contrast md:text-xl"
+            className="w-4/6 text-center text-base text-contrast md:text-xl"
           >
             #{number + 1} {getSiteDomain()} 🔗
           </NavLink>
+          <div className="flex w-1/6 items-center justify-end text-contrast">
+            <Dropdown className="bg-contrast uppercase">
+              <DropdownTrigger className="rotate-90 cursor-pointer text-2xl">•••</DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="start-stop">
+                  {status_id === TRACK_STATUS_ENABLED ? "Stop" : "Start"}
+                </DropdownItem>
+                <DropdownItem key="edit">Edit</DropdownItem>
+                <DropdownItem key="delete" className={`text-error`} color="danger">
+                  Delete
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </div>
         {name && name.length > 0 ? (
-          <InvisibleButton>
+          <InvisibleButton className="w-full">
             <div className="space-y-2 border-primary px-5 py-4" title="Click here to see details">
               <Title className="text-center text-lg leading-5">{truncateString(name, 50)}</Title>
               <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
                 {truncateString(description, 120)}
               </TextImportant>
-              <div className="flex w-full flex-wrap items-center justify-evenly">
-                <div className="flex items-center justify-center space-x-4">
-                  <TextImportant className="text-center text-lg leading-3">
-                    {formatFullPrice()}
-                  </TextImportant>
+              <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
+                <div className="flex items-center justify-center space-x-2">
                   <div className="flex items-center justify-center">
                     <Image
-                      width={40}
-                      height={40}
+                      width={28}
+                      height={28}
                       src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
                       alt="price status"
                       title={getPriceStatusSvgTitle()}
                     />
                   </div>
+                  <TextImportant className="text-center text-lg leading-3">
+                    {formatFullPrice()}
+                  </TextImportant>
                 </div>
-                <div className="flex items-center justify-center space-x-4">
+                <div className="flex items-center justify-center space-x-2">
                   <div className="flex items-center justify-center">
                     <Image
-                      width={40}
-                      height={40}
+                      width={28}
+                      height={28}
                       src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
                       alt="availability status"
                       title={getAvailabilitySvgTitle()}
@@ -229,6 +214,16 @@ const Track = ({ className = "", number, data }) => {
                     {getAvailabilityText(availability)}
                   </TextImportant>
                 </div>
+                {status_id === TRACK_STATUS_ENABLED && (
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="flex items-center justify-center">
+                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
+                    </div>
+                    <TextImportant className="text-center text-sm leading-4">
+                      {getLastCheckTimeText()}
+                    </TextImportant>
+                  </div>
+                )}
               </div>
             </div>
           </InvisibleButton>

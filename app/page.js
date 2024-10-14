@@ -14,6 +14,7 @@ import NotificationSvg from "../public/assets/svg/illustrations/notification.svg
 import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrows-down-tertiary.svg";
 import SubscriptionPage from "./components/SubscriptionPage";
 import { fetchData } from "@/modules/Fetch";
+import { formatNumberWithSpaces } from "@/modules/TextFormatter";
 
 export default function Home() {
   const [productsTracked, setProductsTracked] = useState(0);
@@ -52,14 +53,14 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
             <Image className="h-96" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {productsTracked} products are being tracked
+              {formatNumberWithSpaces(productsTracked)} products are being tracked
               <br /> right now.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
             <Image className="h-96" src={StockPricesSvg} alt="stock prices" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {checksPerformed} checks performed
+              {formatNumberWithSpaces(checksPerformed)} checks performed
               <br /> since the launch.
             </TextNormal>
           </div>

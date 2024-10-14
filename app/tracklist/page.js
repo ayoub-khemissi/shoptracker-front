@@ -6,7 +6,7 @@ import Constants from "@/utils/Constants";
 import Track from "../components/Track";
 import { fetchData } from "@/modules/Fetch";
 
-const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_ARCHIVED } = Constants;
+const { TRACK_STATUS_ARCHIVED } = Constants;
 
 export default function Tracker() {
   const [tab, setTab] = useState("tracked-products");
@@ -28,29 +28,15 @@ export default function Tracker() {
   }, []);
 
   const getFilteredAndSortedTracklist = () => {
-    let list = [];
-
-    switch (tab) {
-      case "tracked-products":
-      default:
-        list = tracklist.filter(
-          (track) =>
-            track.status_id === TRACK_STATUS_ENABLED || track.status_id === TRACK_STATUS_DISABLED,
-        );
-        break;
-
-      case "archived-products":
-        list = tracklist.filter((track) => track.status_id === TRACK_STATUS_ARCHIVED);
-        break;
-    }
-
-    return list.sort((a, b) => {
-      if (a.status_id === b.status_id) {
-        return b.created_at - a.created_at;
-      }
-
-      return a.status_id - b.status_id;
-    });
+    return tracklist
+      .filter((track) =>
+        tab === "tracked-products"
+          ? track.status_id !== TRACK_STATUS_ARCHIVED
+          : track.status_id === TRACK_STATUS_ARCHIVED,
+      )
+      .sort((a, b) =>
+        a.status_id === b.status_id ? b.created_at - a.created_at : a.status_id - b.status_id,
+      );
   };
 
   return (

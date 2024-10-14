@@ -188,7 +188,7 @@ const Track = ({ className = "", number, data }) => {
                 {truncateString(description, 120)}
               </TextImportant>
               <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
-                <div className="flex items-center justify-center space-x-2">
+                <div className="flex items-center justify-center space-x-2 px-2">
                   <div className="flex items-center justify-center">
                     <Image
                       width={28}
@@ -202,7 +202,7 @@ const Track = ({ className = "", number, data }) => {
                     {formatFullPrice()}
                   </TextImportant>
                 </div>
-                <div className="flex items-center justify-center space-x-2">
+                <div className="flex items-center justify-center space-x-2 px-2">
                   <div className="flex items-center justify-center">
                     <Image
                       width={28}
@@ -217,7 +217,7 @@ const Track = ({ className = "", number, data }) => {
                   </TextImportant>
                 </div>
                 {status_id === TRACK_STATUS_ENABLED && (
-                  <div className="flex items-center justify-center space-x-2">
+                  <div className="flex items-center justify-center space-x-2 px-2">
                     <div className="flex items-center justify-center">
                       <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
                     </div>

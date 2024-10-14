@@ -50,12 +50,12 @@ export default function Settings() {
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-      <div className="flex flex-wrap items-center justify-center space-x-4">
+      <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
         <Button
-          className="mb-2"
           locked
+          className="my-1"
           type={tab === "notifications" ? "primary" : "contrast"}
-          defaultCursor={true}
+          defaultCursor
           onClick={() => {
             setTab("notifications");
           }}
@@ -63,10 +63,10 @@ export default function Settings() {
           Notifications
         </Button>
         <Button
-          className="mb-2"
           locked
+          className="my-1"
           type={tab === "subscriptions" ? "primary" : "contrast"}
-          defaultCursor={true}
+          defaultCursor
           onClick={() => {
             setTab("subscriptions");
           }}

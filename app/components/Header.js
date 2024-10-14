@@ -21,26 +21,24 @@ const Header = () => {
           <ShopTrackerLogo />
         </Link>
       </div>
-      <nav className="flex items-center justify-center space-x-12 sm:justify-end">
+      <nav className="flex flex-wrap items-center justify-center sm:flex-nowrap">
         {user ? (
           <>
-            <NavLink className="text-xl" href="/tracker">
+            <NavLink className="my-1 px-8 text-xl" href="/tracker">
               Tracker
             </NavLink>
-            <NavLink className="text-xl" href="/tracklist">
+            <NavLink className="my-1 px-8 text-xl" href="/tracklist">
               Tracklist
             </NavLink>
-            <Dropdown className="bg-contrast uppercase">
+            <Dropdown className="my-1 bg-contrast px-8 uppercase">
               <DropdownTrigger className="cursor-pointer">
-                <div className="flex flex-shrink-0 items-center justify-center rounded-full border-[3px] border-primary">
-                  <Avatar
-                    isBordered
-                    src={user.photo ? user.photo : ShoptrackerIconSvg}
-                    width={48}
-                    height={48}
-                    alt="profile picture"
-                  />
-                </div>
+                <Avatar
+                  isBordered
+                  src={user.photo ? user.photo : ShoptrackerIconSvg}
+                  width={48}
+                  height={48}
+                  alt="profile picture"
+                />
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key="settings">
@@ -69,10 +67,10 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink className="text-xl" href="/register">
+            <NavLink className="my-1 px-8 text-xl" href="/register">
               Sign Up
             </NavLink>
-            <NavLink className="text-xl" href="/login">
+            <NavLink className="my-1 px-8 text-xl" href="/login">
               Sign In
             </NavLink>
           </>

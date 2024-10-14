@@ -41,11 +41,12 @@ export default function Tracker() {
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-      <div className="flex items-center justify-center space-x-4">
+      <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
         <Button
           locked
+          className="my-1"
           type={tab === "tracked-products" ? "primary" : "contrast"}
-          defaultCursor={true}
+          defaultCursor
           onClick={() => {
             setTab("tracked-products");
           }}
@@ -54,8 +55,9 @@ export default function Tracker() {
         </Button>
         <Button
           locked
+          className="my-1"
           type={tab === "archived-products" ? "primary" : "contrast"}
-          defaultCursor={true}
+          defaultCursor
           onClick={() => {
             setTab("archived-products");
           }}

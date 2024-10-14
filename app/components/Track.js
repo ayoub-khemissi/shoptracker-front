@@ -181,7 +181,9 @@ const Track = ({ className = "", number, data }) => {
         {name && name.length > 0 ? (
           <InvisibleButton className="w-full">
             <div className="space-y-2 border-primary px-5 py-4" title="Click here to see details">
-              <Title className="text-center text-lg leading-5">{truncateString(name, 50)}</Title>
+              <Title className="text-center text-lg leading-5 text-secondary">
+                {truncateString(name, 50)}
+              </Title>
               <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
                 {truncateString(description, 120)}
               </TextImportant>

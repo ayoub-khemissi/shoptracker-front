@@ -168,11 +168,11 @@ const Track = ({ className = "", number, data }) => {
               <DropdownTrigger className="rotate-90 cursor-pointer text-2xl">•••</DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key="start-stop">
-                  {status_id === TRACK_STATUS_ENABLED ? "Stop" : "Start"}
+                  {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
                 </DropdownItem>
-                <DropdownItem key="edit">Edit</DropdownItem>
+                <DropdownItem key="edit">✏️ Edit</DropdownItem>
                 <DropdownItem key="delete" className={`text-error`} color="danger">
-                  Delete
+                  🗑️ Delete
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

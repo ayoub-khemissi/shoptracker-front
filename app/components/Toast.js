@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import InvisibleButton from "./InvisibleButton";
 
 const Toast = ({ message, type, show, onClose }) => {
   const [visible, setVisible] = useState(false);
@@ -52,7 +53,7 @@ const Toast = ({ message, type, show, onClose }) => {
         >
           <div className="flex select-none items-center justify-between">
             <span>{message}</span>
-            <button
+            <InvisibleButton
               onClick={() => {
                 setVisible(false);
                 setTimeout(onClose, 500);
@@ -60,10 +61,10 @@ const Toast = ({ message, type, show, onClose }) => {
               className="ml-4 font-bold"
             >
               &#x2715;
-            </button>
+            </InvisibleButton>
           </div>
           <div
-            className="absolute bottom-0 left-0 right-0 h-1.5 rounded-bl-lg bg-gray-200"
+            className="absolute bottom-0 left-0 right-0 h-1.5 rounded-bl-lg bg-primary"
             style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
           />
         </div>

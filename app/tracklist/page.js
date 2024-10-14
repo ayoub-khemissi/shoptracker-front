@@ -8,7 +8,7 @@ import { fetchData } from "@/modules/Fetch";
 
 const { TRACK_STATUS_ARCHIVED } = Constants;
 
-export default function Tracker() {
+export default function Tracklist() {
   const [tab, setTab] = useState("tracked-products");
   const [tracklist, setTracklist] = useState([]);
 

@@ -4,15 +4,27 @@ import React, { useEffect, useState } from "react";
 
 const Toast = ({ message, type, show, onClose }) => {
   const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState(100);
 
   useEffect(() => {
     if (show) {
       setVisible(true);
-      const timer = setTimeout(() => {
-        setVisible(false);
-        setTimeout(onClose, 500);
-      }, 3000);
-      return () => clearTimeout(timer);
+      setProgress(100);
+      const timer = setInterval(() => {
+        setProgress((prev) => {
+          if (prev <= 0) {
+            clearInterval(timer);
+            setVisible(false);
+            setTimeout(onClose, 500);
+            return 0;
+          }
+          return prev - 100 / 30;
+        });
+      }, 100);
+
+      return () => {
+        clearInterval(timer);
+      };
     }
   }, [show, onClose]);
 
@@ -34,7 +46,7 @@ const Toast = ({ message, type, show, onClose }) => {
     <>
       {show && (
         <div
-          className={`fixed left-1/2 top-8 -translate-x-1/2 transform rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
+          className={`fixed left-1/2 top-8 z-50 -translate-x-1/2 transform rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
             visible ? "opacity-100" : "opacity-0"
           } ${getBackgroundAndTextColor()}`}
         >
@@ -50,6 +62,10 @@ const Toast = ({ message, type, show, onClose }) => {
               &#x2715;
             </button>
           </div>
+          <div
+            className="absolute bottom-0 left-0 right-0 h-1.5 rounded-bl-lg bg-gray-200"
+            style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
+          />
         </div>
       )}
     </>

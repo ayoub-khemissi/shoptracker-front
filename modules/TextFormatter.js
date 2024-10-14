@@ -1,3 +1,17 @@
+/**
+ * @param {number} ms
+ * @returns {string}
+ * @description
+ * Takes a number of milliseconds and converts it to a human-readable string.
+ * If the input is not a number, it returns the input unchanged.
+ * The output looks like this:
+ * - Less than a second: "in a second"
+ * - Less than a minute: "X seconds"
+ * - Less than an hour: "X minutes"
+ * - More than an hour: "X hours"
+ * @example
+ * convertMillisecondsToText(5000) // returns "in 5 seconds"
+ */
 export function convertMillisecondsToText(ms) {
   if (typeof ms !== "number") {
     return ms;
@@ -21,6 +35,20 @@ export function convertMillisecondsToText(ms) {
   }
 }
 
+/**
+ * @param {boolean} monthlyAnnually
+ * @param {number} price
+ * @returns {string}
+ * @description
+ * Takes a boolean and a number, and returns a human-readable string.
+ * The boolean determines whether the output is the price for a month or a year.
+ * The output looks like this:
+ * - If the boolean is true, the output is the price multiplied by 12 and then by 0.75, rounded down and subtracted by 0.01.
+ * - If the boolean is false, the output is the price unchanged.
+ * @example
+ * formatMonthlyAnnuallyPrice(true, 9.99) // returns "71.94"
+ * formatMonthlyAnnuallyPrice(false, 9.99) // returns "9.99"
+ */
 export function formatMonthlyAnnuallyPrice(monthlyAnnually, price) {
   if (typeof price !== "number") {
     return price;
@@ -30,6 +58,17 @@ export function formatMonthlyAnnuallyPrice(monthlyAnnually, price) {
   return formatPrice(monthlyAnnually ? annuallyCalc : price);
 }
 
+/**
+ * @param {number|string} price
+ * @returns {string}
+ * @description
+ * Takes a number or a string, and returns a human-readable string.
+ * The output is the number or string formatted as a price
+ * with a comma as the decimal separator and spaces as the thousand separator.
+ * @example
+ * formatPrice(9.99) // returns "9,99"
+ * formatPrice("9.99") // returns "9,99"
+ */
 export function formatPrice(price) {
   if (typeof price !== "number" && typeof price !== "string") {
     return price;
@@ -41,6 +80,18 @@ export function formatPrice(price) {
   return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
 }
 
+/**
+ * @param {string} str
+ * @param {number} num
+ * @returns {string}
+ * @description
+ * Takes a string and a number, and returns a new string.
+ * If the length of the string is greater than the number, the output is the substring
+ * from the start of the string to the number, followed by three dots.
+ * If the length of the string is not greater than the number, the output is the string unchanged.
+ * @example
+ * truncateString("This is a very long string", 10) // returns "This is a..."
+ */
 export function truncateString(str, num) {
   if (typeof str !== "string") {
     return str;
@@ -49,6 +100,15 @@ export function truncateString(str, num) {
   return str.length > num ? str.slice(0, num) + "..." : str;
 }
 
+/**
+ * @param {number} number
+ * @returns {string}
+ * @description
+ * Takes a number and returns a human-readable string.
+ * The output is the number formatted as a string with spaces as the thousand separator.
+ * @example
+ * formatNumberWithSpaces(1000) // returns "1 000"
+ */
 export function formatNumberWithSpaces(number) {
   if (typeof number !== "number") {
     return number;

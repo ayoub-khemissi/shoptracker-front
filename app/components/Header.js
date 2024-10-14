@@ -15,8 +15,8 @@ const Header = () => {
   const { showToast } = useToast();
 
   return (
-    <header className="flex flex-wrap items-center justify-center px-20 py-6 sm:justify-between lg:px-40 lg:py-10">
-      <div>
+    <header className="flex flex-wrap items-center justify-center px-20 py-8 sm:justify-between lg:px-40">
+      <div className="my-1">
         <Link href="/">
           <ShopTrackerLogo />
         </Link>

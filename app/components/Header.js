@@ -30,7 +30,7 @@ const Header = () => {
             <NavLink className="my-1 px-8 text-xl" href="/tracklist">
               Tracklist
             </NavLink>
-            <Dropdown className="my-1 bg-contrast px-8 uppercase">
+            <Dropdown className="my-1 bg-contrast uppercase">
               <DropdownTrigger className="cursor-pointer">
                 <Avatar
                   isBordered

@@ -47,7 +47,7 @@ const Toast = ({ message, type, show, onClose }) => {
     <>
       {show && (
         <div
-          className={`fixed left-1/2 top-8 z-50 -translate-x-1/2 transform rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
+          className={`fixed left-1/2 top-8 z-50 -translate-x-1/2 transform overflow-hidden rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
             visible ? "opacity-100" : "opacity-0"
           } ${getBackgroundAndTextColor()}`}
         >
@@ -64,7 +64,7 @@ const Toast = ({ message, type, show, onClose }) => {
             </InvisibleButton>
           </div>
           <div
-            className="absolute bottom-0 left-0 right-0 h-1.5 rounded-bl-lg bg-primary"
+            className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
             style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
           />
         </div>

@@ -5,7 +5,6 @@ import ShopTrackerLogo from "./ShopTrackerLogo";
 import NavLink from "./NavLink";
 import { useAuthContext } from "../contexts/AuthContext";
 import { fetchLogout } from "@/modules/Fetch";
-import ShoptrackerIconSvg from "../../public/assets/svg/icons/shoptracker-icon.svg";
 import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 import { useToast } from "../contexts/ToastContext";
@@ -34,7 +33,7 @@ const Header = () => {
               <DropdownTrigger className="cursor-pointer">
                 <Avatar
                   isBordered
-                  src={user.photo ? user.photo : ShoptrackerIconSvg}
+                  src={"assets/img/logo-shoptracker.png"}
                   width={48}
                   height={48}
                   alt="profile picture"

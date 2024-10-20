@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "../components/Title";
 import ShopTrackerLogo from "../components/ShopTrackerLogo";
 import TextNormal from "../components/TextNormal";
@@ -14,16 +14,57 @@ import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import { fetchData } from "@/modules/Fetch";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isErrorEmail, setIsErrorEmail] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
+  const [hasLoginGoogle, setHasLoginGoogle] = useState(false);
   const { localLogin } = useAuthContext();
   const { showToast } = useToast();
+  const { data: session, status } = useSession();
 
-  const handleSubmitLogin = async (e) => {
+  useEffect(() => {
+    const loginGoogle = async () => {
+      const response = await fetchData("/login/google", "POST", {
+        email: session.user.email,
+        googleJwt: session.googleJwt,
+      });
+
+      if (!response || !response.status) {
+        setIsErrorEmail(false);
+        setIsErrorPassword(false);
+        showToast("An error occurred. Please try again later.", "error");
+        return;
+      }
+
+      switch (response.status) {
+        case 200:
+          showToast("Logged in successfully! 🎉", "success");
+          setIsErrorEmail(false);
+          setIsErrorPassword(false);
+          localLogin((await response.json()).data);
+          break;
+
+        default:
+          setIsErrorEmail(false);
+          setIsErrorPassword(false);
+          showToast("An error occurred. Please try again later.", "error");
+          break;
+      }
+
+      signOut();
+    };
+
+    if (!hasLoginGoogle && status === "authenticated" && session && session.user) {
+      loginGoogle();
+      setHasLoginGoogle(true);
+    }
+  }, [hasLoginGoogle, localLogin, session, showToast, status]);
+
+  const loginClassical = async (e) => {
     e.preventDefault();
 
     const response = await fetchData("/login/classical", "POST", {
@@ -75,11 +116,17 @@ export default function Login() {
       </section>
       <section className="flex flex-col items-center space-y-4 lg:w-1/2">
         <Title className="text-center text-2xl lg:text-4xl">Sign In</Title>
-        <CircleButton>
+        <CircleButton
+          onClick={() => {
+            signIn("google", {
+              callbackUrl: "/login",
+            });
+          }}
+        >
           <Image className="h-6 w-6" src={GoogleLogoSvg} alt="google sign" />
         </CircleButton>
         <TextSeparator className="w-full">Or</TextSeparator>
-        <form className="w-full space-y-4" onSubmit={handleSubmitLogin}>
+        <form className="w-full space-y-4" onSubmit={loginClassical}>
           <Input
             id="email"
             className="w-full"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Title from "../components/Title";
 import ShopTrackerLogo from "../components/ShopTrackerLogo";
 import TextNormal from "../components/TextNormal";
@@ -14,55 +14,15 @@ import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import { fetchData } from "@/modules/Fetch";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isErrorEmail, setIsErrorEmail] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
-  const [hasLoginGoogle, setHasLoginGoogle] = useState(false);
   const { localLogin } = useAuthContext();
   const { showToast } = useToast();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    const loginGoogle = async () => {
-      const response = await fetchData("/login/google", "POST", {
-        email: session.user.email,
-        googleJwt: session.googleJwt,
-      });
-
-      if (!response || !response.status) {
-        setIsErrorEmail(false);
-        setIsErrorPassword(false);
-        showToast("An error occurred. Please try again later.", "error");
-        return;
-      }
-
-      switch (response.status) {
-        case 200:
-          showToast("Logged in successfully! 🎉", "success");
-          setIsErrorEmail(false);
-          setIsErrorPassword(false);
-          localLogin((await response.json()).data);
-          break;
-
-        default:
-          setIsErrorEmail(false);
-          setIsErrorPassword(false);
-          showToast("An error occurred. Please try again later.", "error");
-          break;
-      }
-
-      signOut();
-    };
-
-    if (!hasLoginGoogle && status === "authenticated" && session && session.user) {
-      loginGoogle();
-      setHasLoginGoogle(true);
-    }
-  }, [hasLoginGoogle, localLogin, session, showToast, status]);
 
   const loginClassical = async (e) => {
     e.preventDefault();
@@ -72,14 +32,7 @@ export default function Login() {
       password: password,
     });
 
-    if (!response || !response.status) {
-      setIsErrorEmail(false);
-      setIsErrorPassword(false);
-      showToast("An error occurred. Please try again later.", "error");
-      return;
-    }
-
-    switch (response.status) {
+    switch (response?.status) {
       case 200:
         showToast("Logged in successfully! 🎉", "success");
         setIsErrorEmail(false);

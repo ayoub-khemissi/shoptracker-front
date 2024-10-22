@@ -47,7 +47,7 @@ const Toast = ({ message, type, show, onClose }) => {
     <>
       {show && (
         <div
-          className={`fixed left-1/2 top-8 z-50 -translate-x-1/2 transform overflow-hidden rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
+          className={`fixed bottom-20 left-1/2 z-50 -translate-x-1/2 transform overflow-hidden rounded-lg px-4 py-3 text-center shadow-lg transition-opacity duration-500 ${
             visible ? "opacity-100" : "opacity-0"
           } ${getBackgroundAndTextColor()}`}
         >

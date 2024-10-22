@@ -14,22 +14,26 @@ const Header = () => {
   const { showToast } = useToast();
 
   return (
-    <header className="flex flex-wrap items-center justify-center px-20 py-8 sm:justify-between lg:px-40">
-      <div className="my-1">
-        <Link href="/">
+    <header className="mb-6 flex flex-wrap items-center justify-center px-20 py-8 sm:justify-between lg:px-40">
+      <nav className="flex w-full flex-wrap items-center justify-center sm:flex-nowrap">
+        <Link className="pr-4" href="/">
           <ShopTrackerLogo />
         </Link>
-      </div>
-      <nav className="flex flex-wrap items-center justify-center sm:flex-nowrap">
+        <NavLink className="px-8 text-xl" href="/pricing">
+          Pricing
+        </NavLink>
+        <NavLink className="px-8 text-xl" href="/faq">
+          FAQ
+        </NavLink>
         {user ? (
           <>
-            <NavLink className="my-1 px-8 text-xl" href="/tracker">
+            <NavLink className="px-8 text-xl" href="/tracker">
               Tracker
             </NavLink>
-            <NavLink className="my-1 px-8 text-xl" href="/tracklist">
+            <NavLink className="px-8 text-xl" href="/tracklist">
               Tracklist
             </NavLink>
-            <Dropdown className="my-1 bg-contrast uppercase">
+            <Dropdown className="bg-contrast uppercase">
               <DropdownTrigger className="cursor-pointer">
                 <Avatar
                   isBordered
@@ -66,10 +70,10 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink className="my-1 px-8 text-xl" href="/register">
+            <NavLink className="px-8 text-xl" href="/register">
               Sign Up
             </NavLink>
-            <NavLink className="my-1 px-8 text-xl" href="/login">
+            <NavLink className="px-8 text-xl" href="/login">
               Sign In
             </NavLink>
           </>

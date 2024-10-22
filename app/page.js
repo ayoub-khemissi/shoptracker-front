@@ -9,7 +9,7 @@ import ProductUrlSvg from "../public/assets/svg/illustrations/product-url.svg";
 import ConfirmationSvg from "../public/assets/svg/illustrations/confirmation.svg";
 import NotificationSvg from "../public/assets/svg/illustrations/notification.svg";
 import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrows-down-tertiary.svg";
-import SubscriptionPage from "./components/SubscriptionPage";
+import PricingPage from "./components/PricingPage";
 import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
 
@@ -99,7 +99,7 @@ export default async function Home() {
         id="subscribe"
         className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
-        <SubscriptionPage />
+        <PricingPage />
         <div className="flex items-center justify-end py-10">
           <Link href="#top" className="animate-bounce">
             <Image

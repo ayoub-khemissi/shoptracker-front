@@ -12,19 +12,13 @@ export default function Tracklist() {
   const [tab, setTab] = useState("tracked-products");
   const [tracklist, setTracklist] = useState([]);
 
-  const fetchTracks = async () => {
-    const response = await fetchData("/tracklist");
-
-    if (!response || response.status !== 200) {
-      return;
+  useEffect(() => {
+    async function fetchTracklist() {
+      const response = await fetchData("/tracklist");
+      setTracklist((await response?.json())?.data ?? []);
     }
 
-    const data = (await response.json()).data;
-    setTracklist(data);
-  };
-
-  useEffect(() => {
-    fetchTracks();
+    fetchTracklist();
   }, []);
 
   const getFilteredAndSortedTracklist = () => {
@@ -38,6 +32,8 @@ export default function Tracklist() {
         a.status_id === b.status_id ? b.created_at - a.created_at : a.status_id - b.status_id,
       );
   };
+
+  const filteredTracklist = getFilteredAndSortedTracklist();
 
   return (
     <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
@@ -66,8 +62,8 @@ export default function Tracklist() {
         </Button>
       </div>
       <div className="flex flex-wrap justify-evenly">
-        {getFilteredAndSortedTracklist().map((track, index) => {
-          return <Track data={track} number={index} key={`track-${index}`} />;
+        {filteredTracklist.map((track, index) => {
+          return <Track data={track} number={index + 1} key={`track-${index}`} />;
         })}
       </div>
     </main>

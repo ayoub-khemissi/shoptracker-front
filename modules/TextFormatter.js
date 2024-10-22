@@ -36,29 +36,6 @@ export function convertMillisecondsToText(ms) {
 }
 
 /**
- * @param {boolean} monthlyAnnually
- * @param {number} price
- * @returns {string}
- * @description
- * Takes a boolean and a number, and returns a human-readable string.
- * The boolean determines whether the output is the price for a month or a year.
- * The output looks like this:
- * - If the boolean is true, the output is the price multiplied by 12 and then by 0.75, rounded down and subtracted by 0.01.
- * - If the boolean is false, the output is the price unchanged.
- * @example
- * formatMonthlyAnnuallyPrice(true, 9.99) // returns "71.94"
- * formatMonthlyAnnuallyPrice(false, 9.99) // returns "9.99"
- */
-export function formatMonthlyAnnuallyPrice(monthlyAnnually, price) {
-  if (typeof price !== "number") {
-    return price;
-  }
-
-  const annuallyCalc = Math.round(price * 12 * 0.75) - 0.01;
-  return formatPrice(monthlyAnnually ? annuallyCalc : price);
-}
-
-/**
  * @param {number|string} price
  * @returns {string}
  * @description

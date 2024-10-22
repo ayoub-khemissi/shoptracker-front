@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import TextNormal from "./components/TextNormal";
 import Title from "./components/Title";
 import Link from "next/link";
@@ -16,24 +13,11 @@ import SubscriptionPage from "./components/SubscriptionPage";
 import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
 
-export default function Home() {
-  const [productsTracked, setProductsTracked] = useState(0);
-  const [checksPerformed, setChecksPerformed] = useState(0);
-
-  const fetchTrackStats = async () => {
-    const response = await fetchData("/track/stats");
-    if (!response || response.status !== 200) {
-      return;
-    }
-
-    const data = (await response.json()).data;
-    setProductsTracked(data.totalTracksEnabled);
-    setChecksPerformed(data.totalTrackChecks);
-  };
-
-  useEffect(() => {
-    fetchTrackStats();
-  }, []);
+export default async function Home() {
+  const response = await fetchData("/track/stats");
+  const data = (await response?.json())?.data;
+  const totalTracksEnabled = data?.total_tracks_enabled ?? 0;
+  const totalTrackChecks = data?.total_track_checks ?? 0;
 
   return (
     <main>
@@ -53,14 +37,14 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
             <Image className="h-96" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {formatNumberWithSpaces(productsTracked)} products are being tracked
+              {formatNumberWithSpaces(totalTracksEnabled)} products are being tracked
               <br /> right now.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
             <Image className="h-96" src={StockPricesSvg} alt="stock prices" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {formatNumberWithSpaces(checksPerformed)} checks performed
+              {formatNumberWithSpaces(totalTrackChecks)} checks performed
               <br /> since the launch.
             </TextNormal>
           </div>

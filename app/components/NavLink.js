@@ -5,7 +5,14 @@ import Link from "next/link";
 
 const lexend = Lexend({ weight: "700", subsets: ["latin"] });
 
-const NavLink = ({ children, href, className = "", type = "primary", target = "_self" }) => {
+const NavLink = ({
+  children,
+  href,
+  className = "",
+  type = "primary",
+  target = "_self",
+  title = null,
+}) => {
   let typeClass;
 
   switch (type) {
@@ -24,6 +31,7 @@ const NavLink = ({ children, href, className = "", type = "primary", target = "_
 
   return (
     <Link
+      title={title}
       target={target}
       href={href}
       className={`${lexend.className} ${typeClass} uppercase transition duration-200 ${className}`}

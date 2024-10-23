@@ -15,7 +15,7 @@ import Subtitle from "../components/Subtitle";
 import TextImportant from "../components/TextImportant";
 import FooterLink from "../components/FooterLink";
 import Breadcrumb from "../components/Breadcrumb";
-import Subscription from "../components/Subscription";
+import Plan from "../components/Plan";
 import CircleButton from "../components/CircleButton";
 import ButtonLink from "../components/ButtonLink";
 import TextSeparator from "../components/TextSeparator";
@@ -23,10 +23,12 @@ import Track from "../components/Track";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import TextLabel from "../components/TextLabel";
-import SubscriptionInfo from "../components/SubscriptionInfo";
+import Subscription from "../components/Subscription";
 import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
 import Spinner from "../components/Spinner";
+
+const { SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -104,7 +106,7 @@ export default function Showcase() {
       </NavLink>
       <Separator type="primary" />
       <Subtitle className="text-lg">Gratuit</Subtitle>
-      <Breadcrumb href="/subscribe">⇽ Retour aux abonnements</Breadcrumb>
+      <Breadcrumb href="/pricing">⇽ Retour aux abonnements</Breadcrumb>
       <TextImportant className="leading-4">
         Parfait pour un suivi régulier <br />
         <span className="text-secondary">et fiable de tes produits.</span> <br />
@@ -114,19 +116,7 @@ export default function Showcase() {
       <CircleButton>
         <Image className="h-6 w-6" src={GoogleLogoSvg} alt="google sign" />
       </CircleButton>
-      <Subscription
-        type="primary"
-        planInfo={{
-          id: Constants.SUBSCRIPTION_PLAN_ID_PRO,
-          monthlyAnnually: false,
-          title: "Pro Plan",
-          price: 25.99,
-          trackCheckInterval: 21600000,
-          trackEnabledMaxProducts: 1,
-          trackDisabledMaxProducts: 5,
-          trackMaxUserSearchesPerDay: 5,
-        }}
-      />
+      <Plan stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY} />
       <ButtonLink href="/checkout">Sélectionner</ButtonLink>
       <TextSeparator>Or</TextSeparator>
       <Track
@@ -151,35 +141,7 @@ export default function Showcase() {
         }}
       />
       <TextLabel>Email</TextLabel>
-      <SubscriptionInfo
-        planInfo={{
-          id: Constants.SUBSCRIPTION_PLAN_ID_BASIC,
-          monthlyAnnually: false,
-          title: "Basic Plan",
-          price: 4.99,
-          trackCheckInterval: 21600000,
-          trackEnabledMaxProducts: 1,
-          trackDisabledMaxProducts: 5,
-          trackMaxUserSearchesPerDay: 5,
-        }}
-        subscriptionInfo={{
-          startDate: 1721920481470,
-          nextPaymentDate: 1724512481470,
-          paymentMethod: "Master Card (4242)",
-          paymentHistory: [
-            {
-              id: 1245,
-              created_at: 1721920481470,
-              price: 24.99,
-            },
-            {
-              id: 1175,
-              created_at: 1719328481470,
-              price: 24.99,
-            },
-          ],
-        }}
-      />
+      <Subscription />
       <Button
         type="primary"
         onClick={() => {

@@ -7,29 +7,29 @@ import Title from "./Title";
 import Switch from "./Switch";
 import Constants from "@/utils/Constants";
 import TextSeparator from "./TextSeparator";
-import Button from "./Button";
+import ButtonLink from "./ButtonLink";
 
 const {
   SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC,
-  SUBSCRIPTION_STRIPE_PRICE_ID_PRO,
-  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE,
-  SUBSCRIPTION_BILLING_PERIOD_MONTH,
-  SUBSCRIPTION_BILLING_PERIOD_YEAR,
-  SUBSCRIPTION_BILLING_PERIOD_FOREVER,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY,
 } = Constants;
 
 const PricingPage = () => {
   const [isAnnually, setIsAnnually] = useState(false);
   const [isBoostPlus, setStarterBoostPlus] = useState(false);
-
-  const getBillingPeriodByIsAnnually = () => {
-    return isAnnually ? SUBSCRIPTION_BILLING_PERIOD_YEAR : SUBSCRIPTION_BILLING_PERIOD_MONTH;
-  };
 
   return (
     <>
@@ -86,51 +86,70 @@ const PricingPage = () => {
           <>
             <Plan
               className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY
+              }
             />
             <Plan
               className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY
+              }
             />
             <Plan
               className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_ELITE}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY
+              }
             />
             <Plan
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY
+              }
             />
           </>
         ) : (
           <>
+            <Plan className="mb-4 2xl:mb-0" stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE} />
             <Plan
               className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE}
-              billingPeriod={SUBSCRIPTION_BILLING_PERIOD_FOREVER}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY
+              }
             />
             <Plan
               className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_BASIC}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY
+              }
             />
             <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_PRO}
-              billingPeriod={getBillingPeriodByIsAnnually()}
-            />
-            <Plan
-              stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM}
-              billingPeriod={getBillingPeriodByIsAnnually()}
+              stripePriceId={
+                isAnnually
+                  ? SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY
+                  : SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY
+              }
             />
           </>
         )}
       </div>
       <TextSeparator className="py-4">Or</TextSeparator>
       <div className="flex items-center justify-center">
-        <Button>Request a custom offer 💎</Button>
+        <ButtonLink href="mailto:shoptracker.contact@gmail.com?subject=I%20request%20a%20custom%20offer%20!&body=X%20products%20tracked%20simultaneously%20every%20X%20minutes.">
+          Request a custom offer 💎
+        </ButtonLink>
       </div>
     </>
   );

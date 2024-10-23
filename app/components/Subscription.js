@@ -1,195 +1,81 @@
 "use client";
 
-import { convertMillisecondsToText, formatMonthlyAnnuallyPrice } from "@/modules/TextFormatter";
-import Separator from "./Separator";
-import Subtitle from "./Subtitle";
+import { formatPrice } from "@/modules/TextFormatter";
+import Plan from "./Plan";
 import TextImportant from "./TextImportant";
-import TextNormal from "./TextNormal";
-import Image from "next/image";
-import CircleCheckSecondarySvg from "../../public/assets/svg/icons/circle-check-secondary.svg";
-import CircleCheckTertiarySvg from "../../public/assets/svg/icons/circle-check-tertiary.svg";
+import TextSeparator from "./TextSeparator";
 import Constants from "@/utils/Constants";
-import Button from "./Button";
+import { useAuthContext } from "../contexts/AuthContext";
+import NavLink from "./NavLink";
+import TextNormal from "./TextNormal";
 
-const {
-  SUBSCRIPTION_PLAN_ID_FREE,
-  SUBSCRIPTION_PLAN_ID_BASIC,
-  SUBSCRIPTION_PLAN_ID_PRO,
-  SUBSCRIPTION_PLAN_ID_PREMIUM,
-  SUBSCRIPTION_PLAN_ID_ENTREPRISE,
-  SUBSCRIPTION_PLAN_ID_BUSINESS,
-  SUBSCRIPTION_PLAN_ID_ELITE,
-  SUBSCRIPTION_PLAN_ID_ULTIMATE,
-} = Constants;
+const { SUBSCRIPTION_STRIPE_PRICE_ID_FREE } = Constants;
 
-const Subscription = ({ className = "", type = "contrast", callToAction = true, planInfo }) => {
-  const {
-    id,
-    monthlyAnnually,
-    title,
-    price,
-    trackCheckInterval,
-    trackEnabledMaxProducts,
-    trackDisabledMaxProducts,
-    trackMaxUserSearchesPerDay,
-  } = planInfo;
+const Subscription = ({ className = "" }) => {
+  const { user } = useAuthContext();
 
-  let billingPeriodText;
-
-  switch (monthlyAnnually) {
-    case undefined:
-    case null:
-      billingPeriodText = "forever";
-      break;
-
-    case true:
-      billingPeriodText = "per year";
-      break;
-
-    case false:
-      billingPeriodText = "per month";
-      break;
+  if (!user?.subscription?.stripe_price_id) {
+    return (
+      <div className={`flex w-full flex-wrap justify-center ${className}`}>
+        <Plan hasCallToAction={false} stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE} />
+      </div>
+    );
   }
 
-  const getDescriptionByPlanId = () => {
-    const spanTextColor = type === "contrast" ? "text-tertiary" : "text-secondary";
-
-    switch (id) {
-      case SUBSCRIPTION_PLAN_ID_FREE:
-      default:
-        return (
-          <>
-            Our free plan to test our <br />
-            <span className={spanTextColor}>application with</span> <br />
-            confidence!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_BASIC:
-        return (
-          <>
-            Perfect for a regular and <br />
-            <span className={spanTextColor}>reliable tracking.</span>
-            <br />
-            Don't wait any longer!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_PRO:
-        return (
-          <>
-            Interested in multiple
-            <br />
-            <span className={spanTextColor}> products at once? </span>
-            <br />
-            Then click here!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_PREMIUM:
-        return (
-          <>
-            Find your favorite products <br />
-            <span className={spanTextColor}>quickly by choosing</span>
-            <br />
-            this option!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_ENTREPRISE:
-        return (
-          <>
-            Perfect for starting <br />
-            <span className={spanTextColor}>your business with a</span> <br />
-            generous offer!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_BUSINESS:
-        return (
-          <>
-            A business offer that will <br />
-            <span className={spanTextColor}>meet your expectations</span> <br />
-            and unique needs!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_ELITE:
-        return (
-          <>
-            A perfect balance between <br />
-            <span className={spanTextColor}>quality and quantity! Take it</span> <br />
-            to the next level!
-          </>
-        );
-
-      case SUBSCRIPTION_PLAN_ID_ULTIMATE:
-        return (
-          <>
-            Simply the best <br />
-            <span className={spanTextColor}>offer we can</span> <br />
-            offer you today!
-          </>
-        );
-    }
-  };
-
-  const getCircleCheckSvgByType = () => {
-    return type === "primary" ? CircleCheckSecondarySvg : CircleCheckTertiarySvg;
-  };
+  const { stripe_price_id, start_date, next_payment_date, payment_method, invoice_history } =
+    user.subscription;
 
   return (
-    <div
-      className={`${type === "contrast" ? "border-primary bg-contrast text-primary" : "border-contrast bg-primary text-contrast"} relative w-80 rounded-2xl border-2 ${className}`}
-    >
-      {type === "primary" && (
-        <div className="absolute right-0 top-0 m-0.5 rounded-bl-xl rounded-tr-xl bg-contrast px-5 py-1">
-          <TextNormal className="text-xs uppercase text-primary">Popular</TextNormal>
+    <div className={`flex w-full flex-wrap justify-evenly ${className}`}>
+      <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
+      <div className="w-96 space-y-5 py-4 lg:py-0">
+        <TextSeparator className="w-full">Subscription</TextSeparator>
+        <div className="flex w-full items-center justify-between">
+          <TextNormal className="uppercase">Start date</TextNormal>
+          <TextImportant className="text-right">
+            {new Date(start_date).toLocaleDateString()}
+          </TextImportant>
         </div>
-      )}
-      <div className="space-y-6 px-4 py-4">
-        <Subtitle className="text-lg">{title}</Subtitle>
-        <TextImportant className="text-2xl leading-4">
-          {formatMonthlyAnnuallyPrice(monthlyAnnually, price)}
-          <span className="text-xs">€ {billingPeriodText}</span>
-        </TextImportant>
-        <TextImportant className="leading-4">{getDescriptionByPlanId()}</TextImportant>
-        {callToAction && (
-          <div className="flex items-center justify-center">
-            <Button type={type === "contrast" ? "primary" : "secondary"}>Select this plan</Button>
+        {next_payment_date && (
+          <div className="flex w-full items-center justify-between">
+            <TextNormal className="uppercase">Next payment date</TextNormal>
+            <TextImportant className="text-right">
+              {new Date(next_payment_date).toLocaleDateString()}
+            </TextImportant>
           </div>
         )}
-      </div>
-      <Separator type={type === "contrast" ? "primary" : "contrast"} />
-      <div className="space-y-3 px-4 py-4">
-        <Subtitle className="text-sm">Features</Subtitle>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            Track <span className="font-bold">{trackEnabledMaxProducts} </span>
-            {trackEnabledMaxProducts > 1 ? "products simultaneously" : "product at a time"}
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            Check performed every
-            <span className="font-bold"> {convertMillisecondsToText(trackCheckInterval)}</span>
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            <span className="font-bold">{trackDisabledMaxProducts} products</span> maximum in the
-            wishlist
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByType()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            <span className="font-bold">{trackMaxUserSearchesPerDay} user searches</span> per day
-          </TextNormal>
-        </div>
+        {payment_method && (
+          <div className="flex w-full items-center justify-between">
+            <TextNormal className="uppercase">Payment Method</TextNormal>
+            <TextImportant className="text-right">{payment_method}</TextImportant>
+          </div>
+        )}
+        {invoice_history && (
+          <>
+            <TextSeparator className="w-full">Invoice history</TextSeparator>
+            <div className="flex w-full flex-col justify-center space-y-3">
+              {invoice_history.map((invoice) => {
+                return (
+                  <NavLink
+                    target="_blank"
+                    title={`View invoice ${invoice.number}`}
+                    href={invoice.url}
+                    className="flex w-full items-center justify-between"
+                    key={`payment-${invoice.id}`}
+                  >
+                    <TextNormal className="uppercase">
+                      {new Date(invoice.date).toLocaleDateString()}
+                    </TextNormal>
+                    <TextImportant className="text-right">
+                      {formatPrice(invoice.amount)}
+                      {invoice.currency}
+                    </TextImportant>
+                  </NavLink>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

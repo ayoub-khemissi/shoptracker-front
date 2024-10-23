@@ -14,19 +14,26 @@ import getPlanData from "@/modules/PlanData";
 
 const {
   SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC,
-  SUBSCRIPTION_STRIPE_PRICE_ID_PRO,
-  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE,
-  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE,
-  SUBSCRIPTION_BILLING_PERIOD_MONTH,
-  SUBSCRIPTION_BILLING_PERIOD_YEAR,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY,
+  SUBSCRIPTION_BILLING_PERIOD_MONTHLY,
+  SUBSCRIPTION_BILLING_PERIOD_ANNUALLY,
   SUBSCRIPTION_BILLING_PERIOD_FOREVER,
 } = Constants;
 
-const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPeriod }) => {
+const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
   const {
     name,
     price,
@@ -35,15 +42,16 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
     track_disabled_max_products,
     track_user_max_searches_per_day,
     popular,
+    billingPeriod,
   } = getPlanData(stripePriceId);
 
   const getBillingPeriodText = () => {
     switch (billingPeriod) {
       default:
-      case SUBSCRIPTION_BILLING_PERIOD_MONTH:
+      case SUBSCRIPTION_BILLING_PERIOD_MONTHLY:
         return "per month";
 
-      case SUBSCRIPTION_BILLING_PERIOD_YEAR:
+      case SUBSCRIPTION_BILLING_PERIOD_ANNUALLY:
         return "per year";
 
       case SUBSCRIPTION_BILLING_PERIOD_FOREVER:
@@ -65,7 +73,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY:
         return (
           <>
             Perfect for a regular and <br />
@@ -75,7 +84,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_PRO:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY:
         return (
           <>
             Interested in multiple
@@ -86,7 +96,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY:
         return (
           <>
             Find your favorite products <br />
@@ -96,7 +107,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY:
         return (
           <>
             Perfect for starting <br />
@@ -105,7 +117,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY:
         return (
           <>
             A business offer that will <br />
@@ -114,7 +127,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_ELITE:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY:
         return (
           <>
             A perfect balance between <br />
@@ -123,7 +137,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
           </>
         );
 
-      case SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY:
+      case SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY:
         return (
           <>
             Simply the best <br />
@@ -142,11 +157,11 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId, billingPe
     let formattedPrice = 0;
     switch (billingPeriod) {
       default:
-      case SUBSCRIPTION_BILLING_PERIOD_MONTH:
+      case SUBSCRIPTION_BILLING_PERIOD_MONTHLY:
         formattedPrice = price;
         break;
 
-      case SUBSCRIPTION_BILLING_PERIOD_YEAR:
+      case SUBSCRIPTION_BILLING_PERIOD_ANNUALLY:
         formattedPrice = Math.round(price * 12 * 0.75) - 0.01;
         break;
 

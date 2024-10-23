@@ -21,6 +21,11 @@ export const AuthProvider = ({ children }) => {
     router.push("/");
   };
 
+  const saveUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -29,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, localLogin, localLogout }}>
+    <AuthContext.Provider value={{ user, localLogin, localLogout, saveUser }}>
       {children}
     </AuthContext.Provider>
   );

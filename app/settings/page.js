@@ -5,29 +5,17 @@ import Button from "../components/Button";
 import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
 import Switch from "../components/Switch";
-import SubscriptionInfo from "../components/SubscriptionInfo";
-import Constants from "@/utils/Constants";
+import Subscription from "../components/Subscription";
 import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function Settings() {
   const [tab, setTab] = useState("notifications");
-  const [notificationMailbox, setNotificationMailbox] = useState(true);
-  const [notificationTextMessage, setNotificationTextMessage] = useState(true);
-  const [activeSubscription] = useState({
-    planInfo: {
-      id: Constants.SUBSCRIPTION_PLAN_ID_FREE,
-      monthlyAnnually: false,
-      title: "Free Plan",
-      price: 0,
-      trackCheckInterval: 21600000,
-      trackEnabledMaxProducts: 1,
-      trackDisabledMaxProducts: 5,
-      trackMaxUserSearchesPerDay: 5,
-    },
-  });
-  const [canceledOrExpiredSubscriptions] = useState([]);
   const { showToast } = useToast();
+  const { user, saveUser } = useAuthContext();
+  const [notificationMailbox, setNotificationMailbox] = useState(!!user.alert_email);
+  const [notificationTextMessage, setNotificationTextMessage] = useState(!!user.alert_text);
 
   const handleUpdateNotifications = async () => {
     const response = await fetchData("/notifications/update", "PATCH", {
@@ -44,6 +32,10 @@ export default function Settings() {
       );
       return;
     }
+
+    user.alert_email = notificationMailbox;
+    user.alert_text = notificationTextMessage;
+    saveUser(user);
 
     showToast("Notifications settings saved! 🥳", "success");
   };
@@ -65,13 +57,13 @@ export default function Settings() {
         <Button
           locked
           className="my-1"
-          type={tab === "subscriptions" ? "primary" : "contrast"}
+          type={tab === "account" ? "primary" : "contrast"}
           defaultCursor
           onClick={() => {
-            setTab("subscriptions");
+            setTab("account");
           }}
         >
-          Subscriptions
+          Account
         </Button>
       </div>
       {tab === "notifications" && (
@@ -112,26 +104,10 @@ export default function Settings() {
           </div>
         </div>
       )}
-      {tab === "subscriptions" && (
+      {tab === "account" && (
         <div className="flex w-full items-center justify-center py-4">
           <div className="flex w-96 flex-col items-center justify-center space-y-5">
-            <TextSeparator className="w-full">Active</TextSeparator>
-            <SubscriptionInfo
-              subscriptionInfo={activeSubscription.subscriptionInfo}
-              planInfo={activeSubscription.planInfo}
-            />
-            {canceledOrExpiredSubscriptions.slice(0, 3).map((subscription) => {
-              return (
-                <>
-                  <TextSeparator className="w-full">Canceled or expired</TextSeparator>
-                  <SubscriptionInfo
-                    key={`subscription-${subscription.id}`}
-                    subscriptionInfo={subscription.subscriptionInfo}
-                    planInfo={subscription.planInfo}
-                  />
-                </>
-              );
-            })}
+            <Subscription />
           </div>
         </div>
       )}

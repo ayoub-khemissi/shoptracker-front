@@ -10,68 +10,87 @@ import ClockPrimarySvg from "../../public/assets/svg/icons/clock-primary.svg";
 import Spinner from "./Spinner";
 import { useAuthContext } from "../contexts/AuthContext";
 
-const { TRACK_STATUS_ENABLED } = Constants;
+const {
+  TRACK_STATUS_ENABLED,
+  TRACK_PRICE_STATUS_DECREASED,
+  TRACK_PRICE_STATUS_INCREASED,
+  TRACK_PRICE_STATUS_STABLE,
+} = Constants;
 
 const Track = ({ className = "", number, data }) => {
   const { user } = useAuthContext();
-  const {
-    url,
-    name,
-    description,
-    first_normal_price,
-    first_discounted_price,
-    currency,
-    availability,
-    price_status,
-    created_at,
-    status_id,
-    track_checks,
-  } = data;
+  const { url, name, description, initial_price, currency, created_at, status_id, track_checks } =
+    data;
 
   const formatFullPrice = () => {
-    const price = getLowestPrice();
-
-    if (price < first_normal_price) {
-      return (
-        <>
-          {formatPrice(price)}
-          <span className="text-xs">{currency}</span>{" "}
-          <span className="text-xs line-through">{formatPrice(first_normal_price) + currency}</span>
-        </>
-      );
+    let price = 0;
+    if (track_checks.length > 0) {
+      price = track_checks[track_checks.length - 1].price;
     } else {
+      price = initial_price;
+    }
+
+    if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
       return (
         <>
           {formatPrice(price)}
           <span className="text-xs">{currency}</span>
         </>
       );
+    } else {
+      return (
+        <>
+          {formatPrice(price)}
+          <span className="text-xs">{currency}</span>{" "}
+          <span className="text-xs line-through">{formatPrice(initial_price) + currency}</span>
+        </>
+      );
     }
   };
 
+  const getPriceStatus = () => {
+    if (track_checks.length > 0) {
+      const { price: lastTrackCheckPrice } = track_checks[track_checks.length - 1];
+
+      if (lastTrackCheckPrice === initial_price) {
+        return TRACK_PRICE_STATUS_STABLE;
+      } else if (lastTrackCheckPrice < initial_price) {
+        return TRACK_PRICE_STATUS_DECREASED;
+      } else {
+        return TRACK_PRICE_STATUS_INCREASED;
+      }
+    } else {
+      return TRACK_PRICE_STATUS_STABLE;
+    }
+  };
+
+  const getAvailability = () => {
+    return !!track_checks[track_checks.length - 1]?.availability;
+  };
+
   const getPriceStatusSvgName = () => {
-    switch (price_status) {
-      case 1:
+    switch (priceStatus) {
+      case TRACK_PRICE_STATUS_DECREASED:
         return "price-decreased";
 
-      case 2:
+      case TRACK_PRICE_STATUS_INCREASED:
         return "price-increased";
 
-      case 3:
+      case TRACK_PRICE_STATUS_STABLE:
       default:
         return "price-stable";
     }
   };
 
   const getPriceStatusSvgTitle = () => {
-    switch (price_status) {
-      case 1:
+    switch (priceStatus) {
+      case TRACK_PRICE_STATUS_DECREASED:
         return "Price decreased";
 
-      case 2:
+      case TRACK_PRICE_STATUS_INCREASED:
         return "Price increased";
 
-      case 3:
+      case TRACK_PRICE_STATUS_STABLE:
       default:
         return "Price stable";
     }
@@ -110,28 +129,6 @@ const Track = ({ className = "", number, data }) => {
     }
   };
 
-  const getLowestPrice = () => {
-    if (track_checks.length > 0) {
-      const lastTrackCheck = track_checks[0];
-
-      if (lastTrackCheck.discounted_price === 0) {
-        return lastTrackCheck.normal_price;
-      }
-
-      return lastTrackCheck.discounted_price < lastTrackCheck.normal_price
-        ? lastTrackCheck.discounted_price
-        : lastTrackCheck.normal_price;
-    }
-
-    if (first_discounted_price === 0) {
-      return first_normal_price;
-    }
-
-    return first_discounted_price < first_normal_price
-      ? first_discounted_price
-      : first_normal_price;
-  };
-
   const getLastCheckTimeText = () => {
     return convertMillisecondsToText(
       created_at - Date.now() + (user ? user.subscription.track_check_interval : 0),
@@ -150,91 +147,97 @@ const Track = ({ className = "", number, data }) => {
     }
   };
 
+  const priceStatus = getPriceStatus();
+  const availability = getAvailability();
+
   return (
-    <div className={`mx-2 my-4 w-[512px] flex-auto ${className}`}>
-      <div className="rounded-lg border-2 border-primary">
-        <div className="flex items-center justify-center bg-primary px-2 py-1.5">
-          <div className="w-1/6"></div>
-          <NavLink
-            target="_blank"
-            type="contrast"
-            href={url}
-            className="w-4/6 text-center text-base text-contrast md:text-xl"
-          >
-            #{number + 1} {getSiteDomain()} 🔗
-          </NavLink>
-          <div className="flex w-1/6 items-center justify-end text-contrast">
-            <Dropdown className="bg-contrast uppercase">
-              <DropdownTrigger className="rotate-90 cursor-pointer text-2xl">•••</DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="start-stop">
-                  {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
-                </DropdownItem>
-                <DropdownItem key="edit">✏️ Edit</DropdownItem>
-                <DropdownItem key="delete" className={`text-error`} color="danger">
-                  🗑️ Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+    <div
+      className={`mx-2 my-2 flex w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
+    >
+      <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
+        <div className="w-1/6"></div>
+        <NavLink
+          target="_blank"
+          type="contrast"
+          href={url}
+          className="w-4/6 text-center text-sm text-contrast md:text-base"
+        >
+          #{number} {getSiteDomain()} 🔗
+        </NavLink>
+        <div className="flex w-1/6 items-center justify-end text-contrast">
+          <Dropdown className="bg-contrast uppercase">
+            <DropdownTrigger className="rotate-90 cursor-pointer text-xl">•••</DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem key="start-stop">
+                {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
+              </DropdownItem>
+              <DropdownItem key="edit">✏️ Edit</DropdownItem>
+              <DropdownItem key="delete" className={`text-error`} color="danger">
+                🗑️ Delete
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </div>
-        {name && name.length > 0 ? (
-          <InvisibleButton className="w-full">
-            <div className="space-y-2 border-primary px-5 py-4" title="Click here to see details">
-              <Title className="text-center text-lg leading-5 text-secondary">
-                {truncateString(name, 50)}
-              </Title>
-              <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
-                {truncateString(description, 120)}
-              </TextImportant>
-              <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
-                <div className="flex items-center justify-center space-x-2 px-2">
-                  <div className="flex items-center justify-center">
-                    <Image
-                      width={28}
-                      height={28}
-                      src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
-                      alt="price status"
-                      title={getPriceStatusSvgTitle()}
-                    />
-                  </div>
-                  <TextImportant className="text-center text-lg leading-3">
-                    {formatFullPrice()}
-                  </TextImportant>
-                </div>
-                <div className="flex items-center justify-center space-x-2 px-2">
-                  <div className="flex items-center justify-center">
-                    <Image
-                      width={28}
-                      height={28}
-                      src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
-                      alt="availability status"
-                      title={getAvailabilitySvgTitle()}
-                    />
-                  </div>
-                  <TextImportant className="py-1 text-center leading-4 text-primary">
-                    {getAvailabilityText(availability)}
-                  </TextImportant>
-                </div>
-                {status_id === TRACK_STATUS_ENABLED && (
-                  <div className="flex items-center justify-center space-x-2 px-2">
-                    <div className="flex items-center justify-center">
-                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
-                    </div>
-                    <TextImportant className="text-center text-sm leading-4">
-                      {getLastCheckTimeText()}
-                    </TextImportant>
-                  </div>
-                )}
-              </div>
-            </div>
-          </InvisibleButton>
-        ) : (
-          <div className="flex items-center justify-center p-6">
-            <Spinner />
-          </div>
-        )}
       </div>
+      {name && name.length > 0 ? (
+        <InvisibleButton className="flex-1">
+          <div
+            className="flex h-full flex-col items-center justify-between space-y-2 border-primary px-5 py-4"
+            title="View track details"
+          >
+            <Title className="text-center text-lg leading-5 text-secondary">
+              {truncateString(name, 50)}
+            </Title>
+            <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
+              {truncateString(description, 120)}
+            </TextImportant>
+            <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
+              <div className="flex items-center justify-center space-x-2 px-2">
+                <div className="flex items-center justify-center">
+                  <Image
+                    width={28}
+                    height={28}
+                    src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
+                    alt="price status"
+                    title={getPriceStatusSvgTitle()}
+                  />
+                </div>
+                <TextImportant className="text-center text-lg leading-3">
+                  {formatFullPrice()}
+                </TextImportant>
+              </div>
+              <div className="flex items-center justify-center space-x-2 px-2">
+                <div className="flex items-center justify-center">
+                  <Image
+                    width={28}
+                    height={28}
+                    src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
+                    alt="availability status"
+                    title={getAvailabilitySvgTitle()}
+                  />
+                </div>
+                <TextImportant className="py-1 text-center leading-4 text-primary">
+                  {getAvailabilityText(availability)}
+                </TextImportant>
+              </div>
+              {status_id === TRACK_STATUS_ENABLED && (
+                <div className="flex items-center justify-center space-x-2 px-2">
+                  <div className="flex items-center justify-center">
+                    <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
+                  </div>
+                  <TextImportant className="text-center text-sm leading-4">
+                    {getLastCheckTimeText()}
+                  </TextImportant>
+                </div>
+              )}
+            </div>
+          </div>
+        </InvisibleButton>
+      ) : (
+        <div title="Waiting for data..." className="flex flex-1 items-center justify-center">
+          <Spinner className="my-8 h-10 w-10" />
+        </div>
+      )}
     </div>
   );
 };

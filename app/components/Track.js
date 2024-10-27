@@ -1,3 +1,5 @@
+"use client";
+
 import { convertMillisecondsToText, formatPrice, truncateString } from "@/modules/TextFormatter";
 import TextImportant from "./TextImportant";
 import Title from "./Title";
@@ -9,6 +11,19 @@ import Image from "next/image";
 import ClockPrimarySvg from "../../public/assets/svg/icons/clock-primary.svg";
 import Spinner from "./Spinner";
 import { useAuthContext } from "../contexts/AuthContext";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  XAxis,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+  YAxis,
+} from "recharts";
+import { useState } from "react";
+import Modal from "./Modal";
+import { ChartContainer } from "@/app/components/Chart";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -18,6 +33,7 @@ const {
 } = Constants;
 
 const Track = ({ className = "", number, data }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const { user } = useAuthContext();
   const { url, name, description, initial_price, currency, created_at, status_id, track_checks } =
     data;
@@ -149,96 +165,145 @@ const Track = ({ className = "", number, data }) => {
 
   const priceStatus = getPriceStatus();
   const availability = getAvailability();
+  const chartData = track_checks.map((trackCheck) => ({
+    date: new Date(trackCheck.created_at).toLocaleString(),
+    price: trackCheck.price,
+  }));
 
   return (
-    <div
-      className={`mx-2 my-2 flex w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
-    >
-      <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
-        <div className="w-1/6"></div>
-        <NavLink
-          target="_blank"
-          type="contrast"
-          href={url}
-          className="w-4/6 text-center text-sm text-contrast md:text-base"
-        >
-          #{number} {getSiteDomain()} 🔗
-        </NavLink>
-        <div className="flex w-1/6 items-center justify-end text-contrast">
-          <Dropdown className="bg-contrast uppercase">
-            <DropdownTrigger className="rotate-90 cursor-pointer text-xl">•••</DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="start-stop">
-                {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
-              </DropdownItem>
-              <DropdownItem key="edit">✏️ Edit</DropdownItem>
-              <DropdownItem key="delete" className={`text-error`} color="danger">
-                🗑️ Delete
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-      </div>
-      {name && name.length > 0 ? (
-        <InvisibleButton className="flex-1">
-          <div
-            className="flex h-full flex-col items-center justify-between space-y-2 border-primary px-5 py-4"
-            title="View track details"
+    <>
+      <div
+        className={`mx-2 my-2 flex w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
+      >
+        <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
+          <div className="w-1/6"></div>
+          <NavLink
+            target="_blank"
+            type="contrast"
+            href={url}
+            className="w-4/6 text-center text-sm text-contrast md:text-base"
           >
-            <Title className="text-center text-lg leading-5 text-secondary">
-              {truncateString(name, 50)}
-            </Title>
-            <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
-              {truncateString(description, 120)}
-            </TextImportant>
-            <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
-              <div className="flex items-center justify-center space-x-2 px-2">
-                <div className="flex items-center justify-center">
-                  <Image
-                    width={28}
-                    height={28}
-                    src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
-                    alt="price status"
-                    title={getPriceStatusSvgTitle()}
-                  />
-                </div>
-                <TextImportant className="text-center text-lg leading-3">
-                  {formatFullPrice()}
-                </TextImportant>
-              </div>
-              <div className="flex items-center justify-center space-x-2 px-2">
-                <div className="flex items-center justify-center">
-                  <Image
-                    width={28}
-                    height={28}
-                    src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
-                    alt="availability status"
-                    title={getAvailabilitySvgTitle()}
-                  />
-                </div>
-                <TextImportant className="py-1 text-center leading-4 text-primary">
-                  {getAvailabilityText(availability)}
-                </TextImportant>
-              </div>
-              {status_id === TRACK_STATUS_ENABLED && (
+            #{number} {getSiteDomain()} 🔗
+          </NavLink>
+          <div className="flex w-1/6 items-center justify-end text-contrast">
+            <Dropdown className="bg-contrast uppercase">
+              <DropdownTrigger className="z-0 rotate-90 cursor-pointer text-xl">
+                •••
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="start-stop">
+                  {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
+                </DropdownItem>
+                <DropdownItem key="edit">✏️ Edit</DropdownItem>
+                <DropdownItem key="delete" className={`text-error`} color="danger">
+                  🗑️ Delete
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        </div>
+        {name && name.length > 0 ? (
+          <InvisibleButton className="flex-1" onClick={() => setModalVisible(true)}>
+            <div
+              className="flex h-full flex-col items-center justify-between space-y-2 border-primary px-5 py-4"
+              title="View track details"
+            >
+              <Title className="text-center text-lg leading-5 text-secondary">
+                {truncateString(name, 50)}
+              </Title>
+              <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
+                {truncateString(description, 120)}
+              </TextImportant>
+              <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
                 <div className="flex items-center justify-center space-x-2 px-2">
                   <div className="flex items-center justify-center">
-                    <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
+                    <Image
+                      width={28}
+                      height={28}
+                      src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
+                      alt="price status"
+                      title={getPriceStatusSvgTitle()}
+                    />
                   </div>
-                  <TextImportant className="text-center text-sm leading-4">
-                    {getLastCheckTimeText()}
+                  <TextImportant className="text-center text-lg leading-3">
+                    {formatFullPrice()}
                   </TextImportant>
                 </div>
-              )}
+                <div className="flex items-center justify-center space-x-2 px-2">
+                  <div className="flex items-center justify-center">
+                    <Image
+                      width={28}
+                      height={28}
+                      src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
+                      alt="availability status"
+                      title={getAvailabilitySvgTitle()}
+                    />
+                  </div>
+                  <TextImportant className="py-1 text-center leading-4 text-primary">
+                    {getAvailabilityText(availability)}
+                  </TextImportant>
+                </div>
+                {status_id === TRACK_STATUS_ENABLED && (
+                  <div className="flex items-center justify-center space-x-2 px-2">
+                    <div className="flex items-center justify-center">
+                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
+                    </div>
+                    <TextImportant className="text-center text-sm leading-4">
+                      {getLastCheckTimeText()}
+                    </TextImportant>
+                  </div>
+                )}
+              </div>
             </div>
+          </InvisibleButton>
+        ) : (
+          <div title="Waiting for data..." className="flex flex-1 items-center justify-center">
+            <Spinner className="my-8 h-10 w-10" />
           </div>
-        </InvisibleButton>
-      ) : (
-        <div title="Waiting for data..." className="flex flex-1 items-center justify-center">
-          <Spinner className="my-8 h-10 w-10" />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+      <Modal
+        isVisible={modalVisible}
+        onClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
+          {name}
+        </Title>
+        <ChartContainer config={{}} className="h-full w-full">
+          <ResponsiveContainer className="h-full w-full">
+            <AreaChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} horizontal={true} />
+              <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+              <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+              <Area
+                dataKey="price"
+                type="linear"
+                fill="transparent"
+                fillOpacity={0.4}
+                stroke="#B78BFF"
+              />
+              <Legend />
+              <Tooltip
+                cursor={false}
+                contentStyle={{
+                  backgroundColor: "#1E1E25CC",
+                  border: "none",
+                  padding: 12,
+                  margin: 0,
+                  borderRadius: 8,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </Modal>
+    </>
   );
 };
 

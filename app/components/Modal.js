@@ -12,11 +12,9 @@ const Modal = ({ children, isVisible = false, onClose = () => {} }) => {
 
     if (isVisible) {
       document.body.style.position = "hidden";
-      document.body.style.overflowY = "scroll";
       window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.position = "static";
-      document.body.style.overflowY = "auto";
     }
 
     return () => {

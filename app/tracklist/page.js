@@ -6,10 +6,11 @@ import Constants from "@/utils/Constants";
 import Track from "../components/Track";
 import { fetchData } from "@/modules/Fetch";
 
-const { TRACK_STATUS_ARCHIVED } = Constants;
+const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_INVALID, TRACK_STATUS_FINISHED } =
+  Constants;
 
 export default function Tracklist() {
-  const [tab, setTab] = useState("tracked-products");
+  const [tab, setTab] = useState(TRACK_STATUS_ENABLED);
   const [tracklist, setTracklist] = useState([]);
 
   useEffect(() => {
@@ -22,15 +23,7 @@ export default function Tracklist() {
   }, []);
 
   const getFilteredAndSortedTracklist = () => {
-    return tracklist
-      .filter((track) =>
-        tab === "tracked-products"
-          ? track.status_id !== TRACK_STATUS_ARCHIVED
-          : track.status_id === TRACK_STATUS_ARCHIVED,
-      )
-      .sort((a, b) =>
-        a.status_id === b.status_id ? b.created_at - a.created_at : a.status_id - b.status_id,
-      );
+    return tracklist.filter((track) => tab === track.status_id);
   };
 
   const filteredTracklist = getFilteredAndSortedTracklist();
@@ -40,25 +33,47 @@ export default function Tracklist() {
       <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
         <Button
           locked
-          className="my-1"
-          type={tab === "tracked-products" ? "primary" : "contrast"}
+          className="m-1"
+          type={tab === TRACK_STATUS_ENABLED ? "primary" : "contrast"}
           defaultCursor
           onClick={() => {
-            setTab("tracked-products");
+            setTab(TRACK_STATUS_ENABLED);
           }}
         >
-          Tracked products
+          In progress
         </Button>
         <Button
           locked
-          className="my-1"
-          type={tab === "archived-products" ? "primary" : "contrast"}
+          className="m-1"
+          type={tab === TRACK_STATUS_DISABLED ? "primary" : "contrast"}
           defaultCursor
           onClick={() => {
-            setTab("archived-products");
+            setTab(TRACK_STATUS_DISABLED);
           }}
         >
-          Archived products
+          Wishlist
+        </Button>
+        <Button
+          locked
+          className="m-1"
+          type={tab === TRACK_STATUS_INVALID ? "primary" : "contrast"}
+          defaultCursor
+          onClick={() => {
+            setTab(TRACK_STATUS_INVALID);
+          }}
+        >
+          Invalid
+        </Button>
+        <Button
+          locked
+          className="m-1"
+          type={tab === TRACK_STATUS_FINISHED ? "primary" : "contrast"}
+          defaultCursor
+          onClick={() => {
+            setTab(TRACK_STATUS_FINISHED);
+          }}
+        >
+          Finished
         </Button>
       </div>
       <div className="flex flex-wrap justify-evenly">

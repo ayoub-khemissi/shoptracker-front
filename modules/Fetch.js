@@ -28,6 +28,12 @@ export const fetchData = async (path, method = "GET", body = null) => {
       await fetchLogout();
     }
 
+    if (response.status >= 500) {
+      throw new Error(
+        `Request failed: received a server error response with status ${response.status}.`,
+      );
+    }
+
     return response;
   } catch (error) {
     console.error("Fetch error:", error);

@@ -9,10 +9,9 @@ const Footer = () => {
       <p className="text-sm">
         © 2024 <ShopTrackerLogo className="text-sm" />
       </p>
-      <FooterLink href="terms-of-use">Terms of Use</FooterLink>
+      <FooterLink href="terms-of-service">Terms of Service</FooterLink>
       <FooterLink href="terms-of-sale">Terms of Sale</FooterLink>
       <FooterLink href="privacy">Privacy</FooterLink>
-      <FooterLink href="cookies">Cookies</FooterLink>
     </footer>
   );
 };

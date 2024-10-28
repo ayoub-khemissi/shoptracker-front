@@ -14,8 +14,8 @@ export default function Settings() {
   const [tab, setTab] = useState("notifications");
   const { showToast } = useToast();
   const { user, saveUser } = useAuthContext();
-  const [notificationMailbox, setNotificationMailbox] = useState(!!user.alert_email);
-  const [notificationTextMessage, setNotificationTextMessage] = useState(!!user.alert_text);
+  const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
+  const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
 
   const handleUpdateNotifications = async () => {
     const response = await fetchData("/notifications/update", "PATCH", {

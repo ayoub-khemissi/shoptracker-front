@@ -24,6 +24,8 @@ import {
 import { useState } from "react";
 import Modal from "./Modal";
 import { ChartContainer } from "@/app/components/Chart";
+import { fetchData } from "@/modules/Fetch";
+import { useToast } from "../contexts/ToastContext";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -35,8 +37,18 @@ const {
 const Track = ({ className = "", number, data }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = useAuthContext();
-  const { url, name, description, initial_price, currency, created_at, status_id, track_checks } =
-    data;
+  const {
+    id,
+    url,
+    name,
+    description,
+    initial_price,
+    currency,
+    created_at,
+    status_id,
+    track_checks,
+  } = data;
+  const { showToast } = useToast();
 
   const formatFullPrice = () => {
     let price = 0;
@@ -163,6 +175,49 @@ const Track = ({ className = "", number, data }) => {
     }
   };
 
+  const deleteTrack = async () => {
+    const response = await fetchData(`/track/delete`, "DELETE", {
+      id: id,
+    });
+
+    if (!response || !response.status) {
+      showToast("Failed to delete the product. Please try again later.", "error");
+      return;
+    }
+
+    switch (response.status) {
+      case 200:
+        window.location.reload();
+        break;
+
+      default:
+        showToast("Failed to delete the product. Please try again later.", "error");
+        break;
+    }
+  };
+
+  const startPauseTrack = async () => {
+    const action = status_id === TRACK_STATUS_ENABLED ? "disable" : "enable";
+    const response = await fetchData(`/track/${action}`, "PATCH", {
+      id: id,
+    });
+
+    if (!response || !response.status) {
+      showToast("Failed to update the product status. Please try again later.", "error");
+      return;
+    }
+
+    switch (response.status) {
+      case 200:
+        window.location.reload();
+        break;
+
+      default:
+        showToast("Failed to update the product status. Please try again later.", "error");
+        break;
+    }
+  };
+
   const priceStatus = getPriceStatus();
   const availability = getAvailability();
   const chartData = track_checks.map((trackCheck) => ({
@@ -191,11 +246,16 @@ const Track = ({ className = "", number, data }) => {
                 •••
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="start-stop">
+                <DropdownItem key="start-stop" onClick={startPauseTrack}>
                   {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
                 </DropdownItem>
                 <DropdownItem key="edit">✏️ Edit</DropdownItem>
-                <DropdownItem key="delete" className={`text-error`} color="danger">
+                <DropdownItem
+                  key="delete"
+                  className={`text-error`}
+                  color="danger"
+                  onClick={deleteTrack}
+                >
                   🗑️ Delete
                 </DropdownItem>
               </DropdownMenu>

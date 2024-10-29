@@ -34,7 +34,7 @@ const Header = () => {
               Tracklist
             </NavLink>
             <Dropdown className="bg-contrast uppercase">
-              <DropdownTrigger className="cursor-pointer">
+              <DropdownTrigger className="shrink-0 cursor-pointer">
                 <Avatar
                   isBordered
                   src={"assets/img/logo-shoptracker.png"}

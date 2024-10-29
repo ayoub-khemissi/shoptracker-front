@@ -19,7 +19,7 @@ export default function Logout() {
       switch (response?.status) {
         case 200:
           showToast("See you later 👋", "info");
-          await localLogout();
+          localLogout();
           break;
 
         default:

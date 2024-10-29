@@ -180,12 +180,7 @@ const Track = ({ className = "", number, data }) => {
       id: id,
     });
 
-    if (!response || !response.status) {
-      showToast("Failed to delete the product. Please try again later.", "error");
-      return;
-    }
-
-    switch (response.status) {
+    switch (response?.status) {
       case 200:
         window.location.reload();
         break;
@@ -202,12 +197,7 @@ const Track = ({ className = "", number, data }) => {
       id: id,
     });
 
-    if (!response || !response.status) {
-      showToast("Failed to update the product status. Please try again later.", "error");
-      return;
-    }
-
-    switch (response.status) {
+    switch (response?.status) {
       case 200:
         window.location.reload();
         break;

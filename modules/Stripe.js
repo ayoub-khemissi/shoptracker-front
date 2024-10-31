@@ -1,19 +1,23 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from "@/utils/Config";
-let stripe;
+let stripe = null;
 
 /**
- * Returns an instance of the Stripe library.
+ * Redirect the user to the checkout page with the given session ID.
  *
- * If the instance hasn't been created yet, it will be created by calling
- * loadStripe with the NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY environment variable.
+ * @param {string} sessionId The session ID to checkout with.
  *
- * @returns {Promise<Stripe>} A promise that resolves with an instance of the Stripe library.
+ * @returns {Promise<void>} Resolves when the checkout page has been loaded.
  */
-export const getStripe = async () => {
-  if (!stripe) {
-    stripe = await loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-  }
+export const redirectToCheckout = async (sessionId) => {
+  try {
+    if (!stripe) {
+      stripe = await loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+    }
 
-  return stripe;
+    await stripe.redirectToCheckout({ sessionId: sessionId });
+  } catch (error) {
+    console.error("Stripe error: ", error);
+    return null;
+  }
 };

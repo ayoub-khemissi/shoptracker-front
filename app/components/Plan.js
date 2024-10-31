@@ -11,6 +11,12 @@ import CircleCheckTertiarySvg from "../../public/assets/svg/icons/circle-check-t
 import Constants from "@/utils/Constants";
 import Button from "./Button";
 import getPlanData from "@/modules/PlanData";
+import { useAuthContext } from "../contexts/AuthContext";
+import ButtonLink from "./ButtonLink";
+import { fetchData } from "@/modules/Fetch";
+import { useToast } from "../contexts/ToastContext";
+import { redirectToCheckout } from "@/modules/Stripe";
+import { useRouter } from "next/navigation";
 
 const {
   SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
@@ -34,6 +40,9 @@ const {
 } = Constants;
 
 const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
+  const { user } = useAuthContext();
+  const { showToast } = useToast();
+  const router = useRouter();
   const {
     name,
     price,
@@ -177,6 +186,29 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
     return popular ? CircleCheckSecondarySvg : CircleCheckTertiarySvg;
   };
 
+  const checkoutSession = async () => {
+    if (stripePriceId === SUBSCRIPTION_STRIPE_PRICE_ID_FREE) {
+      router.push("/tracklist");
+      return;
+    }
+
+    const response = await fetchData(`/checkout/session`, "POST", {
+      stripePriceId: stripePriceId,
+    });
+
+    switch (response?.status) {
+      case 200: {
+        const { sessionId } = (await response.json()).data;
+        redirectToCheckout(sessionId);
+        break;
+      }
+
+      default:
+        showToast("Failed to create a checkout session. Please try again later.", "error");
+        break;
+    }
+  };
+
   return (
     <div
       className={`${popular ? "border-contrast bg-primary text-contrast" : "border-primary bg-contrast text-primary"} relative w-80 rounded-2xl border-2 ${className}`}
@@ -195,7 +227,15 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
         <TextImportant className="leading-4">{getDescriptionByStripePriceId()}</TextImportant>
         {hasCallToAction && (
           <div className="flex items-center justify-center">
-            <Button type={popular ? "secondary" : "primary"}>Select this plan</Button>
+            {user ? (
+              <Button type={popular ? "secondary" : "primary"} onClick={checkoutSession}>
+                Select this plan
+              </Button>
+            ) : (
+              <ButtonLink type={popular ? "secondary" : "primary"} href="/register">
+                Select this plan
+              </ButtonLink>
+            )}
           </div>
         )}
       </div>

@@ -6,7 +6,7 @@ import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
 import Switch from "../components/Switch";
 import Subscription from "../components/Subscription";
-import { fetchData } from "@/modules/Fetch";
+import { fetchData, fetchLogout } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -53,6 +53,7 @@ export default function Settings() {
     switch (response?.status) {
       case 200:
         showToast("Your account has been deleted. 👋😔", "info");
+        await fetchLogout();
         localLogout();
         router.push("/");
         break;

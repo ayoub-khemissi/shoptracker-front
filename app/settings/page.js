@@ -77,11 +77,13 @@ export default function Settings() {
       case 200:
         user.subscription = {
           stripe_price_id: null,
+          stripe_subscription_id: null,
           start_date: null,
           next_payment_date: null,
           payment_method: null,
-          payment_history: [],
+          invoice_history: [],
         };
+
         saveUser(user);
         window.location.reload();
         break;

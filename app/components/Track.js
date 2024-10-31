@@ -38,6 +38,7 @@ const {
 const Track = ({ className = "", number, data }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = useAuthContext();
+  const { showToast } = useToast();
   const {
     id,
     url,
@@ -49,7 +50,6 @@ const Track = ({ className = "", number, data }) => {
     status_id,
     track_checks,
   } = data;
-  const { showToast } = useToast();
 
   const formatFullPrice = () => {
     const price = track_checks[track_checks.length - 1]?.price ?? initial_price;
@@ -168,7 +168,7 @@ const Track = ({ className = "", number, data }) => {
       const parts = domain.split(".");
 
       return parts.length > 2 ? parts.slice(-2).join(".") : domain;
-    } catch (e) {
+    } catch (error) {
       return "Unknown website";
     }
   };

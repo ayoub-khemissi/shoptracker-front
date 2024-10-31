@@ -26,6 +26,7 @@ import Modal from "./Modal";
 import { ChartContainer } from "@/app/components/Chart";
 import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
+import getPlanData from "@/modules/PlanData";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -51,12 +52,7 @@ const Track = ({ className = "", number, data }) => {
   const { showToast } = useToast();
 
   const formatFullPrice = () => {
-    let price = 0;
-    if (track_checks.length > 0) {
-      price = track_checks[track_checks.length - 1].price;
-    } else {
-      price = initial_price;
-    }
+    const price = track_checks[track_checks.length - 1]?.price ?? initial_price;
 
     if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
       return (
@@ -159,7 +155,9 @@ const Track = ({ className = "", number, data }) => {
 
   const getLastCheckTimeText = () => {
     return convertMillisecondsToText(
-      created_at - Date.now() + (user ? user.subscription.track_check_interval : 0),
+      created_at -
+        Date.now() +
+        getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
     );
   };
 

@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <header className="mb-6 flex flex-wrap items-center justify-center px-20 py-8 sm:justify-between lg:px-40">
-      <nav className="flex w-full flex-wrap items-center justify-center sm:flex-nowrap">
+      <nav className="flex w-full flex-wrap items-center justify-center text-nowrap sm:flex-nowrap">
         <Link className="pr-4" href="/">
           <ShopTrackerLogo />
         </Link>

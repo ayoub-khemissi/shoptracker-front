@@ -17,10 +17,11 @@ import TextNormal from "../components/TextNormal";
 export default function Settings() {
   const [tab, setTab] = useState("notifications");
   const { showToast } = useToast();
-  const { user, saveUser } = useAuthContext();
+  const { user, localLogout, saveUser } = useAuthContext();
   const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
   const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
+  const [cancelSubscriptionModalVisible, setCancelSubscriptionModalVisible] = useState(false);
   const router = useRouter();
 
   const updateNotifications = async () => {
@@ -52,6 +53,7 @@ export default function Settings() {
     switch (response?.status) {
       case 200:
         showToast("Your account has been deleted. 👋😔", "info");
+        localLogout();
         router.push("/");
         break;
 
@@ -64,6 +66,28 @@ export default function Settings() {
 
       default:
         showToast("Failed to delete your account. Please try again later.", "error");
+        break;
+    }
+  };
+
+  const cancelSubscription = async () => {
+    const response = await fetchData(`/subscription/cancel`, "DELETE");
+
+    switch (response?.status) {
+      case 200:
+        user.subscription = {
+          stripe_price_id: null,
+          start_date: null,
+          next_payment_date: null,
+          payment_method: null,
+          payment_history: [],
+        };
+        saveUser(user);
+        window.location.reload();
+        break;
+
+      default:
+        showToast("Failed to cancel your subscription. Please try again later.", "error");
         break;
     }
   };
@@ -144,53 +168,88 @@ export default function Settings() {
         </div>
       )}
       {tab === "subscription" && (
-        <div className="flex w-full items-center justify-center py-4">
+        <div className="flex w-full flex-wrap items-start justify-center space-y-4 py-4">
           <Subscription />
+          {user?.subscription?.stripe_price_id && (
+            <>
+              <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
+                <TextSeparator className="w-full">Subscription management</TextSeparator>
+                <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
+                  Cancel subscription
+                </Button>
+              </div>
+              <Modal
+                isVisible={cancelSubscriptionModalVisible}
+                onClose={() => {
+                  setCancelSubscriptionModalVisible(false);
+                }}
+              >
+                <div className="space-y-4">
+                  <Title className="text-center text-xl">
+                    Are you sure you want to cancel your subscription?
+                  </Title>
+                  <TextNormal>
+                    This action cannot be undone. If you proceed, your subscription will be
+                    canceled. You will receive a prorated refund based on the remaining time on your
+                    subscription.
+                  </TextNormal>
+                  <div className="flex w-full items-center justify-between">
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        setCancelSubscriptionModalVisible(false);
+                      }}
+                    >
+                      No
+                    </Button>
+                    <Button type="secondary" onClick={cancelSubscription}>
+                      Yes
+                    </Button>
+                  </div>
+                </div>
+              </Modal>
+            </>
+          )}
         </div>
       )}
       {tab === "account" && (
         <div className="flex w-full items-center justify-center py-4">
           <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
             <TextSeparator className="w-full">Danger zone</TextSeparator>
-            <Button type="secondary" onClick={() => setModalVisible(true)}>
+            <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
               Delete account
             </Button>
           </div>
+          <Modal
+            isVisible={deleteAccountModalVisible}
+            onClose={() => {
+              setDeleteAccountModalVisible(false);
+            }}
+          >
+            <div className="space-y-4">
+              <Title className="text-center text-xl">
+                Are you sure you want to delete your account?
+              </Title>
+              <TextNormal>
+                This action cannot be undone. All of your data will be permanently deleted.
+              </TextNormal>
+              <div className="flex w-full items-center justify-between">
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setDeleteAccountModalVisible(false);
+                  }}
+                >
+                  No
+                </Button>
+                <Button type="secondary" onClick={deleteAccount}>
+                  Yes
+                </Button>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
-      <Modal
-        isVisible={modalVisible}
-        onClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <div className="space-y-4">
-          <Title className="text-center text-xl">
-            Are you sure you want to delete your account?
-          </Title>
-          <TextNormal>
-            This action cannot be undone. All of your data will be permanently deleted.
-          </TextNormal>
-          <div className="flex w-full items-center justify-between">
-            <Button
-              type="primary"
-              onClick={() => {
-                setModalVisible(false);
-              }}
-            >
-              No
-            </Button>
-            <Button
-              type="secondary"
-              onClick={() => {
-                deleteAccount();
-              }}
-            >
-              Yes
-            </Button>
-          </div>
-        </div>
-      </Modal>
     </main>
   );
 }

@@ -28,7 +28,7 @@ const getPlanData = (stripePriceId) => {
       return {
         name: "Free Plan",
         price: 0,
-        track_check_interval: 48 * 60 * 60 * 1000,
+        track_check_interval: 2 * 24 * 60 * 60 * 1000,
         track_enabled_max_products: 1,
         track_disabled_max_products: 3,
         track_user_max_searches_per_day: 3,

@@ -13,6 +13,30 @@ const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <title>ShopTracker - Track prices and availability of products</title>
+        <meta
+          name="description"
+          content="Track prices or availability of products from almost any e-commerce platform."
+        />
+        <meta
+          name="keywords"
+          content="ShopTracker, tracking, restock, price changes, products, e-commerce, website"
+        />
+        <meta name="author" content="ShopTracker" />
+        <meta
+          property="og:title"
+          content="ShopTracker - Track prices and availability of products"
+        />
+        <meta
+          property="og:description"
+          content="Track prices or availability of products from almost any e-commerce platform."
+        />
+        <meta property="og:image" content="https://www.shoptracker.eu/favicon.ico" />
+        <meta property="og:url" content="https://www.shoptracker.eu" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://www.shoptracker.eu" />
+      </head>
       <body
         className={`${montserrat.className} flex h-screen flex-col bg-contrast text-primary dark`}
       >

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-const Modal = ({ children, isVisible = false, onClose = () => {} }) => {
+const Modal = ({ children, isVisible = false, onClose = () => {}, isClosable = true }) => {
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && isClosable) {
         onClose();
       }
     };
@@ -27,7 +27,11 @@ const Modal = ({ children, isVisible = false, onClose = () => {} }) => {
   return (
     <div className="fixed inset-0 z-10 w-full">
       <div className="flex min-h-screen items-center justify-center p-4 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true" onClick={onClose}>
+        <div
+          className="fixed inset-0 transition-opacity"
+          aria-hidden="true"
+          onClick={isClosable ? onClose : null}
+        >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
 

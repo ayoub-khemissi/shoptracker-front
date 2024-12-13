@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Cookies from "./components/Cookies";
 import { ToastProvider } from "./contexts/ToastContext";
 import { SessionProvider } from "next-auth/react";
 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
               <Header />
               <div className="flex-1">{children}</div>
               <Footer />
+              <Cookies />
             </ToastProvider>
           </AuthProvider>
         </SessionProvider>

@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 
-const ButtonLink = ({ children, className = "", href, type = "primary", target = "_self" }) => {
+const ButtonLink = ({
+  children,
+  className = "",
+  href,
+  type = "primary",
+  target = "_self",
+  title = null,
+}) => {
   let typeClass;
 
   switch (type) {
@@ -29,6 +36,7 @@ const ButtonLink = ({ children, className = "", href, type = "primary", target =
     >
       <Link
         target={target}
+        title={title}
         className="h-full w-full text-nowrap px-5 py-2 text-center text-sm font-semibold uppercase"
         href={href}
       >

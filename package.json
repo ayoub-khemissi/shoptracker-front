@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 192.168.1.77 -p 3000",
+    "dev": "next dev -H shoptrackerdev.eu -p 3000",
     "local": "next dev",
     "build": "next build",
     "start": "next start",

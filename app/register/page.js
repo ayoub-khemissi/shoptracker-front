@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "../components/Title";
 import ShopTrackerLogo from "../components/ShopTrackerLogo";
 import TextNormal from "../components/TextNormal";
@@ -14,15 +14,75 @@ import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import { fetchData } from "@/modules/Fetch";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isErrorEmail, setIsErrorEmail] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
-  const { localLogin } = useAuthContext();
+  const [isGoogleLoginProcessed, setIsGoogleLoginProcessed] = useState(false);
+
+  const { localLogin, localLogout } = useAuthContext();
   const { showToast } = useToast();
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  const registerGoogle = async ({
+    googleEmail,
+    googleJwt,
+    localLogout,
+    localLogin,
+    showToast,
+    router,
+  }) => {
+    if (!googleEmail || !googleJwt) {
+      localLogout();
+      await signOut({ redirect: false });
+      return;
+    }
+
+    const response = await fetchData("/register/google", "POST", {
+      email: googleEmail,
+      googleJwt: googleJwt,
+    });
+
+    switch (response?.status) {
+      case 200:
+        showToast("Logged in successfully! 🎉", "success");
+        localLogin((await response.json()).data);
+
+        await signOut({ redirect: false });
+        router.push("/tracker");
+        break;
+
+      default:
+        showToast("An error occurred. Please try again later.", "error");
+
+        localLogout();
+        await signOut({ redirect: false });
+        router.refresh();
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (session && session.user && session.googleJwt && !isGoogleLoginProcessed) {
+      const { user, googleJwt } = session;
+
+      setIsGoogleLoginProcessed(true);
+      registerGoogle({
+        googleEmail: user?.email,
+        googleJwt,
+        localLogout,
+        localLogin,
+        showToast,
+        router,
+      });
+    }
+  }, [session, isGoogleLoginProcessed, localLogout, showToast, localLogin, router]);
 
   const registerClassical = async (e) => {
     e.preventDefault();

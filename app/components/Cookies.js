@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import Title from "./Title";
@@ -5,15 +7,11 @@ import Button from "./Button";
 import TextNormal from "./TextNormal";
 
 const Cookies = () => {
-  const [cookieModalVisible, setCookieModalVisible] = useState(
-    !localStorage.getItem("cookieConsent"),
-  );
+  const [cookieModalVisible, setCookieModalVisible] = useState(false);
 
   useEffect(() => {
     const consent = localStorage.getItem("cookieConsent");
-    if (consent) {
-      setCookieModalVisible(false);
-    }
+    setCookieModalVisible(!consent);
   }, []);
 
   const handleAcceptCookies = () => {

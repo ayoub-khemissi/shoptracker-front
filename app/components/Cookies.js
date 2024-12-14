@@ -32,7 +32,7 @@ const Cookies = () => {
         <br />
         <span className="text-secondary">Essential Cookies</span>!
       </Title>
-      <TextNormal className="pb-2">
+      <TextNormal className="pb-4">
         At ShopTracker, your privacy is our priority. We only use cookies necessary for secure
         login, navigation, and maintaining your preferences.
         <br />

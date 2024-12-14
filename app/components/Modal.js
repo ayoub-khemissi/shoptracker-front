@@ -20,7 +20,7 @@ const Modal = ({ children, isVisible = false, onClose = () => {}, isClosable = t
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isVisible, onClose]);
+  }, [isVisible, onClose, isClosable]);
 
   if (!isVisible) return null;
 

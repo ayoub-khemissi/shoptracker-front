@@ -16,6 +16,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { validatePassword } from "@/modules/DataValidation";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -105,13 +106,11 @@ export default function Register() {
       case 400:
       case 404:
         setIsErrorEmail(true);
-        setIsErrorPassword(true);
         showToast("Incorrect email or password.", "error");
         break;
 
       default:
         setIsErrorEmail(false);
-        setIsErrorPassword(false);
         showToast("An error occurred. Please try again later.", "error");
         break;
     }
@@ -171,9 +170,11 @@ export default function Register() {
               value={password}
               required
               isError={isErrorPassword}
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
+              errorText="The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
               onChange={(e) => {
                 setPassword(e.target.value);
-                setIsErrorPassword(false);
+                setIsErrorPassword(!validatePassword(e.target.value));
               }}
             />
             <div className="flex w-full items-start justify-between">

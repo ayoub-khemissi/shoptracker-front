@@ -237,7 +237,6 @@ const Track = ({ className = "", number, data }) => {
                 <DropdownItem key="start-stop" onClick={startPauseTrack}>
                   {status_id === TRACK_STATUS_ENABLED ? "⏸️ Pause" : "▶️ Start"}
                 </DropdownItem>
-                <DropdownItem key="edit">✏️ Edit</DropdownItem>
                 <DropdownItem
                   key="delete"
                   className={`text-error`}

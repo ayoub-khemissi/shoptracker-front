@@ -4,6 +4,7 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 
 export default function Faq() {
   return (
@@ -56,8 +57,8 @@ export default function Faq() {
           >
             Yes, we offer personalized plans to meet your specific needs. If you're interested,
             please send an email to{" "}
-            <UnderlineLink href="mailto:shoptracker.contact@gmail.com">
-              shoptracker.contact@gmail.com
+            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
+              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
             </UnderlineLink>
             , and our team will get back to you with tailored options.
           </AccordionItem>
@@ -103,8 +104,8 @@ export default function Faq() {
           >
             If you face any issues with tracking specific products, please check the compatibility
             of the site. If the issue persists, contact our support for further assistance at{" "}
-            <UnderlineLink href="mailto:shoptracker.contact@gmail.com">
-              shoptracker.contact@gmail.com
+            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
+              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
             </UnderlineLink>
             .
           </AccordionItem>

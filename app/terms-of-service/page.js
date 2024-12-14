@@ -4,6 +4,7 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
+import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 
 export default function TermsOfService() {
   return (
@@ -59,8 +60,8 @@ export default function TermsOfService() {
 
           <AccordionItem key="6" aria-label="Support" title="6. Support">
             If you need assistance, you can contact support at{" "}
-            <UnderlineLink href="mailto:shoptracker.contact@gmail.com">
-              shoptracker.contact@gmail.com
+            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
+              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
             </UnderlineLink>
             .
           </AccordionItem>

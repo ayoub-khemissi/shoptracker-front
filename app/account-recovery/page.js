@@ -10,7 +10,9 @@ import { useState } from "react";
 import { useToast } from "../contexts/ToastContext";
 import { useRouter } from "next/navigation";
 
-const PHASE_INITIAL = 0, PHASE_CODE = 1, PHASE_PASSWORD = 2;
+const PHASE_INITIAL = 0,
+  PHASE_CODE = 1,
+  PHASE_PASSWORD = 2;
 
 export default function AccountRecovery() {
   const router = useRouter();
@@ -93,7 +95,7 @@ export default function AccountRecovery() {
     switch (response?.status) {
       case 200:
         showToast("Password reset successfully! 🎉", "success");
-        
+
         setEmail("");
         setNewPassword("");
         setConfirmNewPassword("");
@@ -148,12 +150,12 @@ export default function AccountRecovery() {
         name="description"
         content="Account recovery page for ShopTracker. This page allows users to reset their password or recover their account."
       />
-      <section className="flex h-full flex-col space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40 items-center">
+      <section className="flex h-full flex-col items-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
         <Title className="pb-6 text-center text-4xl text-secondary">Account Recovery</Title>
-        <div className="flex flex-col space-y-4 max-w-[400px]">
+        <div className="flex max-w-[400px] flex-col space-y-4">
           <TextNormal>
-            To recover your account, please enter your email address below. We will send you a code to
-            reset your password.
+            To recover your account, please enter your email address below. We will send you a code
+            to reset your password.
           </TextNormal>
           <form className="w-full space-y-4" onSubmit={(e) => handleFormSubmit(e, phase)}>
             <Input
@@ -170,7 +172,7 @@ export default function AccountRecovery() {
                 setIsErrorEmail(false);
               }}
             />
-            {phase === PHASE_CODE &&
+            {phase === PHASE_CODE && (
               <>
                 <TextNormal>
                   We have sent you a code to your email. Please enter the code below to reset your
@@ -185,12 +187,10 @@ export default function AccountRecovery() {
                   onChange={(e) => setResetPasswordCode(e.target.value)}
                 />
               </>
-            }
-            {phase === PHASE_PASSWORD &&
+            )}
+            {phase === PHASE_PASSWORD && (
               <>
-                <TextNormal>
-                  Please enter a new password for your account.
-                </TextNormal>
+                <TextNormal>Please enter a new password for your account.</TextNormal>
                 <Input
                   id="newPassword"
                   className="w-full"
@@ -223,9 +223,11 @@ export default function AccountRecovery() {
                   }}
                 />
               </>
-            }
+            )}
             <div className="flex items-center justify-end">
-              <Button type="primary" buttonType="submit">{getButtonTextByPhase(phase)}</Button>
+              <Button type="primary" buttonType="submit">
+                {getButtonTextByPhase(phase)}
+              </Button>
             </div>
           </form>
         </div>

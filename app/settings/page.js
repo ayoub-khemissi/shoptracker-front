@@ -261,7 +261,7 @@ export default function Settings() {
           </div>
         )}
         {tab === "account" && (
-          <div className="flex flex-col w-full items-center justify-center py-4">
+          <div className="flex w-full flex-col items-center justify-center py-4">
             <div className="flex w-96 flex-col items-center justify-evenly space-y-5 py-4">
               <TextSeparator className="w-full">Change password</TextSeparator>
               <form className="w-full space-y-4" onSubmit={changePassword}>
@@ -297,7 +297,9 @@ export default function Settings() {
                   }}
                 />
                 <div className="flex items-center justify-end">
-                  <Button type="primary" buttonType="submit">Change password</Button>
+                  <Button type="primary" buttonType="submit">
+                    Change password
+                  </Button>
                 </div>
               </form>
             </div>

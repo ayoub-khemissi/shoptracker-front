@@ -318,8 +318,8 @@ export default function Settings() {
           </div>
         )}
         {tab === "account" && (
-          <div className="flex w-full flex-col items-center justify-center py-4">
-            <div className="flex w-96 flex-col items-center justify-center space-y-5 py-4">
+          <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
+            <div className="flex w-96 flex-col items-center justify-center space-y-5">
               <TextSeparator className="w-full">Change password</TextSeparator>
               <form className="w-full space-y-4" onSubmit={changePassword}>
                 <Input
@@ -360,7 +360,7 @@ export default function Settings() {
                 </div>
               </form>
             </div>
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5 py-4">
+            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
               <TextSeparator className="w-full">Danger zone</TextSeparator>
               <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
                 Delete account

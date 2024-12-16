@@ -86,7 +86,7 @@ export default function Tracker() {
           </span>{" "}
           🚀 !
         </Title>
-        <form className="w-full space-y-4" onSubmit={handleSubmitTrack}>
+        <form className="w-full max-w-[700px] space-y-4" onSubmit={handleSubmitTrack}>
           <div className="w-full space-y-4">
             <Input
               id="url"

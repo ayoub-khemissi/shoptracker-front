@@ -14,7 +14,7 @@ import Modal from "../components/Modal";
 import Title from "../components/Title";
 import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
-import { validatePassword } from "@/modules/DataValidation";
+import { validatePassword, validatePhone } from "@/modules/DataValidation";
 
 export default function Settings() {
   const [tab, setTab] = useState("notifications");
@@ -28,7 +28,30 @@ export default function Settings() {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [isErrorNewPassword, setIsErrorNewPassword] = useState(false);
   const [isErrorConfirmNewPassword, setIsErrorConfirmNewPassword] = useState(false);
+  const [phone, setPhone] = useState(user?.phone);
+  const [isErrorPhone, setIsErrorPhone] = useState(false);
   const router = useRouter();
+
+  const updatePhone = async (e) => {
+    e.preventDefault();
+
+    const response = await fetchData("/phone/update", "PATCH", {
+      phone: phone,
+    });
+
+    if (!response || response.status !== 200) {
+      showToast(
+        "An error occurred while saving your phone number. Please try again later.",
+        "error",
+      );
+      return;
+    }
+
+    user.phone = phone;
+    saveUser(user);
+
+    showToast("Phone number saved! 🥳", "success");
+  };
 
   const updateNotifications = async () => {
     const response = await fetchData("/notifications/update", "PATCH", {
@@ -178,12 +201,20 @@ export default function Settings() {
           </Button>
         </div>
         {tab === "notifications" && (
-          <div className="flex w-full items-center justify-center py-4">
+          <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
             <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
               <TextSeparator className="w-full">Receive a notification</TextSeparator>
               <div
                 className="flex w-full items-center justify-between"
                 onClick={() => {
+                  if (!user?.phone) {
+                    showToast(
+                      "You must add a phone number below to receive text notifications.",
+                      "error",
+                    );
+                    return;
+                  }
+
                   if (notificationTextMessage && !notificationMailbox) {
                     showToast("You must choose at least one notification method.", "error");
                     return;
@@ -212,6 +243,32 @@ export default function Settings() {
               <div className="flex w-full items-center justify-center">
                 <Button onClick={updateNotifications}>Save notifications</Button>
               </div>
+            </div>
+            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
+              <TextSeparator className="w-full">Phone number</TextSeparator>
+              <form className="w-full space-y-4" onSubmit={updatePhone}>
+                <Input
+                  id="phone"
+                  className="w-full"
+                  labelText="Phone Number"
+                  type="text"
+                  placeholder="+1234567890"
+                  value={phone}
+                  required
+                  isError={isErrorPhone}
+                  pattern="^\+\d{10,15}$"
+                  errorText="The phone number must start with a plus sign (+) followed by 10 to 15 digits."
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    setIsErrorPhone(!validatePhone(e.target.value));
+                  }}
+                />
+                <div className="flex items-center justify-center">
+                  <Button type="primary" buttonType="submit">
+                    Update phone number
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         )}
@@ -262,7 +319,7 @@ export default function Settings() {
         )}
         {tab === "account" && (
           <div className="flex w-full flex-col items-center justify-center py-4">
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5 py-4">
+            <div className="flex w-96 flex-col items-center justify-center space-y-5 py-4">
               <TextSeparator className="w-full">Change password</TextSeparator>
               <form className="w-full space-y-4" onSubmit={changePassword}>
                 <Input
@@ -296,7 +353,7 @@ export default function Settings() {
                     setIsErrorConfirmNewPassword(e.target.value !== newPassword);
                   }}
                 />
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-center">
                   <Button type="primary" buttonType="submit">
                     Change password
                   </Button>

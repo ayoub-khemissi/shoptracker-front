@@ -24,6 +24,7 @@ export default function Settings() {
   const [tab, setTab] = useState(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
   const { showToast } = useToast();
   const { user, localLogout, saveUser } = useAuthContext();
+  const [subscription, setSubscription] = useState(user?.subscription);
   const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
   const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
   const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
@@ -36,9 +37,31 @@ export default function Settings() {
   const [isErrorPhone, setIsErrorPhone] = useState(false);
   const router = useRouter();
 
+  const getSubscription = async () => {
+    const response = await fetchData("/subscription", "GET");
+
+    switch (response?.status) {
+      case 200:
+        const subscriptionData = (await response.json()).data;
+        user.subscription = subscriptionData;
+        saveUser(user);
+        setSubscription(subscriptionData);
+        break;
+
+      default:
+        showToast("Failed to get your subscription. Please try again later.", "error");
+        break;
+    }
+  };
+
   useEffect(() => {
-    setTab(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
-  }, [searchParams]);
+    const currentTab = searchParams.get("tab");
+    setTab(currentTab || SETTINGS_TAB_NOTIFICATIONS);
+
+    if (user && currentTab === SETTINGS_TAB_SUBSCRIPTION) {
+      getSubscription();
+    }
+  }, [searchParams, user]);
 
   const updatePhone = async (e) => {
     e.preventDefault();
@@ -113,17 +136,8 @@ export default function Settings() {
 
     switch (response?.status) {
       case 200:
-        user.subscription = {
-          stripe_price_id: null,
-          stripe_subscription_id: null,
-          start_date: null,
-          next_payment_date: null,
-          payment_method: null,
-          invoice_history: [],
-        };
-
-        saveUser(user);
-        window.location.reload();
+        showToast("Your subscription has been canceled. 👋😔", "info");
+        await getSubscription();
         break;
 
       default:

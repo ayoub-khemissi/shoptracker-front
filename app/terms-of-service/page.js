@@ -5,6 +5,9 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
+import Constants from "@/utils/Constants";
+
+const { SETTINGS_TAB_ACCOUNT } = Constants;
 
 export default function TermsOfService() {
   return (
@@ -29,7 +32,7 @@ export default function TermsOfService() {
           </AccordionItem>
 
           <AccordionItem key="2" aria-label="Subscription Plans" title="2. Subscription Plans">
-            We offer a Free Plan and several paid plans. Each plan includes the following features:
+            We offer a Free Plan and several paid plans available <UnderlineLink href="/pricing">here</UnderlineLink>. Each plan includes the following features:
             <ol>
               <li>• Number of products trackable at the same time</li>
               <li>• Time interval between each tracking</li>
@@ -55,7 +58,7 @@ export default function TermsOfService() {
 
           <AccordionItem key="5" aria-label="Account Deletion" title="5. Account Deletion">
             Users can delete their data (account) in the{" "}
-            <UnderlineLink href="/settings">Settings</UnderlineLink> page under the Account tab.
+            <UnderlineLink href={`/settings?tab=${SETTINGS_TAB_ACCOUNT}`}>Settings</UnderlineLink> page under the Account tab.
           </AccordionItem>
 
           <AccordionItem key="6" aria-label="Support" title="6. Support">

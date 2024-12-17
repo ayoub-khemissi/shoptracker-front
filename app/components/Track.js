@@ -186,10 +186,11 @@ const Track = ({ className = "", number, data }) => {
     switch (response?.status) {
       case 200:
         router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}&refresh=true`);
+        showToast(`${name}'s track has been deleted.`, "info");
         break;
 
       default:
-        showToast("Failed to delete the product. Please try again later.", "error");
+        showToast("Failed to delete the track. Please try again later.", "error");
         break;
     }
   };
@@ -205,10 +206,16 @@ const Track = ({ className = "", number, data }) => {
         router.push(
           `/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`,
         );
+        showToast(
+          `${name}'s track has been ${
+            status_id === TRACK_STATUS_ENABLED ? "disabled" : "enabled"
+          }.`,
+          status_id === TRACK_STATUS_ENABLED ? "info" : "success",
+        );
         break;
 
       default:
-        showToast("Failed to update the product status. Please try again later.", "error");
+        showToast("Failed to update the track status. Please try again later.", "error");
         break;
     }
   };
@@ -300,7 +307,7 @@ const Track = ({ className = "", number, data }) => {
                 {status_id === TRACK_STATUS_ENABLED && (
                   <div className="flex items-center justify-center space-x-2 px-2">
                     <div className="flex items-center justify-center">
-                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next product check" />
+                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next track check" />
                     </div>
                     <TextImportant className="text-center text-sm leading-4">
                       {getLastCheckTimeText()}

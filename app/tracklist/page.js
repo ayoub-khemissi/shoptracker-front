@@ -36,7 +36,7 @@ export default function Tracklist() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [tab, setTab] = useState(getTrackStatusIdByTab(searchParams.get("tab")));
-  const [refresh, setRefresh] = useState(false);
+  const [, setRefresh] = useState(false);
   const [tracklist, setTracklist] = useState([]);
 
   const fetchTracklist = async () => {

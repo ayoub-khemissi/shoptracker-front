@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "../components/Button";
 import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
@@ -24,7 +24,7 @@ export default function Settings() {
   const [tab, setTab] = useState(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
   const { showToast } = useToast();
   const { user, localLogout, saveUser } = useAuthContext();
-  const [subscription, setSubscription] = useState(user?.subscription);
+  const [, setSubscription] = useState(user?.subscription);
   const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
   const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
   const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
@@ -37,22 +37,23 @@ export default function Settings() {
   const [isErrorPhone, setIsErrorPhone] = useState(false);
   const router = useRouter();
 
-  const getSubscription = async () => {
+  const getSubscription = useCallback(async () => {
     const response = await fetchData("/subscription", "GET");
 
     switch (response?.status) {
-      case 200:
+      case 200: {
         const subscriptionData = (await response.json()).data;
         user.subscription = subscriptionData;
         saveUser(user);
         setSubscription(subscriptionData);
         break;
+      }
 
       default:
         showToast("Failed to get your subscription. Please try again later.", "error");
         break;
     }
-  };
+  }, [user, saveUser, showToast]);
 
   useEffect(() => {
     const currentTab = searchParams.get("tab");
@@ -61,7 +62,7 @@ export default function Settings() {
     if (user && currentTab === SETTINGS_TAB_SUBSCRIPTION) {
       getSubscription();
     }
-  }, [searchParams, user]);
+  }, [searchParams, user, getSubscription]);
 
   const updatePhone = async (e) => {
     e.preventDefault();

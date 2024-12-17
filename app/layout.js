@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Cookies from "./components/Cookies";
 import { ToastProvider } from "./contexts/ToastContext";
 import { SessionProvider } from "next-auth/react";
+import { Suspense } from "react";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -44,10 +45,12 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <AuthProvider>
             <ToastProvider>
-              <Header />
-              <div className="flex-1">{children}</div>
-              <Footer />
-              <Cookies />
+              <Suspense>
+                <Header />
+                <div className="flex-1">{children}</div>
+                <Footer />
+                <Cookies />
+              </Suspense>
             </ToastProvider>
           </AuthProvider>
         </SessionProvider>

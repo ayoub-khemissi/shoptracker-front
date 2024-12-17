@@ -161,8 +161,8 @@ const Track = ({ className = "", number, data }) => {
   const getLastCheckTimeText = () => {
     return convertMillisecondsToText(
       created_at -
-      Date.now() +
-      getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
+        Date.now() +
+        getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
     );
   };
 
@@ -202,7 +202,9 @@ const Track = ({ className = "", number, data }) => {
 
     switch (response?.status) {
       case 200:
-        router.push(`/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`);
+        router.push(
+          `/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`,
+        );
         break;
 
       default:

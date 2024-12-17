@@ -8,11 +8,57 @@ import Constants from "@/utils/Constants";
 import { useAuthContext } from "../contexts/AuthContext";
 import NavLink from "./NavLink";
 import TextNormal from "./TextNormal";
+import { fetchData } from "@/modules/Fetch";
+import { useToast } from "../contexts/ToastContext";
+import { useCallback, useEffect, useState } from "react";
+import Button from "./Button";
+import Modal from "./Modal";
+import Title from "./Title";
 
 const { SUBSCRIPTION_STRIPE_PRICE_ID_FREE } = Constants;
 
 const Subscription = ({ className = "" }) => {
-  const { user } = useAuthContext();
+  const { user, saveUser } = useAuthContext();
+  const { showToast } = useToast();
+  const [cancelSubscriptionModalVisible, setCancelSubscriptionModalVisible] = useState(false);
+  const [subscription, setSubscription] = useState(user?.subscription);
+
+  const getSubscription = useCallback(async () => {
+    const response = await fetchData("/subscription", "GET");
+
+    switch (response?.status) {
+      case 200: {
+        const subscriptionData = (await response.json()).data;
+        user.subscription = subscriptionData;
+        saveUser(user);
+        setSubscription(subscriptionData);
+        break;
+      }
+
+      default:
+        showToast("Failed to get your subscription. Please try again later.", "error");
+        break;
+    }
+  }, [user, saveUser, showToast]);
+
+  const cancelSubscription = async () => {
+    const response = await fetchData(`/subscription/cancel`, "DELETE");
+
+    switch (response?.status) {
+      case 200:
+        showToast("Your subscription has been canceled. 👋😔", "info");
+        await getSubscription();
+        break;
+
+      default:
+        showToast("Failed to cancel your subscription. Please try again later.", "error");
+        break;
+    }
+  };
+
+  useEffect(() => {
+    getSubscription();
+  }, [getSubscription]);
 
   if (!user?.subscription?.stripe_price_id) {
     return (
@@ -50,7 +96,7 @@ const Subscription = ({ className = "" }) => {
             <TextImportant className="text-right">{payment_method}</TextImportant>
           </div>
         )}
-        {invoice_history && (
+        {invoice_history && invoice_history.length > 0 && (
           <>
             <TextSeparator className="w-full">Invoice history</TextSeparator>
             <div className="flex w-full flex-col justify-center space-y-3">
@@ -74,6 +120,46 @@ const Subscription = ({ className = "" }) => {
                 );
               })}
             </div>
+          </>
+        )}
+        {subscription?.stripe_price_id && (
+          <>
+            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
+              <TextSeparator className="w-full">Subscription management</TextSeparator>
+              <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
+                Cancel subscription
+              </Button>
+            </div>
+            <Modal
+              isVisible={cancelSubscriptionModalVisible}
+              onClose={() => {
+                setCancelSubscriptionModalVisible(false);
+              }}
+            >
+              <div className="space-y-4">
+                <Title className="text-center text-xl">
+                  Are you sure you want to cancel your subscription?
+                </Title>
+                <TextNormal>
+                  This action cannot be undone. If you proceed, your subscription will be canceled.
+                  You will receive a prorated refund based on the remaining time on your
+                  subscription.
+                </TextNormal>
+                <div className="flex w-full items-center justify-between">
+                  <Button
+                    type="primary"
+                    onClick={() => {
+                      setCancelSubscriptionModalVisible(false);
+                    }}
+                  >
+                    No
+                  </Button>
+                  <Button type="secondary" onClick={cancelSubscription}>
+                    Yes
+                  </Button>
+                </div>
+              </div>
+            </Modal>
           </>
         )}
       </div>

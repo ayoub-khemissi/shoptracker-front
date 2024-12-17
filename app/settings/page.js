@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
@@ -24,11 +24,9 @@ export default function Settings() {
   const [tab, setTab] = useState(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
   const { showToast } = useToast();
   const { user, localLogout, saveUser } = useAuthContext();
-  const [, setSubscription] = useState(user?.subscription);
   const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
   const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
   const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
-  const [cancelSubscriptionModalVisible, setCancelSubscriptionModalVisible] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [isErrorNewPassword, setIsErrorNewPassword] = useState(false);
@@ -37,32 +35,10 @@ export default function Settings() {
   const [isErrorPhone, setIsErrorPhone] = useState(false);
   const router = useRouter();
 
-  const getSubscription = useCallback(async () => {
-    const response = await fetchData("/subscription", "GET");
-
-    switch (response?.status) {
-      case 200: {
-        const subscriptionData = (await response.json()).data;
-        user.subscription = subscriptionData;
-        saveUser(user);
-        setSubscription(subscriptionData);
-        break;
-      }
-
-      default:
-        showToast("Failed to get your subscription. Please try again later.", "error");
-        break;
-    }
-  }, [user, saveUser, showToast]);
-
   useEffect(() => {
     const currentTab = searchParams.get("tab");
     setTab(currentTab || SETTINGS_TAB_NOTIFICATIONS);
-
-    if (user && currentTab === SETTINGS_TAB_SUBSCRIPTION) {
-      getSubscription();
-    }
-  }, [searchParams, user, getSubscription]);
+  }, [searchParams]);
 
   const updatePhone = async (e) => {
     e.preventDefault();
@@ -128,21 +104,6 @@ export default function Settings() {
 
       default:
         showToast("Failed to delete your account. Please try again later.", "error");
-        break;
-    }
-  };
-
-  const cancelSubscription = async () => {
-    const response = await fetchData(`/subscription/cancel`, "DELETE");
-
-    switch (response?.status) {
-      case 200:
-        showToast("Your subscription has been canceled. 👋😔", "info");
-        await getSubscription();
-        break;
-
-      default:
-        showToast("Failed to cancel your subscription. Please try again later.", "error");
         break;
     }
   };
@@ -298,46 +259,6 @@ export default function Settings() {
         {tab === SETTINGS_TAB_SUBSCRIPTION && (
           <div className="flex w-full flex-wrap items-start justify-center space-y-4 py-4">
             <Subscription />
-            {user?.subscription?.stripe_price_id && (
-              <>
-                <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
-                  <TextSeparator className="w-full">Subscription management</TextSeparator>
-                  <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
-                    Cancel subscription
-                  </Button>
-                </div>
-                <Modal
-                  isVisible={cancelSubscriptionModalVisible}
-                  onClose={() => {
-                    setCancelSubscriptionModalVisible(false);
-                  }}
-                >
-                  <div className="space-y-4">
-                    <Title className="text-center text-xl">
-                      Are you sure you want to cancel your subscription?
-                    </Title>
-                    <TextNormal>
-                      This action cannot be undone. If you proceed, your subscription will be
-                      canceled. You will receive a prorated refund based on the remaining time on
-                      your subscription.
-                    </TextNormal>
-                    <div className="flex w-full items-center justify-between">
-                      <Button
-                        type="primary"
-                        onClick={() => {
-                          setCancelSubscriptionModalVisible(false);
-                        }}
-                      >
-                        No
-                      </Button>
-                      <Button type="secondary" onClick={cancelSubscription}>
-                        Yes
-                      </Button>
-                    </div>
-                  </div>
-                </Modal>
-              </>
-            )}
           </div>
         )}
         {tab === SETTINGS_TAB_ACCOUNT && (

@@ -223,7 +223,7 @@ const Track = ({ className = "", number, data }) => {
   return (
     <>
       <div
-        className={`mx-2 my-2 flex w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
+        className={`mx-2 my-2 flex max-w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
       >
         <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
           <div className="w-1/6"></div>

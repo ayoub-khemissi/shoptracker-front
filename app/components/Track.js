@@ -27,15 +27,20 @@ import { ChartContainer } from "@/app/components/Chart";
 import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import getPlanData from "@/modules/PlanData";
+import { useRouter } from "next/navigation";
 
 const {
   TRACK_STATUS_ENABLED,
   TRACK_PRICE_STATUS_DECREASED,
   TRACK_PRICE_STATUS_INCREASED,
   TRACK_PRICE_STATUS_STABLE,
+
+  TRACKLIST_TAB_IN_PROGRESS,
+  TRACKLIST_TAB_WISHLIST,
 } = Constants;
 
 const Track = ({ className = "", number, data }) => {
+  const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = useAuthContext();
   const { showToast } = useToast();
@@ -156,8 +161,8 @@ const Track = ({ className = "", number, data }) => {
   const getLastCheckTimeText = () => {
     return convertMillisecondsToText(
       created_at -
-        Date.now() +
-        getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
+      Date.now() +
+      getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
     );
   };
 
@@ -180,7 +185,7 @@ const Track = ({ className = "", number, data }) => {
 
     switch (response?.status) {
       case 200:
-        window.location.reload();
+        router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}&refresh=true`);
         break;
 
       default:
@@ -197,7 +202,7 @@ const Track = ({ className = "", number, data }) => {
 
     switch (response?.status) {
       case 200:
-        window.location.reload();
+        router.push(`/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`);
         break;
 
       default:

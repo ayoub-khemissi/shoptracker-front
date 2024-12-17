@@ -1,26 +1,67 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
 import Constants from "@/utils/Constants";
 import Track from "../components/Track";
 import { fetchData } from "@/modules/Fetch";
+import { useRouter } from "next/navigation";
 
-const { TRACK_STATUS_ENABLED, TRACK_STATUS_DISABLED, TRACK_STATUS_INVALID, TRACK_STATUS_FINISHED } =
-  Constants;
+const {
+  TRACK_STATUS_ENABLED,
+  TRACK_STATUS_DISABLED,
+  TRACK_STATUS_INVALID,
+  TRACK_STATUS_FINISHED,
+
+  TRACKLIST_TAB_IN_PROGRESS,
+  TRACKLIST_TAB_WISHLIST,
+  TRACKLIST_TAB_INVALID,
+  TRACKLIST_TAB_FINISHED,
+} = Constants;
+
+const TABS = [
+  { id: TRACK_STATUS_ENABLED, name: TRACKLIST_TAB_IN_PROGRESS },
+  { id: TRACK_STATUS_DISABLED, name: TRACKLIST_TAB_WISHLIST },
+  { id: TRACK_STATUS_INVALID, name: TRACKLIST_TAB_INVALID },
+  { id: TRACK_STATUS_FINISHED, name: TRACKLIST_TAB_FINISHED },
+];
+
+const getTrackStatusIdByTab = (tab) => {
+  const tabData = TABS.find((tabData) => tabData.name === tab);
+  return tabData?.id ?? TRACK_STATUS_ENABLED;
+};
 
 export default function Tracklist() {
-  const [tab, setTab] = useState(TRACK_STATUS_ENABLED);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [tab, setTab] = useState(getTrackStatusIdByTab(searchParams.get("tab")));
+  const [refresh, setRefresh] = useState(false);
   const [tracklist, setTracklist] = useState([]);
 
-  useEffect(() => {
-    async function fetchTracklist() {
-      const response = await fetchData("/tracklist");
-      setTracklist((await response?.json())?.data ?? []);
-    }
+  const fetchTracklist = async () => {
+    const response = await fetchData("/tracklist");
+    setTracklist((await response?.json())?.data ?? []);
+  };
 
+  useEffect(() => {
     fetchTracklist();
   }, []);
+
+  useEffect(() => {
+    const isRefreshing = searchParams.get("refresh") === "true";
+
+    if (isRefreshing) {
+      fetchTracklist();
+      setRefresh(true);
+    } else {
+      setRefresh(false);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    setTab(getTrackStatusIdByTab(searchParams.get("tab")));
+  }, [searchParams]);
 
   const getFilteredAndSortedTracklist = () => {
     return tracklist.filter((track) => tab === track.status_id);
@@ -43,7 +84,7 @@ export default function Tracklist() {
             type={tab === TRACK_STATUS_ENABLED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab(TRACK_STATUS_ENABLED);
+              router.push(`/tracklist?tab=${TRACKLIST_TAB_IN_PROGRESS}`);
             }}
           >
             In progress
@@ -54,7 +95,7 @@ export default function Tracklist() {
             type={tab === TRACK_STATUS_DISABLED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab(TRACK_STATUS_DISABLED);
+              router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}`);
             }}
           >
             Wishlist
@@ -65,7 +106,7 @@ export default function Tracklist() {
             type={tab === TRACK_STATUS_INVALID ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab(TRACK_STATUS_INVALID);
+              router.push(`/tracklist?tab=${TRACKLIST_TAB_INVALID}`);
             }}
           >
             Invalid
@@ -76,7 +117,7 @@ export default function Tracklist() {
             type={tab === TRACK_STATUS_FINISHED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab(TRACK_STATUS_FINISHED);
+              router.push(`/tracklist?tab=${TRACKLIST_TAB_FINISHED}`);
             }}
           >
             Finished

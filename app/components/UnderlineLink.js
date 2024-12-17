@@ -7,7 +7,7 @@ const UnderlineLink = ({ children, className = "", href, target = "_self" }) => 
     <Link
       target={target}
       href={href}
-      className={`text-primary underline transition duration-200 hover:text-secondary ${className}`}
+      className={`text-tertiary underline transition duration-200 hover:text-secondary ${className}`}
     >
       {children}
     </Link>

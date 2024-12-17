@@ -33,6 +33,10 @@ const Constants = {
   TRACKLIST_TAB_WISHLIST: "wishlist",
   TRACKLIST_TAB_INVALID: "invalid",
   TRACKLIST_TAB_FINISHED: "finished",
+
+  SETTINGS_TAB_NOTIFICATIONS: "notifications",
+  SETTINGS_TAB_ACCOUNT: "account",
+  SETTINGS_TAB_SUBSCRIPTION: "subscription",
 };
 
 export default Constants;

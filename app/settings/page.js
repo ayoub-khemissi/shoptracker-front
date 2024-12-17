@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
@@ -9,15 +9,19 @@ import Subscription from "../components/Subscription";
 import { fetchData, fetchLogout } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "../components/Modal";
 import Title from "../components/Title";
 import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
 import { validatePassword, validatePhone } from "@/modules/DataValidation";
+import Constants from "@/utils/Constants";
+
+const { SETTINGS_TAB_NOTIFICATIONS, SETTINGS_TAB_ACCOUNT, SETTINGS_TAB_SUBSCRIPTION } = Constants;
 
 export default function Settings() {
-  const [tab, setTab] = useState("notifications");
+  const searchParams = useSearchParams();
+  const [tab, setTab] = useState(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
   const { showToast } = useToast();
   const { user, localLogout, saveUser } = useAuthContext();
   const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
@@ -31,6 +35,10 @@ export default function Settings() {
   const [phone, setPhone] = useState(user?.phone);
   const [isErrorPhone, setIsErrorPhone] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setTab(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
+  }, [searchParams]);
 
   const updatePhone = async (e) => {
     e.preventDefault();
@@ -169,10 +177,10 @@ export default function Settings() {
           <Button
             locked
             className="m-1"
-            type={tab === "notifications" ? "primary" : "contrast"}
+            type={tab === SETTINGS_TAB_NOTIFICATIONS ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab("notifications");
+              router.push(`/settings?tab=${SETTINGS_TAB_NOTIFICATIONS}`);
             }}
           >
             Notifications
@@ -180,10 +188,10 @@ export default function Settings() {
           <Button
             locked
             className="m-1"
-            type={tab === "subscription" ? "primary" : "contrast"}
+            type={tab === SETTINGS_TAB_SUBSCRIPTION ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab("subscription");
+              router.push(`/settings?tab=${SETTINGS_TAB_SUBSCRIPTION}`);
             }}
           >
             Subscription
@@ -191,16 +199,16 @@ export default function Settings() {
           <Button
             locked
             className="m-1"
-            type={tab === "account" ? "primary" : "contrast"}
+            type={tab === SETTINGS_TAB_ACCOUNT ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
-              setTab("account");
+              router.push(`/settings?tab=${SETTINGS_TAB_ACCOUNT}`);
             }}
           >
             Account
           </Button>
         </div>
-        {tab === "notifications" && (
+        {tab === SETTINGS_TAB_NOTIFICATIONS && (
           <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
             <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
               <TextSeparator className="w-full">Receive a notification</TextSeparator>
@@ -272,7 +280,7 @@ export default function Settings() {
             </div>
           </div>
         )}
-        {tab === "subscription" && (
+        {tab === SETTINGS_TAB_SUBSCRIPTION && (
           <div className="flex w-full flex-wrap items-start justify-center space-y-4 py-4">
             <Subscription />
             {user?.subscription?.stripe_price_id && (
@@ -317,7 +325,7 @@ export default function Settings() {
             )}
           </div>
         )}
-        {tab === "account" && (
+        {tab === SETTINGS_TAB_ACCOUNT && (
           <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
             <div className="flex w-96 flex-col items-center justify-center space-y-5">
               <TextSeparator className="w-full">Change password</TextSeparator>

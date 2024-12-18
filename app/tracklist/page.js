@@ -7,6 +7,8 @@ import Constants from "@/utils/Constants";
 import Track from "../components/Track";
 import { fetchData } from "@/modules/Fetch";
 import { useRouter } from "next/navigation";
+import EmptyBoxSvg from "../../public/assets/svg/illustrations/empty-box.svg";
+import Image from "next/image";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -123,6 +125,11 @@ export default function Tracklist() {
             Finished
           </Button>
         </div>
+        {filteredTracklist.length === 0 && (
+          <div className="flex justify-center items-center pt-2 md:pt-14 lg:pt-20">
+            <Image className="h-96" src={EmptyBoxSvg} alt="empty-box" />
+          </div>
+        )}
         <div className="flex flex-wrap justify-evenly">
           {filteredTracklist.map((track, index) => {
             return <Track data={track} number={index + 1} key={`track-${index}`} />;

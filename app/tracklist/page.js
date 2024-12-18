@@ -126,7 +126,7 @@ export default function Tracklist() {
           </Button>
         </div>
         {filteredTracklist.length === 0 && (
-          <div className="flex justify-center items-center pt-2 md:pt-14 lg:pt-20">
+          <div className="flex items-center justify-center pt-2 md:pt-14 lg:pt-20">
             <Image className="h-96" src={EmptyBoxSvg} alt="empty-box" />
           </div>
         )}

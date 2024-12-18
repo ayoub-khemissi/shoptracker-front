@@ -185,6 +185,12 @@ export default function Register() {
                 <div>
                   <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
                 </div>
+                <TextNormal>
+                  By signing up, you agree to our{" "}
+                  <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>, {" "}
+                  <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
+                  <UnderlineLink href="/privacy">GDPR Privacy Policy</UnderlineLink>.
+                </TextNormal>
               </div>
               <Button buttonType="submit" type="primary">
                 Sign Up

@@ -21,7 +21,7 @@ import {
   Tooltip,
   YAxis,
 } from "recharts";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Modal from "./Modal";
 import { ChartContainer } from "@/app/components/Chart";
 import { fetchData } from "@/modules/Fetch";
@@ -52,9 +52,22 @@ const Track = ({ className = "", number, data }) => {
     initial_price,
     currency,
     created_at,
+    updated_at,
     status_id,
     track_checks,
   } = data;
+
+  const getTimeLeftBeforeCheck = useCallback(() => {
+    const lastCheckTime = updated_at || created_at;
+
+    return (
+      lastCheckTime -
+      Date.now() +
+      getPlanData(user?.subscription?.stripe_price_id).track_check_interval
+    );
+  }, [updated_at, created_at, user?.subscription?.stripe_price_id]);
+
+  const [timeLeftBeforeCheck, setTimeLeftBeforeCheck] = useState(getTimeLeftBeforeCheck());
 
   const formatFullPrice = () => {
     const price = track_checks[track_checks.length - 1]?.price ?? initial_price;
@@ -158,14 +171,6 @@ const Track = ({ className = "", number, data }) => {
     }
   };
 
-  const getLastCheckTimeText = () => {
-    return convertMillisecondsToText(
-      created_at -
-        Date.now() +
-        getPlanData(user?.subscription?.stripe_price_id).track_check_interval,
-    );
-  };
-
   const getSiteDomain = () => {
     try {
       const cleanedUrl = url.replace(/^[a-zA-Z]+:\/\//, "");
@@ -227,10 +232,18 @@ const Track = ({ className = "", number, data }) => {
     price: trackCheck.price,
   }));
 
+  useEffect(() => {
+    const timeLeftBeforeCheckInterval = setInterval(() => {
+      setTimeLeftBeforeCheck(getTimeLeftBeforeCheck());
+    }, 1000);
+
+    return () => clearInterval(timeLeftBeforeCheckInterval);
+  }, [getTimeLeftBeforeCheck]);
+
   return (
     <>
       <div
-        className={`mx-2 my-2 flex max-w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
+        className={`mx-2 my-2 flex min-w-[256px] max-w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
       >
         <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
           <div className="w-1/6"></div>
@@ -307,10 +320,14 @@ const Track = ({ className = "", number, data }) => {
                 {status_id === TRACK_STATUS_ENABLED && (
                   <div className="flex items-center justify-center space-x-2 px-2">
                     <div className="flex items-center justify-center">
-                      <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next track check" />
+                      {timeLeftBeforeCheck > 0 ? (
+                        <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next track check" />
+                      ) : (
+                        <Spinner className="h-7 w-7" />
+                      )}
                     </div>
                     <TextImportant className="text-center text-sm leading-4">
-                      {getLastCheckTimeText()}
+                      {convertMillisecondsToText(timeLeftBeforeCheck)}
                     </TextImportant>
                   </div>
                 )}
@@ -318,7 +335,7 @@ const Track = ({ className = "", number, data }) => {
             </div>
           </InvisibleButton>
         ) : (
-          <div title="Waiting for data..." className="flex flex-1 items-center justify-center">
+          <div title="Fetching data..." className="flex flex-1 items-center justify-center">
             <Spinner className="my-8 h-10 w-10" />
           </div>
         )}

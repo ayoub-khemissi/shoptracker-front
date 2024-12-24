@@ -29,22 +29,29 @@ const TABS = [
   { id: TRACK_STATUS_FINISHED, name: TRACKLIST_TAB_FINISHED },
 ];
 
-const getTrackStatusIdByTab = (tab) => {
-  const tabData = TABS.find((tabData) => tabData.name === tab);
-  return tabData?.id ?? TRACK_STATUS_ENABLED;
-};
-
 export default function Tracklist() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [tab, setTab] = useState(getTrackStatusIdByTab(searchParams.get("tab")));
   const [, setRefresh] = useState(false);
   const [tracklist, setTracklist] = useState([]);
+
+  const getTrackStatusIdByTab = (tab) => {
+    const tabData = TABS.find((tabData) => tabData.name === tab);
+    return tabData?.id ?? TRACK_STATUS_ENABLED;
+  };
+
+  const [tab, setTab] = useState(getTrackStatusIdByTab(searchParams.get("tab")));
 
   const fetchTracklist = async () => {
     const response = await fetchData("/tracklist");
     setTracklist((await response?.json())?.data ?? []);
   };
+
+  const getFilteredAndSortedTracklist = () => {
+    return tracklist.filter((track) => tab === track.status_id);
+  };
+
+  const filteredTracklist = getFilteredAndSortedTracklist();
 
   useEffect(() => {
     fetchTracklist();
@@ -65,11 +72,13 @@ export default function Tracklist() {
     setTab(getTrackStatusIdByTab(searchParams.get("tab")));
   }, [searchParams]);
 
-  const getFilteredAndSortedTracklist = () => {
-    return tracklist.filter((track) => tab === track.status_id);
-  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchTracklist();
+    }, 30 * 1000);
 
-  const filteredTracklist = getFilteredAndSortedTracklist();
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>

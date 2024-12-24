@@ -93,8 +93,6 @@ export default function Register() {
       password: password,
     });
 
-    console.log(response);
-
     switch (response?.status) {
       case 201:
         showToast("Registered successfully! 🎉", "success");

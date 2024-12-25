@@ -5,8 +5,8 @@
  * @returns {boolean} true if the email is valid, false otherwise.
  */
 export function validateEmail(email) {
-    const emailRegex = /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return email && emailRegex.test(email);
+  const emailRegex = /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  return email && emailRegex.test(email);
 }
 
 /**
@@ -18,8 +18,8 @@ export function validateEmail(email) {
  * @returns {boolean} true if the password is valid, false otherwise.
  */
 export function validatePassword(password) {
-    const hashRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return password && hashRegex.test(password);
+  const hashRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  return password && hashRegex.test(password);
 }
 
 /**
@@ -31,9 +31,9 @@ export function validatePassword(password) {
  * @returns {boolean} true if the URL is valid, false otherwise.
  */
 export function validateUrl(url) {
-    const urlRegex =
-        /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)$/;
-    return url && urlRegex.test(url);
+  const urlRegex =
+    /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)$/;
+  return url && urlRegex.test(url);
 }
 
 /**
@@ -43,7 +43,7 @@ export function validateUrl(url) {
  * @returns {boolean} true if the data is a boolean, false otherwise.
  */
 export function validateBoolean(data) {
-    return typeof data === "boolean";
+  return typeof data === "boolean";
 }
 
 /**
@@ -53,7 +53,7 @@ export function validateBoolean(data) {
  * @returns {boolean} true if the data is a number, false otherwise.
  */
 export function validateNumber(data) {
-    return typeof data === "number";
+  return typeof data === "number";
 }
 
 /**
@@ -65,6 +65,6 @@ export function validateNumber(data) {
  * @returns {boolean} true if the phone number is valid, false otherwise.
  */
 export function validatePhone(phone) {
-    const phoneRegex = /^\+\d{10,15}$/;
-    return phone && phoneRegex.test(phone);
+  const phoneRegex = /^\+\d{10,15}$/;
+  return phone && phoneRegex.test(phone);
 }

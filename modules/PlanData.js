@@ -28,7 +28,7 @@ const getPlanData = (stripePriceId) => {
       return {
         name: "Free Plan",
         price: 0,
-        track_check_interval: 2 * 24 * 60 * 60 * 1000,
+        track_check_interval: 24 * 60 * 60 * 1000, // daily = 86400000
         track_enabled_max_products: 1,
         track_disabled_max_products: 3,
         track_user_max_searches_per_day: 3,
@@ -39,8 +39,8 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY:
       return {
         name: "Basic Plan",
-        price: 7.99,
-        track_check_interval: 12 * 60 * 60 * 1000,
+        price: 8.99,
+        track_check_interval: 6 * 60 * 60 * 1000, // every 6 hours = 21600000
         track_enabled_max_products: 3,
         track_disabled_max_products: 5,
         track_user_max_searches_per_day: 5,
@@ -52,7 +52,7 @@ const getPlanData = (stripePriceId) => {
       return {
         name: "Pro Plan",
         price: 24.99,
-        track_check_interval: 30 * 60 * 1000,
+        track_check_interval: 30 * 60 * 1000, // every 30 minutes = 1800000
         track_enabled_max_products: 5,
         track_disabled_max_products: 8,
         track_user_max_searches_per_day: 8,
@@ -64,10 +64,10 @@ const getPlanData = (stripePriceId) => {
       return {
         name: "Premium Plan",
         price: 79.99,
-        track_check_interval: 5 * 60 * 1000,
-        track_enabled_max_products: 5,
-        track_disabled_max_products: 8,
-        track_user_max_searches_per_day: 8,
+        track_check_interval: 5 * 60 * 1000, // every 5 minutes = 300000
+        track_enabled_max_products: 8,
+        track_disabled_max_products: 12,
+        track_user_max_searches_per_day: 12,
         popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_MONTHLY,
       };
@@ -75,8 +75,8 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY:
       return {
         name: "Enterprise +",
-        price: 97.99,
-        track_check_interval: 12 * 60 * 60 * 1000,
+        price: 119.99,
+        track_check_interval: 6 * 60 * 60 * 1000, // every 6 hours = 21600000
         track_enabled_max_products: 15,
         track_disabled_max_products: 20,
         track_user_max_searches_per_day: 20,
@@ -87,35 +87,35 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY:
       return {
         name: "Business +",
-        price: 179.99,
-        track_check_interval: 1 * 60 * 60 * 1000,
-        track_enabled_max_products: 15,
-        track_disabled_max_products: 20,
-        track_user_max_searches_per_day: 20,
-        popular: false,
+        price: 199.99,
+        track_check_interval: 1 * 60 * 60 * 1000, // every hour = 3600000
+        track_enabled_max_products: 20,
+        track_disabled_max_products: 30,
+        track_user_max_searches_per_day: 30,
+        popular: true,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_MONTHLY,
       };
 
     case SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY:
       return {
         name: "Elite +",
-        price: 289.99,
-        track_check_interval: 30 * 60 * 1000,
-        track_enabled_max_products: 20,
-        track_disabled_max_products: 25,
-        track_user_max_searches_per_day: 25,
-        popular: true,
+        price: 299.99,
+        track_check_interval: 30 * 60 * 1000, // every 30 minutes = 1800000
+        track_enabled_max_products: 25,
+        track_disabled_max_products: 40,
+        track_user_max_searches_per_day: 40,
+        popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_MONTHLY,
       };
 
     case SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY:
       return {
         name: "Ultimate +",
-        price: 488.99,
-        track_check_interval: 5 * 60 * 1000,
-        track_enabled_max_products: 20,
-        track_disabled_max_products: 25,
-        track_user_max_searches_per_day: 25,
+        price: 499.99,
+        track_check_interval: 5 * 60 * 1000, // every 5 minutes = 300000
+        track_enabled_max_products: 30,
+        track_disabled_max_products: 50,
+        track_user_max_searches_per_day: 50,
         popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_MONTHLY,
       };
@@ -123,8 +123,8 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY:
       return {
         name: "Basic Plan",
-        price: 7.99,
-        track_check_interval: 12 * 60 * 60 * 1000,
+        price: 6.99, // (8.99 * 0.75) rounded
+        track_check_interval: 6 * 60 * 60 * 1000, // every 6 hours = 21600000
         track_enabled_max_products: 3,
         track_disabled_max_products: 5,
         track_user_max_searches_per_day: 5,
@@ -135,8 +135,8 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY:
       return {
         name: "Pro Plan",
-        price: 24.99,
-        track_check_interval: 30 * 60 * 1000,
+        price: 18.99, // (24.99 * 0.75) rounded
+        track_check_interval: 30 * 60 * 1000, // every 30 minutes = 1800000
         track_enabled_max_products: 5,
         track_disabled_max_products: 8,
         track_user_max_searches_per_day: 8,
@@ -147,11 +147,11 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY:
       return {
         name: "Premium Plan",
-        price: 79.99,
-        track_check_interval: 5 * 60 * 1000,
-        track_enabled_max_products: 5,
-        track_disabled_max_products: 8,
-        track_user_max_searches_per_day: 8,
+        price: 59.99, // (79.99 * 0.75) rounded
+        track_check_interval: 5 * 60 * 1000, // every 5 minutes = 300000
+        track_enabled_max_products: 8,
+        track_disabled_max_products: 12,
+        track_user_max_searches_per_day: 12,
         popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_ANNUALLY,
       };
@@ -159,8 +159,8 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY:
       return {
         name: "Enterprise +",
-        price: 97.99,
-        track_check_interval: 12 * 60 * 60 * 1000,
+        price: 89.99, // (119.99 * 0.75) rounded
+        track_check_interval: 6 * 60 * 60 * 1000, // every 6 hours = 21600000
         track_enabled_max_products: 15,
         track_disabled_max_products: 20,
         track_user_max_searches_per_day: 20,
@@ -171,35 +171,35 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY:
       return {
         name: "Business +",
-        price: 179.99,
-        track_check_interval: 1 * 60 * 60 * 1000,
-        track_enabled_max_products: 15,
-        track_disabled_max_products: 20,
-        track_user_max_searches_per_day: 20,
-        popular: false,
+        price: 149.99, // (199.99 * 0.75) rounded
+        track_check_interval: 1 * 60 * 60 * 1000, // every hour = 3600000
+        track_enabled_max_products: 20,
+        track_disabled_max_products: 30,
+        track_user_max_searches_per_day: 30,
+        popular: true,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_ANNUALLY,
       };
 
     case SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY:
       return {
         name: "Elite +",
-        price: 289.99,
-        track_check_interval: 30 * 60 * 1000,
-        track_enabled_max_products: 20,
-        track_disabled_max_products: 25,
-        track_user_max_searches_per_day: 25,
-        popular: true,
+        price: 224.99, // (299.99 * 0.75) rounded
+        track_check_interval: 30 * 60 * 1000, // every 30 minutes = 1800000
+        track_enabled_max_products: 25,
+        track_disabled_max_products: 40,
+        track_user_max_searches_per_day: 40,
+        popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_ANNUALLY,
       };
 
     case SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY:
       return {
         name: "Ultimate +",
-        price: 488.99,
-        track_check_interval: 5 * 60 * 1000,
-        track_enabled_max_products: 20,
-        track_disabled_max_products: 25,
-        track_user_max_searches_per_day: 25,
+        price: 374.99, // (499.99 * 0.75) rounded
+        track_check_interval: 5 * 60 * 1000, // every 5 minutes = 300000
+        track_enabled_max_products: 30,
+        track_disabled_max_products: 50,
+        track_user_max_searches_per_day: 50,
         popular: false,
         billingPeriod: SUBSCRIPTION_BILLING_PERIOD_ANNUALLY,
       };

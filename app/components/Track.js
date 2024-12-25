@@ -191,7 +191,7 @@ const Track = ({ className = "", number, data }) => {
     switch (response?.status) {
       case 200:
         router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}&refresh=true`);
-        showToast(`${name}'s track has been deleted.`, "info");
+        showToast(`${name ?? "The track"} has been deleted.`, "info");
         break;
 
       default:
@@ -212,7 +212,7 @@ const Track = ({ className = "", number, data }) => {
           `/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`,
         );
         showToast(
-          `${name}'s track has been ${
+          `${name ?? "The track"} has been ${
             status_id === TRACK_STATUS_ENABLED ? "disabled" : "enabled"
           }.`,
           status_id === TRACK_STATUS_ENABLED ? "info" : "success",

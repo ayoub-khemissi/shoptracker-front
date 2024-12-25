@@ -58,10 +58,8 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
     switch (billingPeriod) {
       default:
       case SUBSCRIPTION_BILLING_PERIOD_MONTHLY:
-        return "per month";
-
       case SUBSCRIPTION_BILLING_PERIOD_ANNUALLY:
-        return "per year";
+        return "per month";
 
       case SUBSCRIPTION_BILLING_PERIOD_FOREVER:
         return "forever";
@@ -158,30 +156,6 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
     }
   };
 
-  const formatPriceByBillingPeriod = () => {
-    if (typeof price !== "number") {
-      return price;
-    }
-
-    let formattedPrice = 0;
-    switch (billingPeriod) {
-      default:
-      case SUBSCRIPTION_BILLING_PERIOD_MONTHLY:
-        formattedPrice = price;
-        break;
-
-      case SUBSCRIPTION_BILLING_PERIOD_ANNUALLY:
-        formattedPrice = Math.round(price * 12 * 0.75) - 0.01;
-        break;
-
-      case SUBSCRIPTION_BILLING_PERIOD_FOREVER:
-        formattedPrice = 0;
-        break;
-    }
-
-    return formatPrice(formattedPrice);
-  };
-
   const getCircleCheckSvgByPopularity = () => {
     return popular ? CircleCheckSecondarySvg : CircleCheckTertiarySvg;
   };
@@ -221,7 +195,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
       <div className="space-y-6 px-4 py-4">
         <Subtitle className="text-lg">{name}</Subtitle>
         <TextImportant className="text-2xl leading-4">
-          {formatPriceByBillingPeriod()}
+          {formatPrice(price)}
           <span className="text-xs">€ {getBillingPeriodText()}</span>
         </TextImportant>
         <TextImportant className="leading-4">{getDescriptionByStripePriceId()}</TextImportant>

@@ -356,7 +356,7 @@ const Track = ({ className = "", number, data }) => {
         }}
       >
         <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
-          {name}
+          {truncateString(name, 70)}
         </Title>
         <ChartContainer config={{}} className="h-full w-full">
           <ResponsiveContainer className="h-full w-full">

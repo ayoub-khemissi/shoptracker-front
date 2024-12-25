@@ -219,6 +219,15 @@ const Track = ({ className = "", number, data }) => {
         );
         break;
 
+      case 403: {
+        showToast(
+          (await response.json())?.msg ??
+            "Failed to update the track status. Please try again later.",
+          "error",
+        );
+        break;
+      }
+
       default:
         showToast("Failed to update the track status. Please try again later.", "error");
         break;

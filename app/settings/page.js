@@ -47,18 +47,31 @@ export default function Settings() {
       phone: phone,
     });
 
-    if (!response || response.status !== 200) {
-      showToast(
-        "An error occurred while saving your phone number. Please try again later.",
-        "error",
-      );
-      return;
+    switch (response?.status) {
+      case 200: {
+        user.phone = phone;
+        saveUser(user);
+        setIsErrorPhone(false);
+        showToast("Phone number saved! 🥳", "success");
+        break;
+      }
+
+      case 400:
+        setIsErrorPhone(true);
+        showToast("Invalid phone number, please try again.", "error");
+        return;
+
+      case 409:
+        setIsErrorPhone(true);
+        showToast("This phone number is already taken.", "error");
+        return;
+
+      default:
+        showToast(
+          "An error occurred while saving your phone number. Please try again later.",
+          "error",
+        );
     }
-
-    user.phone = phone;
-    saveUser(user);
-
-    showToast("Phone number saved! 🥳", "success");
   };
 
   const updateNotifications = async () => {

@@ -123,7 +123,7 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY:
       return {
         name: "Basic Plan",
-        price: 6.99, // (8.99 * 0.75) rounded
+        price: 6.74, // (8.99 * 0.75) rounded
         track_check_interval: 6 * 60 * 60 * 1000, // every 6 hours = 21600000
         track_enabled_max_products: 3,
         track_disabled_max_products: 5,
@@ -135,7 +135,7 @@ const getPlanData = (stripePriceId) => {
     case SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY:
       return {
         name: "Pro Plan",
-        price: 18.99, // (24.99 * 0.75) rounded
+        price: 18.74, // (24.99 * 0.75) rounded
         track_check_interval: 30 * 60 * 1000, // every 30 minutes = 1800000
         track_enabled_max_products: 5,
         track_disabled_max_products: 8,

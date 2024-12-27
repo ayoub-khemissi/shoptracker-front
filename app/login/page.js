@@ -58,6 +58,14 @@ export default function Login() {
         router.push("/tracklist");
         break;
 
+      case 404:
+        showToast(`User ${googleEmail} not found.`, "error");
+
+        localLogout();
+        await signOut({ redirect: false });
+        router.refresh();
+        break;
+
       default:
         showToast("An error occurred. Please try again later.", "error");
 

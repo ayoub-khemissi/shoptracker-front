@@ -153,6 +153,11 @@ export default function Register() {
           <Title className="text-center text-2xl lg:text-4xl">Sign Up</Title>
           <CircleButton
             onClick={() => {
+              if (!isTermsAccepted) {
+                showToast("Please accept the terms and conditions.", "error");
+                return;
+              }
+
               signIn("google", {
                 callbackUrl: "/register",
               });

@@ -16,26 +16,42 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <title>ShopTracker - Track prices and availability of products</title>
+        <title>ShopTracker - Track Restocks & Price Drops Online</title>
         <meta
           name="description"
-          content="Track prices or availability of products from almost any e-commerce platform."
+          content="Easily track restocks and price drops of products from almost any e-commerce platform. Get instant alerts and never miss a deal again!"
         />
         <meta
           name="keywords"
-          content="ShopTracker, tracking, restock, price changes, products, e-commerce, website"
+          content="ShopTracker, product tracking, restock alerts, price drop alerts, product availability, stock monitoring, price tracking, real-time updates, restock notifications, price change notifications, e-commerce tools, online shopping assistant, product discounts, inventory updates, shopping deals, price monitoring, deal tracking, stock alerts, retail price tracking, sales notifications, product restock updates, discount alerts, online shopping deals, e-commerce tracking, product price trends"
         />
         <meta name="author" content="ShopTracker" />
-        <meta
-          property="og:title"
-          content="ShopTracker - Track prices and availability of products"
-        />
+        <meta property="og:title" content="ShopTracker - Track Restocks & Price Drops Online" />
         <meta
           property="og:description"
-          content="Track prices or availability of products from almost any e-commerce platform."
+          content="Easily track restocks and price drops of products from almost any e-commerce platform. Get instant alerts and never miss a deal again!"
         />
-        <meta property="og:image" content="https://www.shoptracker.eu/favicon.ico" />
+        <meta
+          property="og:image"
+          content="https://www.shoptracker.eu/assets/img/social-preview.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:url" content="https://www.shoptracker.eu" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="ShopTracker" />
+        <meta name="twitter:title" content="ShopTracker - Track Restocks & Price Drops Online" />
+        <meta
+          name="twitter:description"
+          content="Easily track restocks and price drops of products from almost any e-commerce platform. Get instant alerts and never miss a deal again!"
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.shoptracker.eu/assets/img/social-preview.png"
+        />
+        <meta name="twitter:site" content="@ShopTracker" />
+        <meta name="twitter:creator" content="@ShopTracker" />
         <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href="https://www.shoptracker.eu" />
       </head>

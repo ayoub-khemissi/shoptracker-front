@@ -119,6 +119,11 @@ export default function Register() {
         showToast("Incorrect email or password.", "error");
         break;
 
+      case 409:
+        setIsErrorEmail(true);
+        showToast("This email is already taken.", "error");
+        break;
+
       default:
         setIsErrorEmail(false);
         showToast("An error occurred. Please try again later.", "error");

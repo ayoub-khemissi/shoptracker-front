@@ -17,6 +17,7 @@ import { useToast } from "../contexts/ToastContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "@/modules/DataValidation";
+import { Checkbox } from "@nextui-org/react";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ export default function Register() {
   const [isErrorEmail, setIsErrorEmail] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
   const [isGoogleLoginProcessed, setIsGoogleLoginProcessed] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   const { localLogin, localLogout } = useAuthContext();
   const { showToast } = useToast();
@@ -87,6 +89,16 @@ export default function Register() {
 
   const registerClassical = async (e) => {
     e.preventDefault();
+
+    if (!validatePassword(password)) {
+      setIsErrorPassword(true);
+      return;
+    }
+
+    if (!isTermsAccepted) {
+      showToast("Please accept the terms and conditions.", "error");
+      return;
+    }
 
     const response = await fetchData("/register/classical", "POST", {
       email: email,
@@ -177,18 +189,26 @@ export default function Register() {
             />
             <div className="flex w-full items-start justify-between">
               <div className="flex w-full flex-col space-y-4">
+                <Checkbox
+                  defaultSelected
+                  color="warning"
+                  isRequired
+                  required
+                  aria-required
+                  isSelected={isTermsAccepted}
+                  onChange={(e) => setIsTermsAccepted(e.target.checked)}
+                >
+                  By signing up, you agree to our{" "}
+                  <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>,{" "}
+                  <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
+                  <UnderlineLink href="/privacy">GDPR Privacy Policy</UnderlineLink>.
+                </Checkbox>
                 <TextNormal>
                   Already have an account? <UnderlineLink href="/login">Sign In</UnderlineLink>
                 </TextNormal>
                 <div>
                   <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
                 </div>
-                <TextNormal>
-                  By signing up, you agree to our{" "}
-                  <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>,{" "}
-                  <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
-                  <UnderlineLink href="/privacy">GDPR Privacy Policy</UnderlineLink>.
-                </TextNormal>
               </div>
               <Button buttonType="submit" type="primary">
                 Sign Up

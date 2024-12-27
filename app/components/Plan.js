@@ -162,7 +162,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
 
   const checkoutSession = async () => {
     if (stripePriceId === SUBSCRIPTION_STRIPE_PRICE_ID_FREE) {
-      router.push("/tracklist");
+      router.push("/tracker");
       return;
     }
 

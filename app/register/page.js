@@ -54,11 +54,11 @@ export default function Register() {
 
     switch (response?.status) {
       case 200:
-        showToast("Logged in successfully! 🎉", "success");
+        showToast("Registered successfully! 🎉", "success");
         localLogin((await response.json()).data);
 
         await signOut({ redirect: false });
-        router.push("/tracker");
+        router.push("/pricing");
         break;
 
       default:
@@ -111,6 +111,7 @@ export default function Register() {
         setIsErrorEmail(false);
         setIsErrorPassword(false);
         localLogin((await response.json()).data);
+        router.push("/pricing");
         break;
 
       case 400:

@@ -18,35 +18,46 @@ export default function Privacy() {
         <Title className="pb-6 text-center text-4xl text-secondary">Privacy Policy</Title>
         <TextNormal>
           Your privacy is important to us. This policy explains how we collect, use, and protect
-          your personal data.
+          your personal data, including how we handle information through tools such as Speed
+          Insights and Vercel Analytics.
         </TextNormal>
 
         <Accordion>
           <AccordionItem key="1" aria-label="Introduction" title="Introduction">
-            At ShopTracker, we are committed to protecting your privacy and ensuring compliance with
-            the General Data Protection Regulation (GDPR). This Privacy Policy explains how we
-            collect, use, store, and protect your personal data.
+            At ShopTracker, we are committed to safeguarding your privacy in accordance with the
+            General Data Protection Regulation (GDPR). This Privacy Policy outlines how we gather,
+            process, store, and protect your personal information, including data collected through
+            our use of Speed Insights and Vercel Analytics.
           </AccordionItem>
 
           <AccordionItem key="2" aria-label="Data We Collect" title="1. Data We Collect">
             <TextNormal>1.1 Personal Data</TextNormal>
             <ul className="ml-4 list-disc">
               <li>
-                <strong>Email Address</strong>: Mandatory for account creation and service
+                <strong>Email Address</strong>: Required for account creation and service
                 notifications.
               </li>
               <li>
                 <strong>Phone Number</strong>: Optional, used for WhatsApp or SMS notifications
-                about restocks or price drops.
+                regarding restocks or price changes.
+              </li>
+              <li>
+                <strong>Tracks</strong>: Information about the products you track, including their
+                name, price, and availability status.
               </li>
             </ul>
-            <TextNormal>1.2 Cookies</TextNormal>
-            We use only essential cookies for:
+            <TextNormal>1.2 Cookies and Analytics</TextNormal>
+            We use essential cookies as well as tools like Speed Insights and Vercel Analytics to
+            gather information on how users interact with our website. This data helps us improve
+            the performance and user experience of the platform:
             <ul className="ml-4 list-disc">
-              <li>Authentication and login.</li>
+              <li>Authentication and login processes.</li>
               <li>User preferences and session management.</li>
+              <li>Website performance monitoring and optimization via Vercel Analytics.</li>
             </ul>
-            No third-party tracking cookies are employed.
+            These tools may collect anonymized data, such as page views, traffic sources, and
+            performance metrics, but they do not track personal information unless explicitly
+            provided.
           </AccordionItem>
 
           <AccordionItem
@@ -54,12 +65,16 @@ export default function Privacy() {
             aria-label="Purpose of Data Collection"
             title="2. Purpose of Data Collection"
           >
-            Your data is collected to:
+            The data we collect is used to:
             <ul className="ml-4 list-disc">
-              <li>Provide core functionalities of the ShopTracker service.</li>
-              <li>Notify you about restocks, price drops, or service updates.</li>
-              <li>Send promotional emails if you have explicitly consented.</li>
-              <li>Ensure compliance with applicable laws and regulations.</li>
+              <li>Provide essential features and services of ShopTracker.</li>
+              <li>Notify you of restocks, price drops, or other important updates.</li>
+              <li>Send marketing emails if you have consented.</li>
+              <li>
+                Analyze website performance and user experience using tools like Speed Insights and
+                Vercel Analytics.
+              </li>
+              <li>Ensure compliance with applicable data protection laws and regulations.</li>
             </ul>
           </AccordionItem>
 
@@ -69,8 +84,10 @@ export default function Privacy() {
             title="3. Data Storage and Retention"
           >
             <TextNormal>3.1 Storage Location</TextNormal>
-            Your data is securely stored on AWS servers located within the European Union.
-            Notifications are sent via trusted third-party services:
+            Your personal data is securely stored on Aiven Cloud servers located in Frankfurt,
+            Germany. Aiven acts solely as an infrastructure provider for data storage and does not
+            process your personal data. For all communications and notifications, we use trusted
+            third-party services.
             <ul className="ml-4 list-disc">
               <li>
                 <strong>Twilio</strong> for WhatsApp or SMS notifications.
@@ -100,7 +117,7 @@ export default function Privacy() {
             We implement standard technical and organizational measures to protect your data against
             unauthorized access, disclosure, alteration, or destruction. These include:
             <ul className="ml-4 list-disc">
-              <li>Restricted access to databases.</li>
+              <li>Strictly restricted access to databases.</li>
               <li>Secure password hashing.</li>
               <li>Regular security audits.</li>
             </ul>

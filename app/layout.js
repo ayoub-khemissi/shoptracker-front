@@ -10,6 +10,7 @@ import { ToastProvider } from "./contexts/ToastContext";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -72,6 +73,7 @@ export default function RootLayout({ children }) {
           </AuthProvider>
         </SessionProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

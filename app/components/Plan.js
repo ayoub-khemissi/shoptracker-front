@@ -185,64 +185,108 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
 
   return (
     <div
-      className={`${popular ? "border-contrast bg-primary text-contrast" : "border-primary bg-contrast text-primary"} relative w-80 rounded-2xl border-2 ${className}`}
+      className={`${
+        popular
+          ? "border-sky-300/30 bg-gradient-to-br from-sky-400/20 via-white/10 to-blue-600/20 shadow-lg shadow-sky-500/20"
+          : "border-primary/30 bg-contrast/80"
+      } relative w-80 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
     >
       {popular && (
-        <div className="absolute right-0 top-0 m-0.5 rounded-bl-xl rounded-tr-xl bg-contrast px-5 py-1">
-          <TextNormal className="text-xs uppercase text-primary">Popular</TextNormal>
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 px-6 py-1.5 shadow-lg">
+          <TextNormal className="text-xs font-semibold uppercase tracking-wider text-white">
+            Most Popular ✨
+          </TextNormal>
         </div>
       )}
-      <div className="space-y-6 px-4 py-4">
-        <Subtitle className="text-lg">{name}</Subtitle>
-        <TextImportant className="text-2xl leading-4">
-          {formatPrice(price)}
-          <span className="text-xs">€ {getBillingPeriodText()}</span>
-        </TextImportant>
-        <TextImportant className="leading-4">{getDescriptionByStripePriceId()}</TextImportant>
+
+      <div className="space-y-6 p-6">
+        <div className="space-y-2 text-center">
+          <Subtitle className={`text-xl font-bold ${popular ? "text-sky-300" : "text-primary"}`}>
+            {name}
+          </Subtitle>
+          <TextImportant
+            className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
+          >
+            {formatPrice(price)}
+            <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
+          </TextImportant>
+          <TextImportant
+            className={`text-sm leading-6 ${popular ? "text-sky-100" : "text-primary/80"}`}
+          >
+            {getDescriptionByStripePriceId()}
+          </TextImportant>
+        </div>
+
         {hasCallToAction && (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center pt-2">
             {user ? (
-              <Button type={popular ? "secondary" : "primary"} onClick={checkoutSession}>
+              <Button
+                type="contrast"
+                onClick={checkoutSession}
+                className={`w-full rounded-xl py-3 font-medium transition-all duration-300 ${
+                  popular
+                    ? "bg-gradient-to-r from-sky-400 to-blue-600 text-white shadow-lg shadow-sky-500/20 hover:from-sky-500 hover:to-blue-700 hover:shadow-xl"
+                    : "border-2 border-primary hover:bg-primary hover:text-contrast"
+                }`}
+              >
                 Select this plan
               </Button>
             ) : (
-              <ButtonLink type={popular ? "secondary" : "primary"} href="/register">
+              <ButtonLink
+                type="contrast"
+                href="/register"
+                className={`w-full rounded-xl py-3 font-medium transition-all duration-300 ${
+                  popular
+                    ? "bg-gradient-to-r from-sky-400 to-blue-600 text-white shadow-lg shadow-sky-500/20 hover:from-sky-500 hover:to-blue-700 hover:shadow-xl"
+                    : "border-2 border-primary hover:bg-primary hover:text-contrast"
+                }`}
+              >
                 Select this plan
               </ButtonLink>
             )}
           </div>
         )}
       </div>
-      <Separator type={popular ? "contrast" : "primary"} />
-      <div className="space-y-3 px-4 py-4">
-        <Subtitle className="text-sm">Features</Subtitle>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByPopularity()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            Track <span className="font-bold">{track_enabled_max_products} </span>
-            {track_enabled_max_products > 1 ? "products simultaneously" : "product at a time"}
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByPopularity()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            Check performed every
-            <span className="font-bold"> {convertMillisecondsToText(track_check_interval)}</span>
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByPopularity()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            <span className="font-bold">{track_disabled_max_products} products</span> maximum in the
-            wishlist
-          </TextNormal>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Image className="h-9 w-9" src={getCircleCheckSvgByPopularity()} alt="circle check" />
-          <TextNormal className="text-sm uppercase">
-            <span className="font-bold">{track_user_max_searches_per_day} user searches</span> per
-            day
-          </TextNormal>
+
+      <Separator type={popular ? "contrast" : "primary"} className="opacity-20" />
+
+      <div className="space-y-4 p-6">
+        <Subtitle
+          className={`text-sm uppercase tracking-wider ${popular ? "text-sky-300" : "text-primary"}`}
+        >
+          Features
+        </Subtitle>
+
+        <div className="space-y-4">
+          {[
+            `Track ${track_enabled_max_products} ${track_enabled_max_products > 1 ? "products simultaneously" : "product at a time"}`,
+            `Check performed every ${convertMillisecondsToText(track_check_interval)}`,
+            `${track_disabled_max_products} products maximum in the wishlist`,
+            `${track_user_max_searches_per_day} user searches per day`,
+          ].map((feature, index) => (
+            <div key={index} className="group flex items-center space-x-3">
+              <div
+                className={`flex-shrink-0 rounded-full p-1 ${
+                  popular ? "bg-gradient-to-br from-sky-400 to-blue-600" : "bg-primary/10"
+                }`}
+              >
+                <Image
+                  className={`h-4 w-4 ${popular ? "brightness-200" : ""}`}
+                  src={getCircleCheckSvgByPopularity()}
+                  alt="feature check"
+                />
+              </div>
+              <TextNormal
+                className={`text-sm ${
+                  popular
+                    ? "text-sky-100/90 group-hover:text-white"
+                    : "text-primary/80 group-hover:text-primary"
+                } transition-colors duration-200`}
+              >
+                {feature}
+              </TextNormal>
+            </div>
+          ))}
         </div>
       </div>
     </div>

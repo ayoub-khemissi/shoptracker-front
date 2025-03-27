@@ -29,9 +29,8 @@ const ButtonLink = ({
       break;
 
     case "quaternary":
-      typeClass = `border-quaternary text-contrast bg-quaternary shadow-lg
-        hover:bg-gradient-to-r hover:from-quaternary hover:to-white hover:text-contrast 
-        hover:border-quaternary/20 hover:shadow-quaternary/20 hover:scale-105`;
+      typeClass = `border-quaternary text-primary bg-quaternary shadow-lg
+          hover:text-quaternary hover:bg-contrast hover:shadow-quaternary/20 hover:scale-105`;
       break;
 
     case "contrast":

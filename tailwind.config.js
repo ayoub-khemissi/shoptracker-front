@@ -26,6 +26,11 @@ module.exports = {
           DEFAULT: "#B78BFF",
           light: "#B78BFF",
         },
+        quaternary: {
+          dark: "#0EA5E9",
+          DEFAULT: "#38BDF8",
+          light: "#7DD3FC",
+        },
         contrast: {
           dark: "#1E1E25",
           DEFAULT: "#1E1E25",

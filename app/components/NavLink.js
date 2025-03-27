@@ -12,6 +12,7 @@ const NavLink = ({
   type = "primary",
   target = "_self",
   title = null,
+  onClick,
 }) => {
   let typeClass;
 
@@ -34,6 +35,7 @@ const NavLink = ({
       title={title}
       target={target}
       href={href}
+      onClick={onClick}
       className={`${lexend.className} ${typeClass} uppercase transition duration-200 ${className}`}
     >
       {children}

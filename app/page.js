@@ -33,20 +33,30 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="flex flex-wrap items-center justify-evenly space-y-4 py-6">
-          <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
-            <Image className="h-96" src={ShoppingSvg} alt="shopping" />
+        <div className="grid grid-cols-1 gap-8 py-6 lg:grid-cols-2">
+          <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+            <Image className="h-80" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               {formatNumberWithSpaces(totalTracksEnabled)} products are being tracked
               <br /> right now.
             </TextNormal>
+            {/* Fond avec formes abstraites */}
+            <div className="absolute inset-0 z-0 opacity-10">
+              <div className="absolute right-0 top-0 h-1/2 w-1/2 -translate-y-1/4 translate-x-1/4 transform rounded-full bg-secondary blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 h-1/2 w-1/2 -translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center space-y-6 lg:w-1/3">
-            <Image className="h-96" src={StockPricesSvg} alt="stock prices" />
+          <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+            <Image className="h-80" src={StockPricesSvg} alt="stock prices" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
               {formatNumberWithSpaces(totalTrackChecks)} checks performed
               <br /> since the launch.
             </TextNormal>
+            {/* Fond avec formes abstraites */}
+            <div className="absolute inset-0 z-0 opacity-10">
+              <div className="absolute left-0 top-0 h-1/2 w-1/2 -translate-x-1/4 -translate-y-1/4 transform rounded-full bg-secondary blur-3xl"></div>
+              <div className="absolute bottom-0 right-0 h-1/2 w-1/2 translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
+            </div>
           </div>
         </div>
         <div className="hidden items-center justify-center py-10 lg:flex">
@@ -67,23 +77,23 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="flex flex-wrap items-center justify-between space-y-4 py-20 lg:flex-nowrap lg:space-x-24">
-          <div className="flex flex-col items-center justify-between space-y-10 lg:w-1/3">
-            <Image className="h-72" src={ProductUrlSvg} alt="product url" />
-            <TextNormal className="text-center text-2xl lg:text-3xl">
+        <div className="grid grid-cols-1 gap-8 py-20 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col items-center justify-between space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">
+            <Image className="h-60" src={ProductUrlSvg} alt="product url" />
+            <TextNormal className="text-center text-xl lg:text-2xl">
               Copy and paste the product page URL from the e-commerce site to the tracking page 🔎.
             </TextNormal>
           </div>
-          <div className="flex flex-col items-center justify-between space-y-10 lg:w-1/3">
-            <Image className="h-72" src={ConfirmationSvg} alt="product confirmation" />
-            <TextNormal className="text-center text-2xl lg:text-3xl">
+          <div className="flex flex-col items-center justify-between space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">
+            <Image className="h-60" src={ConfirmationSvg} alt="product confirmation" />
+            <TextNormal className="text-center text-xl lg:text-2xl">
               Wait a few seconds while the agent retrieves the product information and start the
               track 🕵.
             </TextNormal>
           </div>
-          <div className="flex flex-col items-center justify-center space-y-10 lg:w-1/3">
-            <Image className="h-72" src={NotificationSvg} alt="receive notification" />
-            <TextNormal className="text-center text-2xl lg:text-3xl">
+          <div className="flex flex-col items-center justify-center space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">
+            <Image className="h-60" src={NotificationSvg} alt="receive notification" />
+            <TextNormal className="text-center text-xl lg:text-2xl">
               Receive a notification when your product is back in stock or when its price has
               dropped 🎉!
             </TextNormal>

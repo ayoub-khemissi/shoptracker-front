@@ -252,21 +252,21 @@ const Track = ({ className = "", number, data }) => {
   return (
     <>
       <div
-        className={`mx-2 my-2 flex min-w-[256px] max-w-[512px] flex-auto flex-col rounded-lg border-2 border-primary ${className}`}
+        className={`mx-2 my-2 flex min-w-[256px] max-w-[512px] flex-auto flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
       >
-        <div className="flex h-8 items-center justify-center bg-primary px-2 py-1">
+        <div className="flex h-10 items-center justify-center bg-gradient-to-r from-primary/90 to-primary px-3 py-2">
           <div className="w-1/6"></div>
           <NavLink
             target="_blank"
             type="contrast"
             href={url}
-            className="w-4/6 text-center text-sm text-contrast md:text-base"
+            className="w-4/6 text-center text-sm font-medium text-contrast/90 transition-colors duration-200 hover:text-contrast md:text-base"
           >
             #{number} {getSiteDomain()} 🔗
           </NavLink>
           <div className="flex w-1/6 items-center justify-end text-contrast">
-            <Dropdown className="bg-contrast uppercase">
-              <DropdownTrigger className="z-0 rotate-90 cursor-pointer text-xl">
+            <Dropdown className="bg-contrast/95 backdrop-blur-sm">
+              <DropdownTrigger className="z-0 rotate-90 cursor-pointer text-xl transition-opacity hover:opacity-80">
                 •••
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
@@ -286,56 +286,66 @@ const Track = ({ className = "", number, data }) => {
           </div>
         </div>
         {name && name.length > 0 ? (
-          <InvisibleButton className="flex-1" onClick={() => setModalVisible(true)}>
-            <div
-              className="flex h-full flex-col items-center justify-between space-y-2 border-primary px-5 py-4"
-              title="View track details"
-            >
-              <Title className="text-center text-lg leading-5 text-secondary">
+          <InvisibleButton
+            className="flex-1 transition-colors duration-200 hover:bg-white/5"
+            onClick={() => setModalVisible(true)}
+          >
+            <div className="flex h-full flex-col items-center justify-between space-y-3 px-6 py-5">
+              <Title className="text-center text-lg leading-5 text-secondary/90 transition-colors duration-200 hover:text-secondary">
                 {truncateString(name, 50)}
               </Title>
-              <TextImportant className="py-1 text-center text-sm leading-4 text-primary">
+
+              <TextImportant className="py-1 text-center text-sm leading-4 text-primary/80">
                 {truncateString(description, 120)}
               </TextImportant>
-              <div className="flex w-full flex-wrap items-center justify-evenly space-y-1">
-                <div className="flex items-center justify-center space-x-2 px-2">
+
+              <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="flex items-center justify-center space-x-3 rounded-lg border border-white/5 bg-white/5 p-3 backdrop-blur-sm">
                   <div className="flex items-center justify-center">
                     <Image
-                      width={28}
-                      height={28}
+                      width={24}
+                      height={24}
                       src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
                       alt="price status"
                       title={getPriceStatusSvgTitle()}
+                      className="opacity-90"
                     />
                   </div>
                   <TextImportant className="text-center text-lg leading-3">
                     {formatFullPrice()}
                   </TextImportant>
                 </div>
-                <div className="flex items-center justify-center space-x-2 px-2">
+
+                <div className="flex items-center justify-center space-x-3 rounded-lg border border-white/5 bg-white/5 p-3 backdrop-blur-sm">
                   <div className="flex items-center justify-center">
                     <Image
-                      width={28}
-                      height={28}
+                      width={24}
+                      height={24}
                       src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
                       alt="availability status"
                       title={getAvailabilitySvgTitle()}
+                      className="opacity-90"
                     />
                   </div>
-                  <TextImportant className="py-1 text-center leading-4 text-primary">
+                  <TextImportant className="text-center leading-4 text-primary/90">
                     {getAvailabilityText(availability)}
                   </TextImportant>
                 </div>
+
                 {status_id === TRACK_STATUS_ENABLED && (
-                  <div className="flex items-center justify-center space-x-2 px-2">
+                  <div className="flex items-center justify-center space-x-3 rounded-lg border border-white/5 bg-white/5 p-3 backdrop-blur-sm md:col-span-2">
                     <div className="flex items-center justify-center">
                       {timeLeftBeforeCheck > 0 ? (
-                        <Image className="h-7 w-7" src={ClockPrimarySvg} alt="next track check" />
+                        <Image
+                          className="h-6 w-6 opacity-80"
+                          src={ClockPrimarySvg}
+                          alt="next track check"
+                        />
                       ) : (
-                        <Spinner className="h-7 w-7" />
+                        <Spinner className="h-6 w-6" />
                       )}
                     </div>
-                    <TextImportant className="text-center text-sm leading-4">
+                    <TextImportant className="text-center text-sm leading-4 text-primary/80">
                       {convertMillisecondsToText(timeLeftBeforeCheck)}
                     </TextImportant>
                   </div>
@@ -344,16 +354,15 @@ const Track = ({ className = "", number, data }) => {
             </div>
           </InvisibleButton>
         ) : (
-          <div title="Fetching data..." className="flex flex-1 items-center justify-center">
-            <Spinner className="my-8 h-10 w-10" />
+          <div className="flex flex-1 items-center justify-center bg-white/5 p-8">
+            <Spinner className="h-10 w-10 opacity-80" />
           </div>
         )}
       </div>
       <Modal
         isVisible={modalVisible}
-        onClose={() => {
-          setModalVisible(false);
-        }}
+        onClose={() => setModalVisible(false)}
+        className="rounded-xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
       >
         <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
           {truncateString(name, 70)}

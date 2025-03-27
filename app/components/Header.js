@@ -26,7 +26,7 @@ const Header = () => {
 
   const NavItems = () => (
     <>
-      <Link href="/" onClick={closeMenu}>
+      <Link className="lg:hidden" href="/" onClick={closeMenu}>
         <ShopTrackerLogo />
       </Link>
       <NavLink className="px-8 text-xl" href="/pricing" onClick={closeMenu}>
@@ -60,7 +60,7 @@ const Header = () => {
   return (
     <header className="mb-6 flex flex-wrap items-center justify-between px-4 py-4 sm:px-6 md:px-20 lg:px-40">
       {/* Mobile Controls */}
-      <div className="flex w-full items-center justify-between md:hidden">
+      <div className="flex w-full items-center justify-between lg:hidden">
         {/* Burger Menu Button */}
         <InvisibleButton className="text-2xl focus:outline-none" onClick={toggleMenu}>
           ☰
@@ -116,7 +116,7 @@ const Header = () => {
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex md:w-full md:items-center">
+      <div className="hidden lg:flex lg:w-full lg:items-center">
         {/* Logo */}
         <div className="mr-4">
           <Link href="/" onClick={closeMenu}>
@@ -171,7 +171,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background bg-opacity-95 md:hidden">
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background bg-opacity-95 lg:hidden">
           <InvisibleButton
             className="absolute right-4 top-4 text-2xl focus:outline-none"
             onClick={toggleMenu}

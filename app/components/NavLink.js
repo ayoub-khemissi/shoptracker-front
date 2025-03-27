@@ -18,15 +18,15 @@ const NavLink = ({
 
   switch (type) {
     case "primary":
-      typeClass = "text-primary hover:text-secondary";
+      typeClass = "text-primary hover:text-secondary whitespace-nowrap";
       break;
 
     case "tertiary":
-      typeClass = "text-primary hover:text-tertiary";
+      typeClass = "text-primary hover:text-tertiary whitespace-nowrap";
       break;
 
     case "contrast":
-      typeClass = "text-contrast hover:text-tertiary";
+      typeClass = "text-contrast hover:text-tertiary whitespace-nowrap";
       break;
   }
 

@@ -32,6 +32,48 @@ const PricingPage = () => {
   const [isAnnually, setIsAnnually] = useState(false);
   const [isBoostPlus, setStarterBoostPlus] = useState(false);
 
+  const starterPlans = [
+    { id: SUBSCRIPTION_STRIPE_PRICE_ID_FREE },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY,
+    },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY,
+    },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY,
+    },
+  ];
+
+  const boostPlans = [
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY,
+    },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY,
+    },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY,
+    },
+    {
+      id: isAnnually
+        ? SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY
+        : SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY,
+    },
+  ];
+
   return (
     <>
       <Title className="pb-3 text-center text-2xl lg:pb-6 lg:text-4xl">
@@ -83,68 +125,13 @@ const PricingPage = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-evenly">
-        {isBoostPlus ? (
-          <>
-            <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_ENTREPRISE_MONTHLY
-              }
-            />
-            <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_BUSINESS_MONTHLY
-              }
-            />
-            <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_ELITE_MONTHLY
-              }
-            />
-            <Plan
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY
-              }
-            />
-          </>
-        ) : (
-          <>
-            <Plan className="mb-4 2xl:mb-0" stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE} />
-            <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY
-              }
-            />
-            <Plan
-              className="mb-4 2xl:mb-0"
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_PRO_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY
-              }
-            />
-            <Plan
-              stripePriceId={
-                isAnnually
-                  ? SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_ANNUALLY
-                  : SUBSCRIPTION_STRIPE_PRICE_ID_PREMIUM_MONTHLY
-              }
-            />
-          </>
-        )}
+        {(isBoostPlus ? boostPlans : starterPlans).map((plan) => (
+          <Plan
+            key={plan.id}
+            className="mb-4 transition duration-300 hover:scale-105 hover:transform 2xl:mb-0"
+            stripePriceId={plan.id}
+          />
+        ))}
       </div>
       <TextSeparator className="py-4">Or</TextSeparator>
       <div className="flex items-center justify-center">

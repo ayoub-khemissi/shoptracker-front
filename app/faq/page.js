@@ -15,8 +15,8 @@ export default function Faq() {
         content="Frequently Asked Questions (Q&A) page for ShopTracker. This page provides answers to common questions about ShopTracker and how it works."
       />
       <div className="flex h-full flex-col space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:space-x-20 lg:px-40">
-        <Title className="pb-6 text-center text-4xl text-secondary">
-          Frequently Asked Questions (Q&A)
+        <Title className="pb-6 text-center text-2xl lg:text-4xl">
+          ❓ Frequently Asked Questions (Q&A)
         </Title>
 
         <TextNormal>

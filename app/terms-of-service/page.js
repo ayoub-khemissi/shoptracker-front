@@ -15,7 +15,7 @@ export default function TermsOfService() {
         content="Terms of Service page for ShopTracker. This page provides information about the terms and conditions of using ShopTracker services."
       />
       <div className="flex h-full flex-col space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:space-x-20 lg:px-40">
-        <Title className="pb-6 text-center text-4xl text-secondary">Terms of Service</Title>
+        <Title className="pb-6 text-center text-2xl lg:text-4xl">📜 Terms of Service</Title>
         <TextNormal>
           Welcome to ShopTracker! These terms govern your use of our services. By using ShopTracker,
           you agree to these terms.

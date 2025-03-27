@@ -15,7 +15,7 @@ export default function TermsOfSale() {
         content="Terms of Sale page for ShopTracker. This page provides information about the purchase of services from ShopTracker, including payment terms, refund policy, and other important details."
       />
       <div className="flex h-full flex-col space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:space-x-20 lg:px-40">
-        <Title className="pb-6 text-center text-4xl text-secondary">Terms of Sale</Title>
+        <Title className="pb-6 text-center text-2xl lg:text-4xl">🛍️ Terms of Sale</Title>
         <TextNormal>These terms govern your purchase of services from ShopTracker.</TextNormal>
 
         <Accordion>

@@ -11,7 +11,7 @@ const Footer = () => {
       </p>
       <FooterLink href="terms-of-service">Terms of Service</FooterLink>
       <FooterLink href="terms-of-sale">Terms of Sale</FooterLink>
-      <FooterLink href="privacy">Privacy</FooterLink>
+      <FooterLink href="privacy-policy">Privacy Policy</FooterLink>
     </footer>
   );
 };

@@ -162,6 +162,7 @@ export default function Settings() {
         content="Settings page for ShopTracker. This page allows users to edit their account settings."
       />
       <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
+        <Title className="pb-6 text-center text-2xl lg:text-4xl">⚙️ Settings</Title>
         <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
           <Button
             locked

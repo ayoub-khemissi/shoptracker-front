@@ -9,6 +9,7 @@ import { fetchData } from "@/modules/Fetch";
 import { useRouter } from "next/navigation";
 import EmptyBoxSvg from "../../public/assets/svg/illustrations/empty-box.svg";
 import Image from "next/image";
+import Title from "../components/Title";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -88,6 +89,7 @@ export default function Tracklist() {
         content="Tracklist page for ShopTracker. This page displays the tracklist of products being tracked."
       />
       <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
+        <Title className="pb-6 text-center text-2xl lg:text-4xl">📈 Tracklist</Title>
         <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
           <Button
             locked

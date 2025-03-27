@@ -79,70 +79,95 @@ export default function Tracker() {
         content="Tracker page for ShopTracker. This page allows users to track products by entering the URL of the product page from e-commerce websites."
       />
       <main className="flex h-full flex-col items-center space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-        <Title className="w-full pb-4 text-center text-2xl text-primary lg:text-4xl">
-          Fill in the product info <br />
-          <span className="text-secondary transition duration-200 hover:text-tertiary">
-            to start the tracking
-          </span>{" "}
-          🚀 !
-        </Title>
-        <form className="w-full max-w-[700px] space-y-4" onSubmit={handleSubmitTrack}>
-          <div className="w-full space-y-4">
-            <Input
-              id="url"
-              type="url"
-              pattern="https://.*"
-              labelText="Url of the product page"
-              placeholder="https://www.e-commerce.com/product/id/123456789"
-              onChange={(e) => {
-                setUrl(e.target.value);
-              }}
-              value={url}
-              required
-            />
-            <Input
-              id="details"
-              type="text"
-              labelText="Product details (optional)"
-              placeholder="Name, description, color..."
-              onChange={(e) => {
-                setAdditionalInfo(e.target.value);
-              }}
-              value={additionalInfo}
-            />
-          </div>
-          <div className="w-full space-y-4 lg:flex lg:space-y-0">
-            <div className="space-y-2 lg:w-1/2">
-              <Checkbox
-                labelText="Track restocking"
-                checked={trackStock}
-                onClick={handleTrackStock}
-              />
-              <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
-              <div className={`${trackPrice ? "opacity-100" : "opacity-50"} flex items-center`}>
+        <div className="w-full max-w-[800px] space-y-8">
+          <Title className="w-full pb-4 text-center text-2xl text-primary lg:text-4xl">
+            Fill in the product info <br />
+            <span className="text-secondary transition duration-200 hover:text-tertiary">
+              to start the tracking
+            </span>{" "}
+            🚀 !
+          </Title>
+
+          <form
+            className="relative space-y-8 rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md"
+            onSubmit={handleSubmitTrack}
+          >
+            {/* URL et détails */}
+            <div className="space-y-6">
+              <div className="group">
                 <Input
-                  id="price-below"
-                  className="text-center"
-                  labelText="Notify me when price below:"
-                  step={10}
-                  min={0}
-                  max={100000000}
-                  type="number"
-                  placeholder="99 €"
-                  onChange={(e) => {
-                    setTrackPriceThreshold(e.target.value);
-                  }}
-                  value={trackPriceThreshold}
-                  disabled={!trackPrice}
-                  required={trackPrice}
+                  id="url"
+                  type="url"
+                  pattern="https://.*"
+                  labelText="Product URL"
+                  placeholder="https://www.e-commerce.com/product/id/123456789"
+                  onChange={(e) => setUrl(e.target.value)}
+                  value={url}
+                  required
+                  className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
+                />
+              </div>
+
+              <div className="group">
+                <Input
+                  id="details"
+                  type="text"
+                  labelText="Product details (optional)"
+                  placeholder="Name, description, color..."
+                  onChange={(e) => setAdditionalInfo(e.target.value)}
+                  value={additionalInfo}
+                  className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                 />
               </div>
             </div>
-            <div className="flex items-start justify-end lg:w-1/2">
-              <Button buttonType="submit">Start tracking</Button>
+
+            {/* Options de tracking */}
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+                <Title className="mb-4 text-lg font-semibold">Tracking Options</Title>
+
+                <div className="space-y-4">
+                  <Checkbox
+                    labelText="Track restocking"
+                    checked={trackStock}
+                    onClick={handleTrackStock}
+                  />
+                  <Checkbox
+                    labelText="Track price"
+                    checked={trackPrice}
+                    onClick={handleTrackPrice}
+                  />
+
+                  <div
+                    className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
+                  >
+                    <Input
+                      id="price-below"
+                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 focus:border-secondary/50 focus:bg-white/10"
+                      labelText="Notify me when price below:"
+                      step={10}
+                      min={0}
+                      max={100000000}
+                      type="number"
+                      placeholder="99 €"
+                      onChange={(e) => setTrackPriceThreshold(e.target.value)}
+                      value={trackPriceThreshold}
+                      disabled={!trackPrice}
+                      required={trackPrice}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bouton Submit */}
+              <div className="flex items-center justify-center lg:items-end">
+                <Button type="quaternary" buttonType="submit">
+                  Start tracking 🏁
+                </Button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </main>
     </>
   );

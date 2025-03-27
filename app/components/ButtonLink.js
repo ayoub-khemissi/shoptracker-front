@@ -42,8 +42,7 @@ const ButtonLink = ({
 
   return (
     <div
-      className={`${typeClass} flex items-center justify-center rounded-xl border 
-      backdrop-blur-sm transition-all duration-300 ${className}`}
+      className={`${typeClass} flex items-center justify-center rounded-xl border backdrop-blur-sm transition-all duration-300 ${className}`}
     >
       <Link
         target={target}

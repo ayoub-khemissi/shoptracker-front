@@ -8,8 +8,9 @@ import Track from "../components/Track";
 import { fetchData } from "@/modules/Fetch";
 import { useRouter } from "next/navigation";
 import EmptyBoxSvg from "../../public/assets/svg/illustrations/empty-box.svg";
-import Image from "next/image";
 import Title from "../components/Title";
+import ButtonLink from "../components/ButtonLink";
+import GlassPanel from "../components/GlassPanel";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -136,11 +137,21 @@ export default function Tracklist() {
             Finished
           </Button>
         </div>
+
         {filteredTracklist.length === 0 && (
-          <div className="flex items-center justify-center pt-2 md:pt-14 lg:pt-20">
-            <Image className="h-96" src={EmptyBoxSvg} alt="empty-box" />
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
+            {tab === TRACK_STATUS_ENABLED && (
+              <>
+                <Title className="text-primary">No track in progress</Title>
+                <ButtonLink type="quaternary" href="/tracker">
+                  Start Tracking Now ✨
+                </ButtonLink>
+              </>
+            )}
           </div>
         )}
+
         <div className="flex flex-wrap justify-evenly">
           {filteredTracklist.map((track, index) => {
             return <Track data={track} number={index + 1} key={`track-${index}`} />;

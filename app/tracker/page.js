@@ -92,7 +92,6 @@ export default function Tracker() {
             className="relative space-y-8 rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md"
             onSubmit={handleSubmitTrack}
           >
-            {/* URL et détails */}
             <div className="space-y-6">
               <div className="group">
                 <Input
@@ -120,8 +119,6 @@ export default function Tracker() {
                 />
               </div>
             </div>
-
-            {/* Options de tracking */}
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
                 <Title className="mb-4 text-lg font-semibold">Tracking Options</Title>
@@ -158,8 +155,6 @@ export default function Tracker() {
                   </div>
                 </div>
               </div>
-
-              {/* Bouton Submit */}
               <div className="flex items-center justify-center lg:items-end">
                 <Button type="quaternary" buttonType="submit">
                   Start tracking 🏁

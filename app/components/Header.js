@@ -59,19 +59,13 @@ const Header = () => {
 
   return (
     <header className="mb-6 flex flex-wrap items-center justify-between px-4 py-4 sm:px-6 md:px-20 lg:px-40">
-      {/* Mobile Controls */}
       <div className="flex w-full items-center justify-between lg:hidden">
-        {/* Burger Menu Button */}
         <InvisibleButton className="text-2xl focus:outline-none" onClick={toggleMenu}>
           ☰
         </InvisibleButton>
-
-        {/* Logo */}
         <Link href="/" onClick={closeMenu}>
           <ShopTrackerLogo />
         </Link>
-
-        {/* Mobile Avatar */}
         {user ? (
           <Dropdown className="bg-contrast uppercase">
             <DropdownTrigger className="shrink-0 cursor-pointer">
@@ -114,17 +108,12 @@ const Header = () => {
           <div></div>
         )}
       </div>
-
-      {/* Desktop Layout */}
       <div className="hidden lg:flex lg:w-full lg:items-center">
-        {/* Logo */}
         <div className="mr-4">
           <Link href="/" onClick={closeMenu}>
             <ShopTrackerLogo />
           </Link>
         </div>
-
-        {/* Desktop Navigation */}
         <nav className="flex grow items-center justify-end">
           <NavItems />
           {user && (
@@ -168,8 +157,6 @@ const Header = () => {
           )}
         </nav>
       </div>
-
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background bg-opacity-95 lg:hidden">
           <InvisibleButton

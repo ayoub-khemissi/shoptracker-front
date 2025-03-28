@@ -90,11 +90,17 @@ export default function Tracklist() {
         content="Tracklist page for ShopTracker. This page displays the tracklist of products being tracked."
       />
       <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-        <Title className="pb-6 text-center text-2xl lg:text-4xl">📈 Tracklist</Title>
+        <div className="flex items-center justify-center space-y-8">
+          <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
+            📈 Tracklist
+            <div className="to-quaternary absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary"></div>
+          </Title>
+        </div>
+
         <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_ENABLED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_ENABLED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -105,7 +111,7 @@ export default function Tracklist() {
           </Button>
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_DISABLED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_DISABLED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -116,7 +122,7 @@ export default function Tracklist() {
           </Button>
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_INVALID ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_INVALID ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -127,7 +133,7 @@ export default function Tracklist() {
           </Button>
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_FINISHED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_FINISHED ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -139,12 +145,18 @@ export default function Tracklist() {
         </div>
 
         {filteredTracklist.length === 0 && (
-          <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-6 py-10">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
             {tab === TRACK_STATUS_ENABLED && (
               <>
-                <Title className="text-primary">No track in progress</Title>
-                <ButtonLink type="quaternary" href="/tracker">
+                <Title className="text-xl text-secondary lg:text-2xl">
+                  No tracks in progress yet!
+                </Title>
+                <ButtonLink
+                  type="quaternary"
+                  href="/tracker"
+                  className="transform transition-all duration-300 hover:scale-105"
+                >
                   Start Tracking Now ✨
                 </ButtonLink>
               </>
@@ -152,7 +164,7 @@ export default function Tracklist() {
           </div>
         )}
 
-        <div className="flex flex-wrap justify-evenly">
+        <div className="flex flex-wrap justify-evenly gap-4">
           {filteredTracklist.map((track, index) => {
             return <Track data={track} number={index + 1} key={`track-${index}`} />;
           })}

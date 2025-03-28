@@ -165,7 +165,7 @@ export default function Settings() {
         <div className="flex items-center justify-center space-y-8">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             ⚙️ Settings
-            <div className="to-quaternary absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary"></div>
+            <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
           </Title>
         </div>
         <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
@@ -294,7 +294,7 @@ export default function Settings() {
                       <Button
                         type="quaternary"
                         buttonType="submit"
-                        className="hover:shadow-quaternary/20 transition-all duration-300 hover:shadow-lg"
+                        className="transition-all duration-300 hover:shadow-lg hover:shadow-quaternary/20"
                       >
                         Update phone number
                       </Button>
@@ -350,7 +350,7 @@ export default function Settings() {
                       <Button
                         type="quaternary"
                         buttonType="submit"
-                        className="hover:shadow-quaternary/20 transition-all duration-300 hover:shadow-lg"
+                        className="transition-all duration-300 hover:shadow-lg hover:shadow-quaternary/20"
                       >
                         Change password
                       </Button>

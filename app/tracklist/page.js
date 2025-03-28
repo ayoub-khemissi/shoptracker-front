@@ -93,7 +93,7 @@ export default function Tracklist() {
         <div className="flex items-center justify-center space-y-8">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             📈 Tracklist
-            <div className="to-quaternary absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary"></div>
+            <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
           </Title>
         </div>
 

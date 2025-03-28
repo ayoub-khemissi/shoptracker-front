@@ -162,11 +162,16 @@ export default function Settings() {
         content="Settings page for ShopTracker. This page allows users to edit their account settings."
       />
       <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-        <Title className="pb-6 text-center text-2xl lg:text-4xl">⚙️ Settings</Title>
+        <div className="flex items-center justify-center space-y-8">
+          <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
+            ⚙️ Settings
+            <div className="to-quaternary absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary"></div>
+          </Title>
+        </div>
         <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === SETTINGS_TAB_NOTIFICATIONS ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === SETTINGS_TAB_NOTIFICATIONS ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -177,7 +182,7 @@ export default function Settings() {
           </Button>
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === SETTINGS_TAB_SUBSCRIPTION ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === SETTINGS_TAB_SUBSCRIPTION ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -188,7 +193,7 @@ export default function Settings() {
           </Button>
           <Button
             locked
-            className="m-1"
+            className={`m-1 transition-all duration-300 ${tab === SETTINGS_TAB_ACCOUNT ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === SETTINGS_TAB_ACCOUNT ? "primary" : "contrast"}
             defaultCursor
             onClick={() => {
@@ -198,162 +203,203 @@ export default function Settings() {
             Account
           </Button>
         </div>
-        {tab === SETTINGS_TAB_NOTIFICATIONS && (
-          <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
-              <TextSeparator className="w-full">Receive a notification</TextSeparator>
-              <div
-                className="flex w-full items-center justify-between"
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
+          <div className="absolute inset-0 z-0 opacity-10">
+            <div className="absolute right-0 top-0 h-1/2 w-1/2 -translate-y-1/4 translate-x-1/4 transform rounded-full bg-secondary blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 h-1/2 w-1/2 -translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
+          </div>
+          <div className="relative z-10">
+            {tab === SETTINGS_TAB_NOTIFICATIONS && (
+              <div className="flex flex-wrap items-start justify-evenly gap-y-4 py-4">
+                <div className="w-full max-w-md space-y-8 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                  <TextSeparator className="text-lg font-medium">
+                    Notification Methods
+                  </TextSeparator>
+                  <div className="space-y-5 p-2">
+                    <div
+                      className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      onClick={() => {
+                        if (!user?.phone) {
+                          showToast(
+                            "You must add a phone number below to receive text notifications.",
+                            "error",
+                          );
+                          return;
+                        }
+
+                        if (notificationTextMessage && !notificationMailbox) {
+                          showToast("You must choose at least one notification method.", "error");
+                          return;
+                        }
+
+                        setNotificationTextMessage(!notificationTextMessage);
+                      }}
+                    >
+                      <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
+                        By text message
+                      </TextLabel>
+                      <Switch checked={notificationTextMessage} opacityWhenOff />
+                    </div>
+
+                    <div
+                      className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      onClick={() => {
+                        if (notificationMailbox && !notificationTextMessage) {
+                          showToast("You must choose at least one notification method.", "error");
+                          return;
+                        }
+
+                        setNotificationMailbox(!notificationMailbox);
+                      }}
+                    >
+                      <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
+                        In your mailbox
+                      </TextLabel>
+                      <Switch checked={notificationMailbox} opacityWhenOff />
+                    </div>
+
+                    <div className="flex w-full items-center justify-center pt-4">
+                      <Button
+                        type="quaternary"
+                        onClick={updateNotifications}
+                        className="transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20"
+                      >
+                        Save notifications
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                  <TextSeparator className="text-lg font-medium">
+                    Whatsapp Phone Number
+                  </TextSeparator>
+                  <form className="space-y-6 p-2" onSubmit={updatePhone}>
+                    <Input
+                      id="phone"
+                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
+                      labelText="Whatsapp Phone Number"
+                      type="text"
+                      placeholder="+1234567890"
+                      value={phone}
+                      required
+                      isError={isErrorPhone}
+                      pattern="^\+\d{10,15}$"
+                      errorText="The phone number must start with a plus sign (+) followed by 10 to 15 digits."
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                        setIsErrorPhone(!validatePhone(e.target.value));
+                      }}
+                    />
+                    <div className="flex items-center justify-center">
+                      <Button
+                        type="quaternary"
+                        buttonType="submit"
+                        className="hover:shadow-quaternary/20 transition-all duration-300 hover:shadow-lg"
+                      >
+                        Update phone number
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {tab === SETTINGS_TAB_SUBSCRIPTION && (
+              <div className="flex flex-wrap items-start justify-center py-4">
+                <Subscription />
+              </div>
+            )}
+
+            {tab === SETTINGS_TAB_ACCOUNT && (
+              <div className="flex flex-col items-center justify-center space-y-10 py-4">
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                  <TextSeparator className="text-lg font-medium">Change Password</TextSeparator>
+                  <form className="space-y-6 p-2" onSubmit={changePassword}>
+                    <Input
+                      id="newPassword"
+                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
+                      labelText="New Password"
+                      type="password"
+                      placeholder="••••••••••••"
+                      value={newPassword}
+                      required
+                      isError={isErrorNewPassword}
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
+                      errorText="The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                      onChange={(e) => {
+                        setNewPassword(e.target.value);
+                        setIsErrorNewPassword(!validatePassword(e.target.value));
+                      }}
+                    />
+                    <Input
+                      id="newConfirmPassword"
+                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
+                      labelText="Confirm New Password"
+                      type="password"
+                      placeholder="••••••••••••"
+                      value={confirmNewPassword}
+                      required
+                      isError={isErrorConfirmNewPassword}
+                      errorText="The passwords do not match."
+                      onChange={(e) => {
+                        setConfirmNewPassword(e.target.value);
+                        setIsErrorConfirmNewPassword(e.target.value !== newPassword);
+                      }}
+                    />
+                    <div className="flex items-center justify-center">
+                      <Button
+                        type="quaternary"
+                        buttonType="submit"
+                        className="hover:shadow-quaternary/20 transition-all duration-300 hover:shadow-lg"
+                      >
+                        Change password
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-error/30 bg-error/5 p-6 shadow-lg backdrop-blur-sm">
+                  <TextSeparator className="text-lg font-medium text-error">
+                    Danger Zone
+                  </TextSeparator>
+                  <div className="flex items-center justify-center p-2">
+                    <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
+                      Delete account
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <Modal
+          isVisible={deleteAccountModalVisible}
+          onClose={() => {
+            setDeleteAccountModalVisible(false);
+          }}
+          className="rounded-2xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
+        >
+          <div className="space-y-6 p-4">
+            <Title className="text-center text-xl text-error">
+              Are you sure you want to delete your account?
+            </Title>
+            <TextNormal className="text-center">
+              This action cannot be undone. All of your data will be permanently deleted.
+            </TextNormal>
+            <div className="flex w-full items-center justify-between pt-4">
+              <Button
+                type="quaternary"
                 onClick={() => {
-                  if (!user?.phone) {
-                    showToast(
-                      "You must add a phone number below to receive text notifications.",
-                      "error",
-                    );
-                    return;
-                  }
-
-                  if (notificationTextMessage && !notificationMailbox) {
-                    showToast("You must choose at least one notification method.", "error");
-                    return;
-                  }
-
-                  setNotificationTextMessage(!notificationTextMessage);
+                  setDeleteAccountModalVisible(false);
                 }}
               >
-                <TextLabel>By text message</TextLabel>
-                <Switch checked={notificationTextMessage} opacityWhenOff />
-              </div>
-              <div
-                className="flex w-full items-center justify-between"
-                onClick={() => {
-                  if (notificationMailbox && !notificationTextMessage) {
-                    showToast("You must choose at least one notification method.", "error");
-                    return;
-                  }
-
-                  setNotificationMailbox(!notificationMailbox);
-                }}
-              >
-                <TextLabel>In your mailbox</TextLabel>
-                <Switch checked={notificationMailbox} opacityWhenOff />
-              </div>
-              <div className="flex w-full items-center justify-center">
-                <Button onClick={updateNotifications}>Save notifications</Button>
-              </div>
-            </div>
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
-              <TextSeparator className="w-full">Phone number</TextSeparator>
-              <form className="w-full space-y-4" onSubmit={updatePhone}>
-                <Input
-                  id="phone"
-                  className="w-full"
-                  labelText="Phone Number"
-                  type="text"
-                  placeholder="+1234567890"
-                  value={phone}
-                  required
-                  isError={isErrorPhone}
-                  pattern="^\+\d{10,15}$"
-                  errorText="The phone number must start with a plus sign (+) followed by 10 to 15 digits."
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                    setIsErrorPhone(!validatePhone(e.target.value));
-                  }}
-                />
-                <div className="flex items-center justify-center">
-                  <Button type="primary" buttonType="submit">
-                    Update phone number
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-        {tab === SETTINGS_TAB_SUBSCRIPTION && (
-          <div className="flex w-full flex-wrap items-start justify-center space-y-4 py-4">
-            <Subscription />
-          </div>
-        )}
-        {tab === SETTINGS_TAB_ACCOUNT && (
-          <div className="flex w-full flex-col items-center justify-center space-y-4 py-4">
-            <div className="flex w-96 flex-col items-center justify-center space-y-5">
-              <TextSeparator className="w-full">Change password</TextSeparator>
-              <form className="w-full space-y-4" onSubmit={changePassword}>
-                <Input
-                  id="newPassword"
-                  className="w-full"
-                  labelText="New Password"
-                  type="password"
-                  placeholder="••••••••••••"
-                  value={newPassword}
-                  required
-                  isError={isErrorNewPassword}
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
-                  errorText="The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                  onChange={(e) => {
-                    setNewPassword(e.target.value);
-                    setIsErrorNewPassword(!validatePassword(e.target.value));
-                  }}
-                />
-                <Input
-                  id="newConfirmPassword"
-                  className="w-full"
-                  labelText="Confirm New Password"
-                  type="password"
-                  placeholder="••••••••••••"
-                  value={confirmNewPassword}
-                  required
-                  isError={isErrorConfirmNewPassword}
-                  errorText="The passwords do not match."
-                  onChange={(e) => {
-                    setConfirmNewPassword(e.target.value);
-                    setIsErrorConfirmNewPassword(e.target.value !== newPassword);
-                  }}
-                />
-                <div className="flex items-center justify-center">
-                  <Button type="primary" buttonType="submit">
-                    Change password
-                  </Button>
-                </div>
-              </form>
-            </div>
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
-              <TextSeparator className="w-full">Danger zone</TextSeparator>
-              <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
-                Delete account
+                Cancel
+              </Button>
+              <Button type="secondary" onClick={deleteAccount}>
+                Delete Permanently
               </Button>
             </div>
-            <Modal
-              isVisible={deleteAccountModalVisible}
-              onClose={() => {
-                setDeleteAccountModalVisible(false);
-              }}
-            >
-              <div className="space-y-4">
-                <Title className="text-center text-xl">
-                  Are you sure you want to delete your account?
-                </Title>
-                <TextNormal>
-                  This action cannot be undone. All of your data will be permanently deleted.
-                </TextNormal>
-                <div className="flex w-full items-center justify-between">
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      setDeleteAccountModalVisible(false);
-                    }}
-                  >
-                    No
-                  </Button>
-                  <Button type="secondary" onClick={deleteAccount}>
-                    Yes
-                  </Button>
-                </div>
-              </div>
-            </Modal>
           </div>
-        )}
+        </Modal>
       </main>
     </>
   );

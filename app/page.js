@@ -108,16 +108,16 @@ export default async function Home() {
         className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <PricingPage />
-        <div className="flex items-center justify-end py-10">
-          <Link href="#top" className="animate-bounce">
-            <Image
-              className="rotate-180"
-              src={ScrollArrowsDownSecondarySvg}
-              alt="scroll up arrow"
-            />
-          </Link>
-        </div>
       </section>
+      <div className="fixed bottom-8 right-8 lg:bottom-16 lg:right-16">
+        <Link href="#top">
+          <Image
+            className="h-10 w-10 rotate-180 transition duration-300 hover:scale-110 lg:h-12 lg:w-12"
+            src={ScrollArrowsDownSecondarySvg}
+            alt="scroll up arrow"
+          />
+        </Link>
+      </div>
     </main>
   );
 }

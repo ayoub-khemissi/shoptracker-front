@@ -23,7 +23,7 @@ export default async function Home() {
     <main>
       <section
         id="top"
-        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40"
+        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <Title className="text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop

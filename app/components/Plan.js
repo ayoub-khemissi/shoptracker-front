@@ -263,7 +263,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
                 }`}
               >
                 <Image
-                  className={`h-4 w-4 ${popular ? "brightness-125" : ""}`}
+                  className="h-4 w-4 brightness-110"
                   src={getCircleCheckSvgByPopularity()}
                   alt="feature check"
                 />

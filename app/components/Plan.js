@@ -191,7 +191,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
           : "border-primary/30 bg-contrast/80"
       } relative w-80 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
     >
-      {popular && (
+      {popular && hasCallToAction && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 px-6 py-1.5 shadow-lg">
           <TextNormal className="text-xs font-semibold uppercase tracking-wider text-white">
             Most Popular ✨

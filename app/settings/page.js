@@ -316,6 +316,14 @@ export default function Settings() {
                   <TextSeparator className="text-lg font-medium">Change Password</TextSeparator>
                   <form className="space-y-6 p-2" onSubmit={changePassword}>
                     <Input
+                      id="email"
+                      className="w-full cursor-not-allowed rounded-xl border border-white/20 bg-white/5 px-4 py-3"
+                      labelText="Email"
+                      type="email"
+                      value={user?.email}
+                      disabled
+                    />
+                    <Input
                       id="newPassword"
                       className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                       labelText="New Password"

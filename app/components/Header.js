@@ -5,7 +5,7 @@ import { useState } from "react";
 import ShopTrackerLogo from "./ShopTrackerLogo";
 import NavLink from "./NavLink";
 import { useAuthContext } from "../contexts/AuthContext";
-import { fetchLogout } from "@/modules/Fetch";
+import { fetchData } from "@/modules/Fetch";
 import { Dropdown, DropdownTrigger, DropdownItem, DropdownMenu } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 import { useToast } from "../contexts/ToastContext";
@@ -88,7 +88,7 @@ const Header = () => {
                 className={`text-error`}
                 color="danger"
                 onClick={async () => {
-                  const response = await fetchLogout();
+                  const response = await fetchData("/logout", "POST", null, false);
 
                   if (!response || response.status !== 200) {
                     showToast("Failed to logout. Please try again later.", "error");
@@ -138,7 +138,7 @@ const Header = () => {
                   className={`text-error`}
                   color="danger"
                   onClick={async () => {
-                    const response = await fetchLogout();
+                    const response = await fetchData("/logout", "POST", null, false);
 
                     if (!response || response.status !== 200) {
                       showToast("Failed to logout. Please try again later.", "error");

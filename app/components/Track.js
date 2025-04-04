@@ -54,7 +54,8 @@ const Track = ({ className = "", number, data }) => {
     created_at,
     updated_at,
     status_id,
-    track_checks,
+    track_checks_ok,
+    track_checks_ko,
   } = data;
 
   const getTimeLeftBeforeCheck = useCallback(() => {
@@ -70,7 +71,7 @@ const Track = ({ className = "", number, data }) => {
   const [timeLeftBeforeCheck, setTimeLeftBeforeCheck] = useState(getTimeLeftBeforeCheck());
 
   const formatFullPrice = () => {
-    const price = track_checks[track_checks.length - 1]?.price ?? initial_price;
+    const price = track_checks_ok[track_checks_ok.length - 1]?.price ?? initial_price;
 
     if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
       return (
@@ -91,8 +92,8 @@ const Track = ({ className = "", number, data }) => {
   };
 
   const getPriceStatus = () => {
-    if (track_checks.length > 0) {
-      const { price: lastTrackCheckPrice } = track_checks[track_checks.length - 1];
+    if (track_checks_ok.length > 0) {
+      const { price: lastTrackCheckPrice } = track_checks_ok[track_checks_ok.length - 1];
 
       if (lastTrackCheckPrice === initial_price) {
         return TRACK_PRICE_STATUS_STABLE;
@@ -107,7 +108,7 @@ const Track = ({ className = "", number, data }) => {
   };
 
   const getAvailability = () => {
-    return !!track_checks[track_checks.length - 1]?.availability;
+    return !!track_checks_ok[track_checks_ok.length - 1]?.availability;
   };
 
   const getPriceStatusSvgName = () => {
@@ -236,7 +237,7 @@ const Track = ({ className = "", number, data }) => {
 
   const priceStatus = getPriceStatus();
   const availability = getAvailability();
-  const chartData = track_checks.map((trackCheck) => ({
+  const chartData = track_checks_ok.map((trackCheck) => ({
     date: new Date(trackCheck.created_at).toLocaleString(),
     price: trackCheck.price,
   }));
@@ -248,6 +249,8 @@ const Track = ({ className = "", number, data }) => {
 
     return () => clearInterval(timeLeftBeforeCheckInterval);
   }, [getTimeLeftBeforeCheck]);
+
+  const track_checks = [...track_checks_ok, ...track_checks_ko];
 
   return (
     <>
@@ -362,11 +365,55 @@ const Track = ({ className = "", number, data }) => {
       <Modal
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
-        className="rounded-xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
+        className="overflow-visible rounded-xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
       >
         <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
           {truncateString(name, 70)}
         </Title>
+        {track_checks.length > 0 && (
+          <div className="mb-8">
+            <Title className="mb-4 text-center text-lg leading-none text-primary">
+              Recent Check History
+            </Title>
+            <div className="relative px-6">
+              <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
+              <div className="relative flex w-full justify-between px-[15px]">
+                {track_checks
+                  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+                  .slice(0, 5)
+                  .map((check, index) => {
+                    const isOk = "price" in check;
+                    return (
+                      <div key={index} className="group relative">
+                        <Image
+                          width={30}
+                          height={30}
+                          src={`assets/svg/icons/${
+                            isOk ? "circle-check-success" : "circle-cross-error"
+                          }.svg`}
+                          alt={isOk ? "✅" : "❌"}
+                          className="opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        />
+                        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 transform opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                          <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
+                            <TextImportant className="text-sm font-medium text-primary">
+                              {isOk
+                                ? `Price: ${formatPrice(check.price)}${currency}`
+                                : `${check.title}: ${check.reason}`}
+                            </TextImportant>
+                            <TextImportant className="mt-1 text-xs text-primary/70">
+                              {new Date(check.created_at).toLocaleString()}
+                            </TextImportant>
+                          </div>
+                          <div className="absolute left-1/2 top-full -mt-1 h-2 w-2 -translate-x-1/2 rotate-45 transform border-b border-r border-white/10 bg-gradient-to-br from-contrast/95 to-contrast shadow-md shadow-secondary/10"></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+        )}
         <ChartContainer config={{}} className="h-full w-full">
           <ResponsiveContainer className="h-full w-full">
             <AreaChart accessibilityLayer data={chartData}>
@@ -393,6 +440,7 @@ const Track = ({ className = "", number, data }) => {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
+                  textAlign: "center",
                 }}
               />
             </AreaChart>

@@ -137,12 +137,20 @@ export default function Showcase() {
             currency: "EUR",
             availability: true,
             price_status: 1,
-            track_checks: [
+            track_checks_ok: [
               {
+                id: 1,
+                price: 27.99,
                 availability: 1,
                 created_at: 1820744029719,
-                discounted_price: 25,
-                normal_price: 18,
+              },
+            ],
+            track_checks_ko: [
+              {
+                id: 1,
+                title: "The Price is Missing",
+                reason: "The product's price is not shown on the page.",
+                created_at: 1820744035984,
               },
             ],
             created_at: 1721682189515,

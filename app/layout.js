@@ -58,14 +58,14 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href="https://www.shoptracker.eu" />
       </head>
       <body
-        className={`${montserrat.className} flex h-screen flex-col bg-contrast text-primary dark`}
+        className={`${montserrat.className} flex min-h-screen flex-col bg-contrast text-primary dark`}
       >
         <SessionProvider>
           <AuthProvider>
             <ToastProvider>
               <Suspense>
                 <Header />
-                <div className="flex-1">{children}</div>
+                <main className="flex-1">{children}</main>
                 <Footer />
                 <Cookies />
               </Suspense>

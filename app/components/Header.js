@@ -26,30 +26,31 @@ const Header = () => {
 
   const NavItems = () => (
     <>
-      <Link className="lg:hidden" href="/" onClick={closeMenu}>
-        <ShopTrackerLogo />
-      </Link>
-      <NavLink className="px-8 text-xl" href="/pricing" onClick={closeMenu}>
+      <NavLink className="w-full text-center text-2xl" href="/pricing" onClick={closeMenu}>
         Pricing
       </NavLink>
-      <NavLink className="px-8 text-xl" href="/faq" onClick={closeMenu}>
+      <NavLink className="w-full text-center text-2xl" href="/faq" onClick={closeMenu}>
         FAQ
       </NavLink>
       {user ? (
         <>
-          <NavLink className="px-8 text-xl" href="/tracker" onClick={closeMenu}>
+          <NavLink className="w-full text-center text-2xl" href="/tracker" onClick={closeMenu}>
             Tracker
           </NavLink>
-          <NavLink className="px-8 text-xl" href="/tracklist" onClick={closeMenu}>
+          <NavLink className="w-full text-center text-2xl" href="/tracklist" onClick={closeMenu}>
             Tracklist
           </NavLink>
         </>
       ) : (
         <>
-          <NavLink className="px-8 text-xl" href="/register" onClick={closeMenu}>
+          <NavLink
+            className="w-full py-4 text-center text-2xl"
+            href="/register"
+            onClick={closeMenu}
+          >
             Sign Up
           </NavLink>
-          <NavLink className="px-8 text-xl" href="/login" onClick={closeMenu}>
+          <NavLink className="w-full py-4 text-center text-2xl" href="/login" onClick={closeMenu}>
             Sign In
           </NavLink>
         </>
@@ -58,7 +59,7 @@ const Header = () => {
   );
 
   return (
-    <header className="mb-6 flex flex-wrap items-center justify-between px-4 py-4 sm:px-6 md:px-20 lg:px-40">
+    <header className="sticky top-0 z-50 mb-6 flex flex-wrap items-center justify-between bg-white/30 px-4 py-2 backdrop-blur-md dark:bg-black/30 sm:px-6 md:px-20 lg:px-40">
       <div className="flex w-full items-center justify-between lg:hidden">
         <InvisibleButton className="text-2xl focus:outline-none" onClick={toggleMenu}>
           ☰
@@ -108,13 +109,29 @@ const Header = () => {
           <div></div>
         )}
       </div>
-      <div className="hidden lg:flex lg:w-full lg:items-center">
+      {isMenuOpen && (
+        <div className="absolute left-0 right-0 top-0 z-50 flex min-h-screen w-full flex-col items-center justify-center bg-background/95 backdrop-blur-md lg:hidden">
+          <InvisibleButton
+            className="absolute right-6 top-6 text-3xl focus:outline-none"
+            onClick={toggleMenu}
+          >
+            ✕
+          </InvisibleButton>
+          <nav className="flex h-full w-full flex-col items-center justify-center gap-y-1 space-y-6 px-6 py-8">
+            <Link href="/" onClick={closeMenu}>
+              <ShopTrackerLogo className="h-16 w-auto" />
+            </Link>
+            <NavItems />
+          </nav>
+        </div>
+      )}
+      <div className="hidden scale-80 lg:flex lg:w-full lg:items-center lg:justify-between">
         <div className="mr-4">
           <Link href="/" onClick={closeMenu}>
             <ShopTrackerLogo />
           </Link>
         </div>
-        <nav className="flex grow items-center justify-end">
+        <nav className="flex items-center justify-end gap-x-12">
           <NavItems />
           {user && (
             <Dropdown className="bg-contrast uppercase">
@@ -157,19 +174,6 @@ const Header = () => {
           )}
         </nav>
       </div>
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background bg-opacity-95 lg:hidden">
-          <InvisibleButton
-            className="absolute right-4 top-4 text-2xl focus:outline-none"
-            onClick={toggleMenu}
-          >
-            ✕
-          </InvisibleButton>
-          <nav className="flex flex-col items-center space-y-6 py-8">
-            <NavItems />
-          </nav>
-        </div>
-      )}
     </header>
   );
 };

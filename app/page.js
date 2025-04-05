@@ -20,10 +20,10 @@ export default async function Home() {
   const totalTrackChecks = data?.total_track_checks ?? 0;
 
   return (
-    <main>
+    <main className="min-h-screen overflow-auto">
       <section
         id="top"
-        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
+        className="bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <Title className="text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop
@@ -65,7 +65,7 @@ export default async function Home() {
       </section>
       <section
         id="how-to"
-        className="h-full bg-gradient-to-b from-contrast-alt from-90% to-contrast px-10 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
+        className="bg-gradient-to-b from-contrast-alt from-90% to-contrast px-10 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <Title className="text-center text-2xl lg:text-4xl">
           Track prices or availability of products from almost
@@ -105,7 +105,7 @@ export default async function Home() {
       </section>
       <section
         id="subscribe"
-        className="h-full bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
+        className="bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
       >
         <PricingPage />
       </section>

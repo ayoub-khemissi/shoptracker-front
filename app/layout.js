@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { LoadingScreen } from "./components/LoadingScreen";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -63,7 +64,7 @@ export default function RootLayout({ children }) {
         <SessionProvider>
           <AuthProvider>
             <ToastProvider>
-              <Suspense>
+              <Suspense fallback={<LoadingScreen />}>
                 <Header />
                 <main className="flex-1">{children}</main>
                 <Footer />

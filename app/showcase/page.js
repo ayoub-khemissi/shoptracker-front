@@ -27,6 +27,7 @@ import Subscription from "../components/Subscription";
 import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
 import Spinner from "../components/Spinner";
+import { LoadingScreen } from "../components/LoadingScreen";
 
 const { SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
 
@@ -196,6 +197,7 @@ export default function Showcase() {
           </div>
         </Modal>
         <Spinner />
+        <LoadingScreen />
       </main>
     </>
   );

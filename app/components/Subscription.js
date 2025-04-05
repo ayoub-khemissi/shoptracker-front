@@ -74,7 +74,7 @@ const Subscription = ({ className = "" }) => {
   return (
     <div className={`flex w-full flex-wrap justify-evenly ${className}`}>
       <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
-      <div className="w-96 space-y-5 py-4 lg:py-0">
+      <div className="max-w-96 space-y-4 py-4 md:py-0">
         <TextSeparator className="w-full">Subscription</TextSeparator>
         <div className="flex w-full items-center justify-between">
           <TextNormal className="uppercase">Start date</TextNormal>
@@ -124,8 +124,8 @@ const Subscription = ({ className = "" }) => {
         )}
         {subscription?.stripe_price_id && (
           <>
-            <div className="flex w-96 flex-col items-center justify-evenly space-y-5">
-              <TextSeparator className="w-full">Subscription management</TextSeparator>
+            <div className="flex max-w-96 flex-col items-center justify-evenly space-y-5">
+              <TextSeparator className="w-full">Actions</TextSeparator>
               <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
                 Cancel subscription
               </Button>

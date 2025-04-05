@@ -34,7 +34,16 @@ export const fetchData = async (path, method = "GET", body = null, remoteApi = t
 
     return response;
   } catch (error) {
-    console.error("Fetch error:", error);
+    console.error("Fetch error: ", error);
     return null;
   }
+};
+
+/**
+ * Logout the user.
+ *
+ * @returns {Promise<void>} A promise resolving when the logout is complete.
+ */
+export const fetchLogout = async () => {
+  await fetchData("/logout", "POST", null, false);
 };

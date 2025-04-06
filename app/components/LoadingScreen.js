@@ -3,7 +3,7 @@
 import ShopTrackerLogo from "./ShopTrackerLogo";
 
 export const LoadingScreen = () => (
-  <div className="flex min-h-screen flex-col items-center justify-center bg-contrast">
+  <div className="flex min-h-screen w-full flex-col items-center justify-center bg-contrast">
     <div className="animate-pulse">
       <ShopTrackerLogo className="text-5xl" />
     </div>

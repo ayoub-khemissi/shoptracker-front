@@ -371,7 +371,7 @@ const Track = ({ number, data }) => {
         {track_checks.length > 0 && (
           <div className="mb-8">
             <Title className="mb-4 text-center text-lg leading-none text-primary">
-              Recent Check History
+              Recent Checks Status
             </Title>
             <div className="relative px-6">
               <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
@@ -396,8 +396,8 @@ const Track = ({ number, data }) => {
                           <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
                             <TextImportant className="text-sm font-medium text-primary">
                               {isOk
-                                ? `Price: ${formatPrice(check.price)}${currency}`
-                                : `${check.title}: ${check.reason}`}
+                                ? `${formatPrice(check.price)}${currency} - ${getAvailabilityText(check.availability)}`
+                                : `⚠️ ${check.title}: ${check.reason}`}
                             </TextImportant>
                             <TextImportant className="mt-1 text-xs text-primary/70">
                               {new Date(check.created_at).toLocaleString()}

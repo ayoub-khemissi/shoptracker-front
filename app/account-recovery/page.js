@@ -9,6 +9,7 @@ import { validatePassword } from "@/modules/DataValidation";
 import { useState } from "react";
 import { useToast } from "../contexts/ToastContext";
 import { useRouter } from "next/navigation";
+import { Section } from "../components/Section";
 
 const PHASE_INITIAL = 0,
   PHASE_CODE = 1,
@@ -150,88 +151,95 @@ export default function AccountRecovery() {
         name="description"
         content="Account recovery page for ShopTracker. This page allows users to reset their password or recover their account."
       />
-      <section className="flex h-full flex-col items-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
-        <Title className="pb-6 text-center text-4xl text-secondary">Account Recovery</Title>
-        <div className="flex max-w-[400px] flex-col space-y-4">
-          <TextNormal>
-            To recover your account, please enter your email address below. We will send you a code
-            to reset your password.
-          </TextNormal>
-          <form className="w-full space-y-4" onSubmit={(e) => handleFormSubmit(e, phase)}>
-            <Input
-              id="email"
-              className="w-full"
-              labelText="Email"
-              type="email"
-              placeholder="xyz@mail.com"
-              value={email}
-              required
-              isError={isErrorEmail}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setIsErrorEmail(false);
-              }}
-            />
-            {phase === PHASE_CODE && (
-              <>
-                <TextNormal>
-                  We have sent you a code to your email. Please enter the code below to reset your
-                  password.
-                </TextNormal>
-                <Input
-                  id="resetPasswordCode"
-                  type="text"
-                  placeholder="Enter the code"
-                  labelText="Code"
-                  value={resetPasswordCode}
-                  onChange={(e) => setResetPasswordCode(e.target.value)}
-                />
-              </>
-            )}
-            {phase === PHASE_PASSWORD && (
-              <>
-                <TextNormal>Please enter a new password for your account.</TextNormal>
-                <Input
-                  id="newPassword"
-                  className="w-full"
-                  labelText="New Password"
-                  type="password"
-                  placeholder="••••••••••••"
-                  value={newPassword}
-                  required
-                  isError={isErrorNewPassword}
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
-                  errorText="The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                  onChange={(e) => {
-                    setNewPassword(e.target.value);
-                    setIsErrorNewPassword(!validatePassword(e.target.value));
-                  }}
-                />
-                <Input
-                  id="newConfirmPassword"
-                  className="w-full"
-                  labelText="Confirm New Password"
-                  type="password"
-                  placeholder="••••••••••••"
-                  value={confirmNewPassword}
-                  required
-                  isError={isErrorConfirmNewPassword}
-                  errorText="The passwords do not match."
-                  onChange={(e) => {
-                    setConfirmNewPassword(e.target.value);
-                    setIsErrorConfirmNewPassword(e.target.value !== newPassword);
-                  }}
-                />
-              </>
-            )}
-            <div className="flex items-center justify-end">
-              <Button type="primary" buttonType="submit">
-                {getButtonTextByPhase(phase)}
-              </Button>
-            </div>
-          </form>
+      <Section>
+        <div className="flex items-center justify-center pb-3">
+          <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
+            🤔 Account Recovery
+            <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
+          </Title>
         </div>
-      </section>
+        <div className="flex w-full items-center justify-center">
+          <div className="flex max-w-[512px] flex-col space-y-4 self-center">
+            <TextNormal>
+              To recover your account, please enter your email address below. We will send you a
+              code to reset your password.
+            </TextNormal>
+            <form className="w-full space-y-4" onSubmit={(e) => handleFormSubmit(e, phase)}>
+              <Input
+                id="email"
+                className="w-full"
+                labelText="Email"
+                type="email"
+                placeholder="xyz@mail.com"
+                value={email}
+                required
+                isError={isErrorEmail}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsErrorEmail(false);
+                }}
+              />
+              {phase === PHASE_CODE && (
+                <>
+                  <TextNormal>
+                    We have sent you a code to your email. Please enter the code below to reset your
+                    password.
+                  </TextNormal>
+                  <Input
+                    id="resetPasswordCode"
+                    type="text"
+                    placeholder="Enter the code"
+                    labelText="Code"
+                    value={resetPasswordCode}
+                    onChange={(e) => setResetPasswordCode(e.target.value)}
+                  />
+                </>
+              )}
+              {phase === PHASE_PASSWORD && (
+                <>
+                  <TextNormal>Please enter a new password for your account.</TextNormal>
+                  <Input
+                    id="newPassword"
+                    className="w-full"
+                    labelText="New Password"
+                    type="password"
+                    placeholder="••••••••••••"
+                    value={newPassword}
+                    required
+                    isError={isErrorNewPassword}
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
+                    errorText="The password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                      setIsErrorNewPassword(!validatePassword(e.target.value));
+                    }}
+                  />
+                  <Input
+                    id="newConfirmPassword"
+                    className="w-full"
+                    labelText="Confirm New Password"
+                    type="password"
+                    placeholder="••••••••••••"
+                    value={confirmNewPassword}
+                    required
+                    isError={isErrorConfirmNewPassword}
+                    errorText="The passwords do not match."
+                    onChange={(e) => {
+                      setConfirmNewPassword(e.target.value);
+                      setIsErrorConfirmNewPassword(e.target.value !== newPassword);
+                    }}
+                  />
+                </>
+              )}
+              <div className="flex items-center justify-end">
+                <Button type="primary" buttonType="submit">
+                  {getButtonTextByPhase(phase)}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </Section>
     </>
   );
 }

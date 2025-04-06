@@ -2,7 +2,7 @@
 
 export const Section = ({ children, id, alt = false }) => {
   const baseClasses =
-    "w-full h-full lg:min-h-screen lg:flex lg:justify-center lg:flex-col px-6 md:px-12 lg:px-28";
+    "w-full h-full lg:min-h-screen lg:flex lg:justify-between lg:flex-col py-3 px-6 md:px-12 lg:px-28 lg:py-24";
 
   return (
     <section

@@ -59,7 +59,7 @@ const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 mb-6 flex flex-wrap items-center justify-between bg-white/30 px-4 py-2 backdrop-blur-md dark:bg-black/30 sm:px-6 md:px-20 lg:px-40">
+    <header className="sticky top-0 z-50 flex h-14 flex-wrap items-center justify-between bg-white/30 px-6 py-2 backdrop-blur-md dark:bg-black/30 md:px-12 lg:-mt-14 lg:px-28">
       <div className="flex w-full items-center justify-between lg:hidden">
         <InvisibleButton className="text-2xl focus:outline-none" onClick={toggleMenu}>
           ☰
@@ -119,7 +119,7 @@ const Header = () => {
           </nav>
         </div>
       )}
-      <div className="hidden scale-80 lg:flex lg:w-full lg:items-center lg:justify-between">
+      <div className="hidden scale-75 lg:flex lg:w-full lg:items-center lg:justify-between">
         <div className="mr-4">
           <Link href="/" onClick={closeMenu}>
             <ShopTrackerLogo />

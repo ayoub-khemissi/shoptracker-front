@@ -204,14 +204,14 @@ export default function Settings() {
             Account
           </Button>
         </div>
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl backdrop-blur-md lg:p-8">
           <div className="absolute inset-0 z-0 opacity-10">
             <div className="absolute right-0 top-0 h-1/2 w-1/2 -translate-y-1/4 translate-x-1/4 transform rounded-full bg-secondary blur-3xl"></div>
             <div className="absolute bottom-0 left-0 h-1/2 w-1/2 -translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
           </div>
           <div className="relative z-10">
             {tab === SETTINGS_TAB_NOTIFICATIONS && (
-              <div className="flex flex-wrap items-start justify-evenly gap-y-4 py-4">
+              <div className="flex flex-wrap items-start justify-evenly gap-y-4">
                 <div className="w-full max-w-md space-y-8 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">
                     Notification Methods
@@ -306,14 +306,14 @@ export default function Settings() {
             )}
 
             {tab === SETTINGS_TAB_SUBSCRIPTION && (
-              <div className="flex flex-wrap items-start justify-center py-4">
+              <div className="flex flex-wrap items-start justify-center">
                 <Subscription />
               </div>
             )}
 
             {tab === SETTINGS_TAB_ACCOUNT && (
-              <div className="flex flex-col items-center justify-center space-y-10 py-4">
-                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+              <div className="flex flex-wrap items-start justify-evenly gap-y-4">
+                <div className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">Change Password</TextSeparator>
                   <form className="space-y-6 p-2" onSubmit={changePassword}>
                     <Input

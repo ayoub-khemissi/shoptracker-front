@@ -119,7 +119,7 @@ const Header = () => {
           </nav>
         </div>
       )}
-      <div className="hidden scale-75 lg:flex lg:w-full lg:items-center lg:justify-between">
+      <div className="hidden h-full scale-75 lg:flex lg:w-full lg:items-center lg:justify-between">
         <div className="mr-4">
           <Link href="/" onClick={closeMenu}>
             <ShopTrackerLogo />

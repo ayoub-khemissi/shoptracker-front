@@ -43,14 +43,10 @@ const Header = () => {
         </>
       ) : (
         <>
-          <NavLink
-            className="w-full py-4 text-center text-2xl"
-            href="/register"
-            onClick={closeMenu}
-          >
+          <NavLink className="w-full text-center text-2xl" href="/register" onClick={closeMenu}>
             Sign Up
           </NavLink>
-          <NavLink className="w-full py-4 text-center text-2xl" href="/login" onClick={closeMenu}>
+          <NavLink className="w-full text-center text-2xl" href="/login" onClick={closeMenu}>
             Sign In
           </NavLink>
         </>

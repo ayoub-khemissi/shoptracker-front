@@ -91,14 +91,14 @@ export default function Tracklist() {
         content="Tracklist page for ShopTracker. This page displays the tracklist of products being tracked."
       />
       <Section>
-        <div className="flex items-center justify-center space-y-8">
+        <div className="flex items-center justify-center pb-3">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             📈 Tracklist
             <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
           </Title>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
+        <div className="flex flex-wrap items-center justify-center pb-3 sm:flex-nowrap sm:space-x-4">
           <Button
             locked
             className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_ENABLED ? "shadow-lg shadow-secondary/10" : ""}`}
@@ -146,7 +146,7 @@ export default function Tracklist() {
         </div>
 
         {filteredTracklist.length === 0 && (
-          <div className="flex flex-col items-center justify-center space-y-6 py-10">
+          <div className="flex flex-col items-center justify-center space-y-6">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
             {tab === TRACK_STATUS_ENABLED && (
               <>

@@ -89,10 +89,10 @@ export default function Tracker() {
         </Title>
 
         <form
-          className="relative space-y-8 rounded-2xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur-md"
+          className="relative space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl backdrop-blur-md"
           onSubmit={handleSubmitTrack}
         >
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="group">
               <Input
                 id="url"
@@ -120,7 +120,7 @@ export default function Tracker() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
               <Title className="mb-4 text-lg font-semibold">Tracking Options</Title>
 
               <div className="space-y-4">
@@ -136,7 +136,7 @@ export default function Tracker() {
                 >
                   <Input
                     id="price-below"
-                    className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 focus:border-secondary/50 focus:bg-white/10"
+                    className="w-full rounded-xl border border-white/20 bg-white/5 p-4 transition-all duration-300 focus:border-secondary/50 focus:bg-white/10"
                     labelText="Notify me when price below:"
                     step={10}
                     min={0}

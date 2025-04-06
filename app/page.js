@@ -17,8 +17,8 @@ import { Section } from "./components/Section";
 export default async function Home() {
   const response = await fetchData("/track/stats");
   const data = (await response?.json())?.data;
-  const totalTracksEnabled = data?.total_tracks_enabled ?? 0;
-  const totalTrackChecks = data?.total_track_checks ?? 0;
+  const totalTracksEnabled = data?.total_tracks_enabled || 0;
+  const totalTrackChecks = data?.total_track_checks || 0;
 
   return (
     <>

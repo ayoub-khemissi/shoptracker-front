@@ -40,14 +40,14 @@ export default function Tracklist() {
 
   const getTrackStatusIdByTab = (tab) => {
     const tabData = TABS.find((tabData) => tabData.name === tab);
-    return tabData?.id ?? TRACK_STATUS_ENABLED;
+    return tabData?.id || TRACK_STATUS_ENABLED;
   };
 
   const [tab, setTab] = useState(getTrackStatusIdByTab(searchParams.get("tab")));
 
   const fetchTracklist = async () => {
     const response = await fetchData("/tracklist");
-    setTracklist((await response?.json())?.data ?? []);
+    setTracklist((await response?.json())?.data || []);
   };
 
   const getFilteredAndSortedTracklist = () => {

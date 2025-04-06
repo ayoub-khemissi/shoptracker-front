@@ -71,7 +71,7 @@ const Track = ({ number, data }) => {
   const [timeLeftBeforeCheck, setTimeLeftBeforeCheck] = useState(getTimeLeftBeforeCheck());
 
   const formatFullPrice = () => {
-    const price = track_checks_ok[track_checks_ok.length - 1]?.price ?? initial_price;
+    const price = track_checks_ok[track_checks_ok.length - 1]?.price || initial_price;
 
     if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
       return (
@@ -192,7 +192,7 @@ const Track = ({ number, data }) => {
     switch (response?.status) {
       case 200:
         router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}&refresh=true`);
-        showToast(`${name ?? "The track"} has been deleted.`, "info");
+        showToast(`${name || "The track"} has been deleted.`, "info");
         break;
 
       default:
@@ -213,7 +213,7 @@ const Track = ({ number, data }) => {
           `/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`,
         );
         showToast(
-          `${name ?? "The track"} has been ${
+          `${name || "The track"} has been ${
             status_id === TRACK_STATUS_ENABLED ? "disabled" : "enabled"
           }.`,
           status_id === TRACK_STATUS_ENABLED ? "info" : "success",
@@ -222,7 +222,7 @@ const Track = ({ number, data }) => {
 
       case 403: {
         showToast(
-          (await response.json())?.msg ??
+          (await response.json())?.msg ||
             "Failed to update the track status. Please try again later.",
           "error",
         );

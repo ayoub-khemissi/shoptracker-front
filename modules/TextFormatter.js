@@ -53,6 +53,10 @@ export function formatPrice(price) {
 
   let [integerPart, decimalPart] = String(price).replace(".", ",").split(",");
 
+  if (decimalPart && decimalPart.length === 1) {
+    decimalPart += "0";
+  }
+
   integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
 }

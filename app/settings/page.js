@@ -163,13 +163,13 @@ export default function Settings() {
         content="Settings page for ShopTracker. This page allows users to edit their account settings."
       />
       <Section>
-        <div className="flex items-center justify-center space-y-8">
+        <div className="flex items-center justify-center pb-3">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             ⚙️ Settings
             <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
           </Title>
         </div>
-        <div className="flex flex-wrap items-center justify-center sm:flex-nowrap sm:space-x-4">
+        <div className="flex flex-wrap items-center justify-center pb-3 sm:flex-nowrap sm:space-x-4">
           <Button
             locked
             className={`m-1 transition-all duration-300 ${tab === SETTINGS_TAB_NOTIFICATIONS ? "shadow-lg shadow-secondary/10" : ""}`}

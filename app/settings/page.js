@@ -212,13 +212,13 @@ export default function Settings() {
           <div className="relative z-10">
             {tab === SETTINGS_TAB_NOTIFICATIONS && (
               <div className="flex flex-wrap items-start justify-evenly gap-y-4">
-                <div className="w-full max-w-md space-y-8 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">
                     Notification Methods
                   </TextSeparator>
-                  <div className="space-y-5 p-2">
+                  <div className="space-y-4">
                     <div
-                      className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                       onClick={() => {
                         if (!user?.phone) {
                           showToast(
@@ -243,7 +243,7 @@ export default function Settings() {
                     </div>
 
                     <div
-                      className="group flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                       onClick={() => {
                         if (notificationMailbox && !notificationTextMessage) {
                           showToast("You must choose at least one notification method.", "error");
@@ -270,11 +270,11 @@ export default function Settings() {
                     </div>
                   </div>
                 </div>
-                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">
                     Whatsapp Phone Number
                   </TextSeparator>
-                  <form className="space-y-6 p-2" onSubmit={updatePhone}>
+                  <form className="space-y-4" onSubmit={updatePhone}>
                     <Input
                       id="phone"
                       className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
@@ -313,9 +313,9 @@ export default function Settings() {
 
             {tab === SETTINGS_TAB_ACCOUNT && (
               <div className="flex flex-wrap items-start justify-evenly gap-y-4">
-                <div className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">Change Password</TextSeparator>
-                  <form className="space-y-6 p-2" onSubmit={changePassword}>
+                  <form className="space-y-4" onSubmit={changePassword}>
                     <Input
                       id="email"
                       className="w-full cursor-not-allowed rounded-xl border border-white/20 bg-white/5 px-4 py-3"
@@ -366,11 +366,11 @@ export default function Settings() {
                     </div>
                   </form>
                 </div>
-                <div className="w-full max-w-md space-y-6 rounded-xl border border-error/30 bg-error/5 p-6 shadow-lg backdrop-blur-sm">
+                <div className="w-full max-w-md space-y-6 rounded-xl border border-error/30 bg-error/5 p-4 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium text-error">
                     Danger Zone
                   </TextSeparator>
-                  <div className="flex items-center justify-center p-2">
+                  <div className="flex items-center justify-center p-4">
                     <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
                       Delete account
                     </Button>

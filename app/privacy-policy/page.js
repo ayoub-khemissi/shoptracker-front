@@ -5,8 +5,9 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
+import { Section } from "../components/Section";
 
-export default function Privacy() {
+export default function PrivacyPolicy() {
   return (
     <>
       <title>Privacy Policy</title>
@@ -14,7 +15,7 @@ export default function Privacy() {
         name="description"
         content="Privacy policy page for ShopTracker. This page explains how we collect, use, and protect your personal data."
       />
-      <div className="flex h-full flex-col space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:space-x-20 lg:px-40">
+      <Section>
         <Title className="pb-6 text-center text-2xl lg:text-4xl">🔒 Privacy Policy</Title>
         <TextNormal>
           Your privacy is important to us. This policy explains how we collect, use, and protect
@@ -206,7 +207,7 @@ export default function Privacy() {
             after updates constitutes acceptance of the revised policy.
           </AccordionItem>
         </Accordion>
-      </div>
+      </Section>
     </>
   );
 }

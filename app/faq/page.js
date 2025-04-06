@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
+import { Section } from "../components/Section";
 
 export default function Faq() {
   return (
@@ -14,7 +15,7 @@ export default function Faq() {
         name="description"
         content="Frequently Asked Questions (Q&A) page for ShopTracker. This page provides answers to common questions about ShopTracker and how it works."
       />
-      <div className="flex h-full flex-col space-x-0 space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:space-x-20 lg:px-40">
+      <Section>
         <Title className="pb-6 text-center text-2xl lg:text-4xl">
           ❓ Frequently Asked Questions (Q&A)
         </Title>
@@ -110,7 +111,7 @@ export default function Faq() {
             .
           </AccordionItem>
         </Accordion>
-      </div>
+      </Section>
     </>
   );
 }

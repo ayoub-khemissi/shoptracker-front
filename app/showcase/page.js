@@ -28,6 +28,7 @@ import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
 import Spinner from "../components/Spinner";
 import { LoadingScreen } from "../components/LoadingScreen";
+import { Section } from "../components/Section";
 
 const { SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
 
@@ -43,7 +44,7 @@ export default function Showcase() {
         name="description"
         content="Showcase page for ShopTracker. This page displays the different components and features available in the application."
       />
-      <main className="flex h-full flex-col items-center justify-center space-y-4 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
+      <Section>
         <Button type="primary">S'inscrire</Button>
         <Button type="contrast">Retour</Button>
         <Button type="tertiary">Sélectionner</Button>
@@ -198,7 +199,7 @@ export default function Showcase() {
         </Modal>
         <Spinner />
         <LoadingScreen />
-      </main>
+      </Section>
     </>
   );
 }

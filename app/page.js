@@ -12,6 +12,7 @@ import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrow
 import PricingPage from "./components/PricingPage";
 import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
+import { Section } from "./components/Section";
 
 export default async function Home() {
   const response = await fetchData("/track/stats");
@@ -20,11 +21,8 @@ export default async function Home() {
   const totalTrackChecks = data?.total_track_checks ?? 0;
 
   return (
-    <main className="min-h-screen overflow-auto">
-      <section
-        id="top"
-        className="bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
-      >
+    <>
+      <Section id="top">
         <Title className="text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop
           <br />{" "}
@@ -33,7 +31,7 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="grid grid-cols-1 gap-8 py-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 py-8 lg:grid-cols-2">
           <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
             <Image className="h-80" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
@@ -57,16 +55,13 @@ export default async function Home() {
             </div>
           </div>
         </div>
-        <div className="hidden items-center justify-center py-10 lg:flex">
+        <div className="hidden items-center justify-center py-4 lg:flex">
           <Link href="#how-to" className="animate-bounce">
             <Image src={ScrollArrowsDownSecondarySvg} alt="scroll down arrow" />
           </Link>
         </div>
-      </section>
-      <section
-        id="how-to"
-        className="bg-gradient-to-b from-contrast-alt from-90% to-contrast px-10 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
-      >
+      </Section>
+      <Section alt id="how-to">
         <Title className="text-center text-2xl lg:text-4xl">
           Track prices or availability of products from almost
           <br />{" "}
@@ -75,7 +70,7 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="grid grid-cols-1 gap-8 py-20 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 py-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col items-center justify-between space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">
             <Image className="h-60" src={ProductUrlSvg} alt="product url" />
             <TextNormal className="text-center text-xl lg:text-2xl">
@@ -97,18 +92,15 @@ export default async function Home() {
             </TextNormal>
           </div>
         </div>
-        <div className="hidden items-center justify-center py-10 lg:flex">
-          <Link href="#subscribe" className="animate-bounce">
+        <div className="hidden items-center justify-center py-4 lg:flex">
+          <Link href="#pricing" className="animate-bounce">
             <Image src={ScrollArrowsDownTertiarySvg} alt="scroll down arrow" />
           </Link>
         </div>
-      </section>
-      <section
-        id="subscribe"
-        className="bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 py-6 md:px-20 md:py-10 lg:px-40 lg:py-20"
-      >
+      </Section>
+      <Section id="pricing">
         <PricingPage />
-      </section>
+      </Section>
       <div className="fixed bottom-8 right-8 lg:bottom-16 lg:right-16">
         <Link href="#top">
           <Image
@@ -118,6 +110,6 @@ export default async function Home() {
           />
         </Link>
       </div>
-    </main>
+    </>
   );
 }

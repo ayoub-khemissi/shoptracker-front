@@ -16,6 +16,7 @@ import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
 import { validatePassword, validatePhone } from "@/modules/DataValidation";
 import Constants from "@/utils/Constants";
+import { Section } from "../components/Section";
 
 const { SETTINGS_TAB_NOTIFICATIONS, SETTINGS_TAB_ACCOUNT, SETTINGS_TAB_SUBSCRIPTION } = Constants;
 
@@ -161,7 +162,7 @@ export default function Settings() {
         name="description"
         content="Settings page for ShopTracker. This page allows users to edit their account settings."
       />
-      <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
+      <Section>
         <div className="flex items-center justify-center space-y-8">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             ⚙️ Settings
@@ -408,7 +409,7 @@ export default function Settings() {
             </div>
           </div>
         </Modal>
-      </main>
+      </Section>
     </>
   );
 }

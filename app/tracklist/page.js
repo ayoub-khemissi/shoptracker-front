@@ -11,6 +11,7 @@ import EmptyBoxSvg from "../../public/assets/svg/illustrations/empty-box.svg";
 import Title from "../components/Title";
 import ButtonLink from "../components/ButtonLink";
 import GlassPanel from "../components/GlassPanel";
+import { Section } from "../components/Section";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -89,7 +90,7 @@ export default function Tracklist() {
         name="description"
         content="Tracklist page for ShopTracker. This page displays the tracklist of products being tracked."
       />
-      <main className="h-full space-y-3 bg-gradient-to-b from-contrast from-90% to-contrast-alt px-6 md:px-20 lg:px-40">
+      <Section>
         <div className="flex items-center justify-center space-y-8">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
             📈 Tracklist
@@ -169,7 +170,7 @@ export default function Tracklist() {
             return <Track data={track} number={index + 1} key={`track-${index}`} />;
           })}
         </div>
-      </main>
+      </Section>
     </>
   );
 }

@@ -39,7 +39,7 @@ const {
   TRACKLIST_TAB_WISHLIST,
 } = Constants;
 
-const Track = ({ className = "", number, data }) => {
+const Track = ({ number, data }) => {
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = useAuthContext();
@@ -254,9 +254,7 @@ const Track = ({ className = "", number, data }) => {
 
   return (
     <>
-      <div
-        className={`mx-2 my-2 flex min-w-[256px] max-w-[512px] flex-auto flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
-      >
+      <div className="flex min-w-[256px] max-w-[512px] flex-auto flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
         <div className="flex h-10 items-center justify-center bg-gradient-to-r from-primary/90 to-primary px-3 py-2">
           <div className="w-1/6"></div>
           <NavLink

@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <>
-      <Section id="top">
+      <Section id="top" centered>
         <Title className="text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop
           <br />{" "}
@@ -61,7 +61,7 @@ export default async function Home() {
           </Link>
         </div>
       </Section>
-      <Section alt id="how-to">
+      <Section alt id="how-to" centered>
         <Title className="text-center text-2xl lg:text-4xl">
           Track prices or availability of products from almost
           <br />{" "}
@@ -98,7 +98,7 @@ export default async function Home() {
           </Link>
         </div>
       </Section>
-      <Section id="pricing">
+      <Section id="pricing" centered>
         <PricingPage />
       </Section>
       <div className="fixed bottom-8 right-8 lg:bottom-16 lg:right-16">

@@ -38,8 +38,8 @@ export default async function Home() {
               {formatNumberWithSpaces(totalTracksEnabled)} products are being tracked
               <br /> right now.
             </TextNormal>
-            <div className="absolute inset-0 z-0 opacity-10">
-              <div className="absolute right-0 top-0 h-1/2 w-1/2 -translate-y-1/4 translate-x-1/4 transform rounded-full bg-secondary blur-3xl"></div>
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute right-0 top-0 h-1/2 w-1/2 -translate-y-1/4 translate-x-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
               <div className="absolute bottom-0 left-0 h-1/2 w-1/2 -translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
             </div>
           </div>
@@ -49,8 +49,8 @@ export default async function Home() {
               {formatNumberWithSpaces(totalTrackChecks)} checks performed
               <br /> since the launch.
             </TextNormal>
-            <div className="absolute inset-0 z-0 opacity-10">
-              <div className="absolute left-0 top-0 h-1/2 w-1/2 -translate-x-1/4 -translate-y-1/4 transform rounded-full bg-secondary blur-3xl"></div>
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute left-0 top-0 h-1/2 w-1/2 -translate-x-1/4 -translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
               <div className="absolute bottom-0 right-0 h-1/2 w-1/2 translate-x-1/4 translate-y-1/4 transform rounded-full bg-tertiary blur-3xl"></div>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default async function Home() {
       <Section id="pricing" centered>
         <PricingPage />
       </Section>
-      <div className="fixed bottom-8 right-8 lg:bottom-16 lg:right-16">
+      <div className="fixed bottom-8 right-8 z-10 lg:bottom-16 lg:right-16">
         <Link href="#top">
           <Image
             className="h-10 w-10 rotate-180 transition duration-300 hover:scale-110 lg:h-12 lg:w-12"

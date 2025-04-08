@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import TextNormal from "../../components/TextNormal";
+import TextNormal from "@/app/components/TextNormal";
 import Image from "next/image";
-import TVProductSvg from "../../../public/assets/svg/illustrations/tv-product.svg";
-import Button from "../../components/Button";
+import TVProductSvg from "@/public/assets/svg/illustrations/tv-product.svg";
+import Button from "@/app/components/Button";
 import { notFound } from "next/navigation";
 import { formatPrice } from "@/modules/TextFormatter";
 import Link from "next/link";
+import { Section } from "@/app/components/Section";
 
 const priceRange = {
   min: 500,
@@ -65,74 +66,81 @@ export default function TVProduct({ params }) {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 md:p-8 lg:p-12">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-700/10 via-transparent to-transparent opacity-50"></div>
-
-      <div className="relative w-full max-w-4xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/20">
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
-          <div className="relative flex flex-col items-center justify-center">
-            <div className="absolute -inset-2 rounded-full bg-blue-500/10 blur-2xl"></div>
-            <Image
-              src={TVProductSvg}
-              alt="TV Product"
-              className="relative h-64 w-64 transform object-contain transition-transform duration-300 hover:scale-105"
-            />
+    <>
+      <title>Ultra 4k Smart TV - Celestium</title>
+      <meta
+        name="description"
+        content="Experience stunning clarity with the Ultra 4K Smart TV from Celestium. Smart features, vibrant colors, and seamless streaming—entertainment has never looked this good."
+      />
+      <Section centered>
+        <div className="relative w-full max-w-4xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/20">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+            <div className="relative flex flex-col items-center justify-center">
+              <div className="absolute -inset-2 rounded-full bg-blue-500/10 blur-2xl"></div>
+              <Image
+                src={TVProductSvg}
+                alt="Ultra 4k Smart TV"
+                className="relative h-64 w-64 transform object-contain transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="space-y-4 text-white">
+              <div className="space-y-2">
+                <TextNormal className="text-2xl font-bold text-blue-300 drop-shadow-md">
+                  {productData.name}
+                </TextNormal>
+                <TextNormal className="text-lg text-gray-400 opacity-80">
+                  {productData.brand}
+                </TextNormal>
+              </div>
+              <div className="space-y-3 rounded-xl border border-white/10 bg-white/5 p-4">
+                <TextNormal className="text-4xl font-bold text-blue-200 drop-shadow-lg">
+                  {formatPrice(productData.price)}€
+                </TextNormal>
+                <TextNormal
+                  className={`text-lg font-semibold ${
+                    productData.inStock
+                      ? "animate-pulse text-green-400"
+                      : "text-red-400 line-through"
+                  }`}
+                >
+                  {productData.inStock ? "In Stock" : "Out of Stock"}
+                </TextNormal>
+                <TextNormal className="rounded-md border border-blue-500/30 bg-white/10 p-2 text-sm italic text-blue-200">
+                  💡 Price will vary between {priceRange.min}€ and {priceRange.max}€
+                </TextNormal>
+              </div>
+              <Button type="quaternary" className="w-full" disabled={!productData.inStock}>
+                Add to Cart
+              </Button>
+              <TextNormal className="rounded-md border border-white/10 bg-white/5 p-2 text-center text-sm opacity-60">
+                Next update in:
+                <span className="ml-2 font-bold text-blue-300">{formatTime(timeLeft)}</span>
+              </TextNormal>
+            </div>
           </div>
-          <div className="space-y-4 text-white">
-            <div className="space-y-2">
-              <TextNormal className="text-2xl font-bold text-blue-300 drop-shadow-md">
-                {productData.name}
-              </TextNormal>
-              <TextNormal className="text-lg text-gray-400 opacity-80">
-                {productData.brand}
-              </TextNormal>
-            </div>
-            <div className="space-y-3 rounded-xl border border-white/10 bg-white/5 p-4">
-              <TextNormal className="text-4xl font-bold text-blue-200 drop-shadow-lg">
-                {formatPrice(productData.price)}€
-              </TextNormal>
-              <TextNormal
-                className={`text-lg font-semibold ${
-                  productData.inStock ? "animate-pulse text-green-400" : "text-red-400 line-through"
-                }`}
-              >
-                {productData.inStock ? "In Stock" : "Out of Stock"}
-              </TextNormal>
-              <TextNormal className="rounded-md border border-blue-500/30 bg-white/10 p-2 text-sm italic text-blue-200">
-                💡 Price will vary between {priceRange.min}€ and {priceRange.max}€
-              </TextNormal>
-            </div>
-            <Button type="quaternary" className="w-full" disabled={!productData.inStock}>
-              Add to Cart
-            </Button>
-            <TextNormal className="rounded-md border border-white/10 bg-white/5 p-2 text-center text-sm opacity-60">
-              Next update in:
-              <span className="ml-2 font-bold text-blue-300">{formatTime(timeLeft)}</span>
+          <div className="mt-8 space-y-4 border-t border-white/10 pt-8 text-center">
+            <TextNormal className="text-lg font-semibold text-white/80">
+              Explore Different Update Intervals
             </TextNormal>
+            <div className="flex flex-wrap justify-center gap-2">
+              {validIntervals.map((intervalOption) => (
+                <Link
+                  key={intervalOption}
+                  href={`/tv-product/${intervalOption}`}
+                  className={`rounded-full px-3 py-1 text-sm transition-all duration-300 ${
+                    interval === intervalOption
+                      ? "bg-blue-600 text-white"
+                      : "bg-white/10 text-blue-200 hover:bg-blue-500/20"
+                  } border border-white/10 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
+                >
+                  {intervalOption}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="mt-8 space-y-4 border-t border-white/10 pt-8 text-center">
-          <TextNormal className="text-lg font-semibold text-white/80">
-            Explore Different Update Intervals
-          </TextNormal>
-          <div className="flex flex-wrap justify-center gap-2">
-            {validIntervals.map((intervalOption) => (
-              <Link
-                key={intervalOption}
-                href={`/tv-product/${intervalOption}`}
-                className={`rounded-full px-3 py-1 text-sm transition-all duration-300 ${
-                  interval === intervalOption
-                    ? "bg-blue-600 text-white"
-                    : "bg-white/10 text-blue-200 hover:bg-blue-500/20"
-                } border border-white/10 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500/50`}
-              >
-                {intervalOption}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+      </Section>
+    </>
   );
 }
 

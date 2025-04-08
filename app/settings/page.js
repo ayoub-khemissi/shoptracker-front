@@ -254,8 +254,7 @@ export default function Settings() {
                       </TextLabel>
                       <Switch checked={notificationMailbox} opacityWhenOff />
                     </div>
-
-                    <div className="flex w-full items-center justify-center pt-4">
+                    <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
                       <Button
                         type="quaternary"
                         onClick={updateNotifications}
@@ -390,7 +389,7 @@ export default function Settings() {
             <TextNormal className="text-center">
               This action cannot be undone. All of your data will be permanently deleted.
             </TextNormal>
-            <div className="flex w-full items-center justify-between pt-4">
+            <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
               <Button
                 type="quaternary"
                 onClick={() => {

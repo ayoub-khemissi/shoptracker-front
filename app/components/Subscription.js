@@ -145,7 +145,7 @@ const Subscription = ({ className = "" }) => {
                   You will receive a prorated refund based on the remaining time on your
                   subscription.
                 </TextNormal>
-                <div className="flex w-full items-center justify-between">
+                <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
                   <Button
                     type="primary"
                     onClick={() => {

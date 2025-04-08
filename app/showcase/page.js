@@ -186,7 +186,7 @@ export default function Showcase() {
               <br />
               <span className="text-secondary">ton abonnement</span> !
             </Title>
-            <div className="flex items-center justify-between">
+            <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
               <Button
                 type="contrast"
                 onClick={() => {

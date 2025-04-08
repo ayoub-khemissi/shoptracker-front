@@ -24,13 +24,13 @@ export function convertMillisecondsToText(ms) {
   if (ms < second) {
     return "in a second";
   } else if (ms < minute) {
-    let seconds = Math.floor(ms / second);
+    const seconds = Math.floor(ms / second);
     return seconds + (seconds === 1 ? " second" : " seconds");
   } else if (ms < hour) {
-    let minutes = Math.floor(ms / minute);
+    const minutes = Math.floor(ms / minute);
     return minutes + (minutes === 1 ? " minute" : " minutes");
   } else {
-    let hours = Math.floor(ms / hour);
+    const hours = Math.floor(ms / hour);
     return hours + (hours === 1 ? " hour" : " hours");
   }
 }

@@ -6,13 +6,36 @@ export const Section = ({ children, id, alt = false, centered = false }) => {
   return (
     <section
       {...(id && { id })}
-      className={`${baseClasses} ${
-        alt
-          ? "bg-gradient-to-b from-contrast-alt from-90% to-contrast"
-          : "bg-gradient-to-b from-contrast from-90% to-contrast-alt"
-      } ${centered ? "lg:flex lg:flex-col lg:justify-center" : ""}`}
+      className={`${baseClasses} relative overflow-hidden ${
+        centered ? "lg:flex lg:flex-col lg:justify-center" : ""
+      }`}
     >
-      {children}
+      <div className="absolute inset-0">
+        <div
+          className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] ${
+            alt
+              ? "from-purple-700/20 via-gray-900/60 to-contrast/90"
+              : "from-blue-700/20 via-gray-900/60 to-contrast/90"
+          }`}
+        />
+        <div
+          className={`absolute inset-0 bg-gradient-to-t ${
+            alt
+              ? "from-purple-500/15 via-transparent to-contrast/80"
+              : "from-blue-500/20 via-transparent to-contrast/80"
+          }`}
+        />
+        <div
+          className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] ${
+            alt
+              ? "from-purple-700/10 via-transparent to-transparent"
+              : "from-sky-700/15 via-transparent to-transparent"
+          }`}
+        />
+        <div className="absolute bottom-0 h-32 w-full bg-gradient-to-t from-contrast to-transparent" />
+        <div className="absolute top-0 h-32 w-full bg-gradient-to-b from-contrast to-transparent" />
+      </div>
+      <div className="relative z-10">{children}</div>
     </section>
   );
 };

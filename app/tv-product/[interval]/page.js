@@ -56,7 +56,7 @@ export default function TVProduct({ params }) {
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
 
-    let result = [];
+    const result = [];
     if (hours > 0) result.push(`${hours}h`);
     if (mins > 0) result.push(`${mins}m`);
     if (secs > 0 || result.length === 0) result.push(`${secs}s`);
@@ -119,7 +119,7 @@ export default function TVProduct({ params }) {
             {validIntervals.map((intervalOption) => (
               <Link
                 key={intervalOption}
-                href={`/product/${intervalOption}`}
+                href={`/tv-product/${intervalOption}`}
                 className={`rounded-full px-3 py-1 text-sm transition-all duration-300 ${
                   interval === intervalOption
                     ? "bg-blue-600 text-white"

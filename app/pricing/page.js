@@ -11,7 +11,7 @@ export default function Pricing() {
         name="description"
         content="Pricing page for ShopTracker. This page provides information about the different plans and pricing options available for users."
       />
-      <Section>
+      <Section centered>
         <PricingPage />
       </Section>
     </>

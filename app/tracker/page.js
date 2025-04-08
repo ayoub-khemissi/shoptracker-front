@@ -9,6 +9,8 @@ import { useToast } from "../contexts/ToastContext";
 import { fetchData } from "@/modules/Fetch";
 import { useRouter } from "next/navigation";
 import { Section } from "../components/Section";
+import TextNormal from "../components/TextNormal";
+import { NEXT_PUBLIC_BASE_URL } from "@/utils/Config";
 
 export default function Tracker() {
   const [url, setUrl] = useState("");
@@ -18,6 +20,8 @@ export default function Tracker() {
   const [trackPriceThreshold, setTrackPriceThreshold] = useState("");
   const { showToast } = useToast();
   const router = useRouter();
+
+  const demoUrl = `${NEXT_PUBLIC_BASE_URL}/tv-product/5m`;
 
   const handleTrackPrice = () => {
     if (trackPrice && !trackStock) {
@@ -88,76 +92,98 @@ export default function Tracker() {
           🚀 !
         </Title>
 
-        <form
-          className="relative space-y-4 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl backdrop-blur-md"
-          onSubmit={handleSubmitTrack}
-        >
-          <div className="space-y-4">
-            <div className="group">
-              <Input
-                id="url"
-                type="url"
-                pattern="https://.*"
-                labelText="Product URL"
-                placeholder="https://www.e-commerce.com/product/id/123456789"
-                onChange={(e) => setUrl(e.target.value)}
-                value={url}
-                required
-                className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
-              />
-            </div>
-
-            <div className="group">
-              <Input
-                id="details"
-                type="text"
-                labelText="Product details (optional)"
-                placeholder="Name, description, color..."
-                onChange={(e) => setAdditionalInfo(e.target.value)}
-                value={additionalInfo}
-                className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-              <Title className="mb-4 text-lg font-semibold">Tracking Options</Title>
-
-              <div className="space-y-4">
-                <Checkbox
-                  labelText="Track restocking"
-                  checked={trackStock}
-                  onClick={handleTrackStock}
+        <div className="grid grid-cols-1 gap-12 xl:grid-cols-2">
+          <form onSubmit={handleSubmitTrack} className="space-y-8">
+            <div className="space-y-4">
+              <div className="group">
+                <Input
+                  id="url"
+                  type="url"
+                  pattern="https://.*"
+                  labelText="Product URL"
+                  placeholder="https://www.e-commerce.com/product/id/123456789"
+                  onChange={(e) => setUrl(e.target.value)}
+                  value={url}
+                  required
+                  className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                 />
-                <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
+              </div>
 
-                <div
-                  className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
-                >
-                  <Input
-                    id="price-below"
-                    className="w-full rounded-xl border border-white/20 bg-white/5 p-4 transition-all duration-300 focus:border-secondary/50 focus:bg-white/10"
-                    labelText="Notify me when price below:"
-                    step={10}
-                    min={0}
-                    max={100000000}
-                    type="number"
-                    placeholder="99 €"
-                    onChange={(e) => setTrackPriceThreshold(e.target.value)}
-                    value={trackPriceThreshold}
-                    disabled={!trackPrice}
-                    required={trackPrice}
-                  />
-                </div>
+              <div className="group">
+                <Input
+                  id="details"
+                  type="text"
+                  labelText="Product details (optional)"
+                  placeholder="Name, description, color..."
+                  onChange={(e) => setAdditionalInfo(e.target.value)}
+                  value={additionalInfo}
+                  className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
+                />
               </div>
             </div>
-            <div className="flex items-center justify-center lg:items-end">
-              <Button type="quaternary" buttonType="submit">
-                Start tracking 🏁
-              </Button>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <div className="space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+                <Title className="mb-4 text-lg font-semibold">Tracking Options</Title>
+
+                <div className="space-y-4">
+                  <Checkbox
+                    labelText="Track restocking"
+                    checked={trackStock}
+                    onClick={handleTrackStock}
+                  />
+                  <Checkbox
+                    labelText="Track price"
+                    checked={trackPrice}
+                    onClick={handleTrackPrice}
+                  />
+
+                  <div
+                    className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
+                  >
+                    <Input
+                      id="price-below"
+                      className="w-full rounded-xl border border-white/20 bg-white/5 p-4 transition-all duration-300 focus:border-secondary/50 focus:bg-white/10"
+                      labelText="Notify me when price below:"
+                      step={10}
+                      min={0}
+                      max={100000000}
+                      type="number"
+                      placeholder="99 €"
+                      onChange={(e) => setTrackPriceThreshold(e.target.value)}
+                      value={trackPriceThreshold}
+                      disabled={!trackPrice}
+                      required={trackPrice}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center lg:items-end">
+                <Button type="quaternary" buttonType="submit">
+                  Start tracking 🏁
+                </Button>
+              </div>
             </div>
+          </form>
+          <div className="flex flex-col justify-center space-y-6 rounded-xl border border-white/10 bg-white/5 p-8 text-center">
+            <Title className="text-2xl lg:text-3xl">Quick Demo</Title>
+            <TextNormal className="text-lg">Try our pre-configured TV product tracker</TextNormal>
+
+            <Button
+              type="tertiary"
+              onClick={() => {
+                setUrl(demoUrl);
+                setAdditionalInfo("Ultra 4K Smart TV");
+                setTrackStock(true);
+                setTrackPrice(true);
+                setTrackPriceThreshold(999);
+                handleSubmitTrack({ preventDefault: () => {} });
+              }}
+              className="w-full"
+            >
+              Launch Demo (5m update interval)
+            </Button>
           </div>
-        </form>
+        </div>
       </Section>
     </>
   );

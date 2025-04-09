@@ -85,10 +85,13 @@ const Header = () => {
                 className={`text-error`}
                 color="danger"
                 onClick={async () => {
-                  await fetchLogout();
-                  showToast("See you later 👋", "info");
-                  localLogout();
-                  closeMenu();
+                  if (await fetchLogout()) {
+                    showToast("See you later 👋", "info");
+                    localLogout();
+                    closeMenu();
+                  } else {
+                    showToast("Failed to logout. Please try again later.", "error");
+                  }
                 }}
               >
                 Logout
@@ -145,10 +148,13 @@ const Header = () => {
                   className={`text-error`}
                   color="danger"
                   onClick={async () => {
-                    await fetchLogout();
-                    showToast("See you later 👋", "info");
-                    localLogout();
-                    closeMenu();
+                    if (await fetchLogout()) {
+                      showToast("See you later 👋", "info");
+                      localLogout();
+                      closeMenu();
+                    } else {
+                      showToast("Failed to logout. Please try again later.", "error");
+                    }
                   }}
                 >
                   Logout

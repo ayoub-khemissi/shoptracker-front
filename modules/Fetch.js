@@ -6,8 +6,6 @@ import {
 
 const remoteApiUrl = `http${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "s" : ""}://${NEXT_PUBLIC_SHOPTRACKER_API_HOSTNAME}${NEXT_PUBLIC_SHOPTRACKER_API_HTTPSECURE ? "" : `:${NEXT_PUBLIC_SHOPTRACKER_API_PORT}`}`;
 
-const localApiUrl = "/api";
-
 /**
  * Make a request to the API.
  *
@@ -17,9 +15,9 @@ const localApiUrl = "/api";
  * @returns {Promise<Response>} A promise resolving the response object.
  * @throws {Error} If the request fails, the function throws an error.
  */
-export const fetchData = async (path, method = "GET", body = null, remoteApi = true) => {
+export const fetchData = async (path, method = "GET", body = null) => {
   try {
-    const response = await fetch((remoteApi ? remoteApiUrl : localApiUrl) + path, {
+    const response = await fetch(remoteApiUrl + path, {
       method: method,
       body: body ? JSON.stringify(body) : null,
       headers: { "Content-Type": "application/json" },
@@ -42,8 +40,9 @@ export const fetchData = async (path, method = "GET", body = null, remoteApi = t
 /**
  * Logout the user.
  *
- * @returns {Promise<void>} A promise resolving when the logout is complete.
+ * @returns {Promise<boolean>} A promise resolving with the logout result.
  */
 export const fetchLogout = async () => {
-  await fetchData("/logout", "POST", null, false);
+  const response = await fetchData("/logout", "POST");
+  return response?.ok;
 };

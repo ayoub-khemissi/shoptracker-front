@@ -102,12 +102,16 @@ export default function Settings() {
     const response = await fetchData(`/account/delete`, "DELETE");
 
     switch (response?.status) {
-      case 200:
-        showToast("Your account has been deleted. 👋😔", "info");
-        await fetchLogout();
-        localLogout();
-        router.push("/");
+      case 200: {
+        if (await fetchLogout()) {
+          showToast("Your account has been deleted. 👋😔", "info");
+          localLogout();
+          router.push("/");
+        } else {
+          showToast("Failed to delete your account. Please try again later.", "error");
+        }
         break;
+      }
 
       case 400:
         showToast(

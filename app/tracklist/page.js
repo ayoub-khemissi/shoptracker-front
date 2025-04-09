@@ -40,6 +40,8 @@ export default function Tracklist() {
   const [tracklist, setTracklist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const getTrackStatusIdByTab = (tab) => {
     const tabData = TABS.find((tabData) => tabData.name === tab);
@@ -53,13 +55,23 @@ export default function Tracklist() {
     setTracklist((await response?.json())?.data || []);
   };
 
-  const getFilteredAndSortedTracklist = () => {
-    return tracklist
+  const getPaginatedTracklist = () => {
+    const filtered = tracklist
       .filter((track) => tab === track.status_id)
-      .filter((track) => track.name?.toLowerCase().includes(searchQuery.toLowerCase()));
+      .filter(
+        (track) =>
+          searchQuery.length === 0 || track.name?.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return {
+      items: filtered.slice(startIndex, startIndex + itemsPerPage),
+      totalPages: Math.ceil(filtered.length / itemsPerPage),
+      totalItems: filtered.length,
+    };
   };
 
-  const filteredTracklist = getFilteredAndSortedTracklist();
+  const { items: paginatedTracklist, totalPages, totalItems } = getPaginatedTracklist();
 
   useEffect(() => {
     fetchTracklist();
@@ -153,18 +165,19 @@ export default function Tracklist() {
             Finished
           </Button>
         </div>
-
-        <div className="mb-6 px-4">
+        <div className="px-4 pb-3">
           <Input
             ref={searchInputRef}
             type="search"
             placeholder="Search by product name..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
           />
         </div>
-
-        {filteredTracklist.length === 0 && (
+        {totalItems === 0 && (
           <div className="flex flex-col items-center justify-center space-y-6">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
             {tab === TRACK_STATUS_ENABLED && (
@@ -181,11 +194,53 @@ export default function Tracklist() {
             )}
           </div>
         )}
+        {totalPages > 1 && (
+          <div className="flex flex-wrap justify-center gap-2 px-4 pb-3">
+            <Button
+              type="contrast"
+              size="small"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            >
+              <p className="rotate-180">➜</p>
+            </Button>
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              const page =
+                currentPage <= 3
+                  ? i + 1
+                  : currentPage >= totalPages - 2
+                    ? totalPages - 4 + i
+                    : currentPage - 2 + i;
+              return (
+                <Button
+                  key={`page-${page}`}
+                  type={currentPage === page ? "quaternary" : "contrast"}
+                  size="small"
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </Button>
+              );
+            })}
+            <Button
+              type="contrast"
+              size="small"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            >
+              <p>➜</p>
+            </Button>
+          </div>
+        )}
 
         <div className="flex flex-wrap justify-evenly gap-4">
-          {filteredTracklist.map((track, index) => {
-            return <Track data={track} number={index + 1} key={`track-${index}`} />;
-          })}
+          {paginatedTracklist.map((track, index) => (
+            <Track
+              data={track}
+              key={`track-${index}`}
+              number={index + 1 + (currentPage - 1) * itemsPerPage}
+            />
+          ))}
         </div>
       </Section>
     </>

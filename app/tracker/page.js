@@ -12,6 +12,8 @@ import { Section } from "../components/Section";
 import TextNormal from "../components/TextNormal";
 import { NEXT_PUBLIC_BASE_URL } from "@/utils/Config";
 
+const demoUrl = `${NEXT_PUBLIC_BASE_URL}/tv-product/5m`;
+
 export default function Tracker() {
   const [url, setUrl] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
@@ -20,8 +22,6 @@ export default function Tracker() {
   const [trackPriceThreshold, setTrackPriceThreshold] = useState("");
   const { showToast } = useToast();
   const router = useRouter();
-
-  const demoUrl = `${NEXT_PUBLIC_BASE_URL}/tv-product/5m`;
 
   const handleTrackPrice = () => {
     if (trackPrice && !trackStock) {
@@ -39,6 +39,41 @@ export default function Tracker() {
     }
 
     setTrackStock(!trackStock);
+  };
+
+  const handleSubmitDemoTrack = async (e) => {
+    e.preventDefault();
+
+    const response = await fetchData("/track", "POST", {
+      url: demoUrl,
+      additionalInfo: "Ultra 4K Smart TV",
+      trackStock: true,
+      trackPrice: true,
+      trackPriceThreshold: 999,
+    });
+
+    if (!response || !response.status) {
+      showToast("Failed to track the product. Please try again later.", "error");
+      return;
+    }
+
+    const msg = (await response.json()).msg;
+
+    switch (response.status) {
+      case 201:
+        showToast("Product added to the tracking list! 🎉", "success");
+        router.push("/tracklist");
+        break;
+
+      case 403:
+      case 409:
+        showToast(msg, "error");
+        break;
+
+      default:
+        showToast("An error occurred. Please try again later.", "error");
+        break;
+    }
   };
 
   const handleSubmitTrack = async (e) => {
@@ -167,19 +202,7 @@ export default function Tracker() {
           <div className="flex flex-col justify-center space-y-6 rounded-xl border border-white/10 bg-white/5 p-8 text-center">
             <Title className="text-2xl lg:text-3xl">Quick Demo</Title>
             <TextNormal className="text-lg">Try our pre-configured TV product tracker</TextNormal>
-
-            <Button
-              type="tertiary"
-              onClick={() => {
-                setUrl(demoUrl);
-                setAdditionalInfo("Ultra 4K Smart TV");
-                setTrackStock(true);
-                setTrackPrice(true);
-                setTrackPriceThreshold(999);
-                handleSubmitTrack({ preventDefault: () => {} });
-              }}
-              className="w-full"
-            >
+            <Button type="tertiary" onClick={handleSubmitDemoTrack} className="w-full">
               Launch Demo (5m update interval)
             </Button>
           </div>

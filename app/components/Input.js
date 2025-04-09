@@ -26,9 +26,11 @@ const Input = ({
   errorText = null,
   isError = false,
   onChange = () => {},
+  ref = null,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
+  const isSearch = type === "search";
 
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
@@ -45,9 +47,9 @@ const Input = ({
         <input
           id={id}
           name={id}
-          className={`w-full rounded-md border-2 px-4 py-2 ${
+          className={`w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 pl-4 pr-10 text-primary transition-all duration-300 ${
             isError ? "border-error text-error" : "border-primary text-primary"
-          } bg-contrast placeholder-gray ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
+          } ${disabled ? "cursor-not-allowed opacity-50" : "hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"}`}
           value={value}
           type={isPassword && showPassword ? "text" : type}
           onChange={onChange}
@@ -59,6 +61,8 @@ const Input = ({
           {...(min && { min: min })}
           {...(max && { max: max })}
           {...(labelText && { "aria-labelledby": `label-${id}` })}
+          {...(isSearch && { "aria-label": "Search" })}
+          {...(ref && { ref: ref })}
         />
         {isPassword && (
           <InvisibleButton
@@ -73,6 +77,7 @@ const Input = ({
             />
           </InvisibleButton>
         )}
+        {isSearch && <div className="absolute right-4 top-1/2 -translate-y-1/2 transform">🔎</div>}
       </div>
       {isError && errorText && <TextNormal className="text-sm text-error">{errorText}</TextNormal>}
     </div>

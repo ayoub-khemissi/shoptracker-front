@@ -11,8 +11,10 @@ import { useRouter } from "next/navigation";
 import { Section } from "../components/Section";
 import TextNormal from "../components/TextNormal";
 import { NEXT_PUBLIC_BASE_URL } from "@/utils/Config";
+import ButtonLink from "../components/ButtonLink";
 
-const demoUrl = `${NEXT_PUBLIC_BASE_URL}/tv-product/5m`;
+const demoUrl5m = `${NEXT_PUBLIC_BASE_URL}/tv-product/5m`;
+const demoUrl30s = `${NEXT_PUBLIC_BASE_URL}/tv-product/30s`;
 
 export default function Tracker() {
   const [url, setUrl] = useState("");
@@ -45,7 +47,7 @@ export default function Tracker() {
     e.preventDefault();
 
     const response = await fetchData("/track", "POST", {
-      url: demoUrl,
+      url: demoUrl5m,
       additionalInfo: "Ultra 4K Smart TV",
       trackStock: true,
       trackPrice: true,
@@ -201,10 +203,13 @@ export default function Tracker() {
           </form>
           <div className="flex flex-col justify-center space-y-6 rounded-xl border border-white/10 bg-white/5 p-8 text-center">
             <Title className="text-2xl lg:text-3xl">Quick Demo</Title>
-            <TextNormal className="text-lg">Try our pre-configured TV product tracker</TextNormal>
+            <TextNormal className="text-lg">Try our pre-configured product track!</TextNormal>
             <Button type="tertiary" onClick={handleSubmitDemoTrack} className="w-full">
               Launch Demo (5m update interval)
             </Button>
+            <ButtonLink href={demoUrl30s} type="quaternary" className="w-full">
+              Ultra 4k Smart TV product page
+            </ButtonLink>
           </div>
         </div>
       </Section>

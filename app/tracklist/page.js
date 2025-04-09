@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
 import Constants from "@/utils/Constants";
@@ -12,6 +12,7 @@ import Title from "../components/Title";
 import ButtonLink from "../components/ButtonLink";
 import GlassPanel from "../components/GlassPanel";
 import { Section } from "../components/Section";
+import Input from "../components/Input";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -37,6 +38,8 @@ export default function Tracklist() {
   const searchParams = useSearchParams();
   const [, setRefresh] = useState(false);
   const [tracklist, setTracklist] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef(null);
 
   const getTrackStatusIdByTab = (tab) => {
     const tabData = TABS.find((tabData) => tabData.name === tab);
@@ -51,7 +54,9 @@ export default function Tracklist() {
   };
 
   const getFilteredAndSortedTracklist = () => {
-    return tracklist.filter((track) => tab === track.status_id);
+    return tracklist
+      .filter((track) => tab === track.status_id)
+      .filter((track) => track.name?.toLowerCase().includes(searchQuery.toLowerCase()));
   };
 
   const filteredTracklist = getFilteredAndSortedTracklist();
@@ -74,6 +79,10 @@ export default function Tracklist() {
   useEffect(() => {
     setTab(getTrackStatusIdByTab(searchParams.get("tab")));
   }, [searchParams]);
+
+  useEffect(() => {
+    searchInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -145,14 +154,22 @@ export default function Tracklist() {
           </Button>
         </div>
 
+        <div className="mb-6 px-4">
+          <Input
+            ref={searchInputRef}
+            type="search"
+            placeholder="Search by product name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         {filteredTracklist.length === 0 && (
           <div className="flex flex-col items-center justify-center space-y-6">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
             {tab === TRACK_STATUS_ENABLED && (
               <>
-                <Title className="text-xl text-secondary lg:text-2xl">
-                  No tracks in progress yet!
-                </Title>
+                <Title className="text-xl text-secondary lg:text-2xl">No track found!</Title>
                 <ButtonLink
                   type="quaternary"
                   href="/tracker"

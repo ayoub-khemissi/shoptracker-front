@@ -182,7 +182,7 @@ export default function Tracklist() {
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
             {tab === TRACK_STATUS_ENABLED && (
               <>
-                <Title className="text-xl text-secondary lg:text-2xl">No track found!</Title>
+                <Title className="text-xl text-secondary lg:text-2xl">No track found 😕</Title>
                 <ButtonLink
                   type="quaternary"
                   href="/tracker"

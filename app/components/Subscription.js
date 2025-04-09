@@ -72,9 +72,9 @@ const Subscription = ({ className = "" }) => {
     user.subscription;
 
   return (
-    <div className={`flex w-full flex-wrap justify-evenly ${className}`}>
+    <div className={`flex w-full flex-wrap justify-evenly gap-4 ${className}`}>
       <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
-      <div className="max-w-96 space-y-4 py-4 md:py-0">
+      <div className="w-80 space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
         <TextSeparator className="w-full">Subscription</TextSeparator>
         <div className="flex w-full items-center justify-between">
           <TextNormal className="uppercase">Start date</TextNormal>

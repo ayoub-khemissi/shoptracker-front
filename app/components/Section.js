@@ -1,14 +1,12 @@
 "use client";
 
-export const Section = ({ children, id, alt = false, centered = false }) => {
+export const Section = ({ children, id, alt = false, centerX = false, centerY = false }) => {
   const baseClasses = "w-full min-h-screen py-3 px-6 md:px-12 lg:px-28 lg:py-24";
 
   return (
     <section
       {...(id && { id })}
-      className={`${baseClasses} relative overflow-hidden ${
-        centered ? "lg:flex lg:flex-col lg:justify-center" : ""
-      }`}
+      className={`${baseClasses} relative overflow-hidden lg:flex lg:flex-col ${centerX ? "lg:items-center" : ""} ${centerY ? "lg:justify-center" : ""}`}
     >
       <div className="absolute inset-0">
         <div

@@ -72,7 +72,7 @@ export default function TVProduct({ params }) {
         name="description"
         content="Experience stunning clarity with the Ultra 4K Smart TV from Celestium. Smart features, vibrant colors, and seamless streaming—entertainment has never looked this good."
       />
-      <Section centered>
+      <Section centerX centerY>
         <div className="relative w-full max-w-4xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/20">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
             <div className="relative flex flex-col items-center justify-center">

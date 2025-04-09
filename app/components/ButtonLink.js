@@ -46,7 +46,7 @@ const ButtonLink = ({
       <Link
         target={target}
         title={title}
-        className="h-full w-full text-nowrap px-5 py-2.5 text-center text-sm font-semibold uppercase"
+        className="h-full w-full px-5 py-2.5 text-center text-sm font-semibold uppercase"
         href={href}
       >
         {children}

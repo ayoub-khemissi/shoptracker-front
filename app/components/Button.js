@@ -43,7 +43,7 @@ const Button = ({
   return (
     <button
       type={buttonType}
-      className={`${typeClass} text-nowrap rounded-xl border px-5 py-2.5 text-sm font-semibold uppercase backdrop-blur-sm transition-all duration-300 ${defaultCursor ? "cursor-default" : ""} ${className}`}
+      className={`${typeClass} rounded-xl border px-5 py-2.5 text-center text-sm font-semibold uppercase backdrop-blur-sm transition-all duration-300 ${defaultCursor ? "cursor-default" : ""} ${className}`}
       onClick={onClick}
       {...(disabled && { disabled: disabled })}
       {...(key && { key: key })}

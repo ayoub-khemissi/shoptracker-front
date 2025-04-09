@@ -8,6 +8,8 @@ const Button = ({
   locked = false,
   buttonType = "button",
   defaultCursor = false,
+  disabled = false,
+  key,
 }) => {
   let typeClass;
 
@@ -43,6 +45,8 @@ const Button = ({
       type={buttonType}
       className={`${typeClass} text-nowrap rounded-xl border px-5 py-2.5 text-sm font-semibold uppercase backdrop-blur-sm transition-all duration-300 ${defaultCursor ? "cursor-default" : ""} ${className}`}
       onClick={onClick}
+      {...(disabled && { disabled: disabled })}
+      {...(key && { key: key })}
     >
       {children}
     </button>

@@ -111,7 +111,7 @@ const Track = ({ number, data }) => {
     return !!track_checks_ok[track_checks_ok.length - 1]?.availability;
   };
 
-  const getPriceStatusSvgName = () => {
+  const getPriceStatusSvgName = (priceStatus) => {
     switch (priceStatus) {
       case TRACK_PRICE_STATUS_DECREASED:
         return "price-decreased";
@@ -125,7 +125,7 @@ const Track = ({ number, data }) => {
     }
   };
 
-  const getPriceStatusSvgTitle = () => {
+  const getPriceStatusSvgTitle = (priceStatus) => {
     switch (priceStatus) {
       case TRACK_PRICE_STATUS_DECREASED:
         return "Price decreased";
@@ -139,8 +139,8 @@ const Track = ({ number, data }) => {
     }
   };
 
-  const getAvailabilitySvgName = () => {
-    switch (availability) {
+  const getAvailabilitySvgName = (availability) => {
+    switch (!!availability) {
       case true:
         return "circle-check-success";
 
@@ -150,8 +150,8 @@ const Track = ({ number, data }) => {
     }
   };
 
-  const getAvailabilitySvgTitle = () => {
-    switch (availability) {
+  const getAvailabilitySvgTitle = (availability) => {
+    switch (!!availability) {
       case true:
         return "Product available";
 
@@ -161,8 +161,8 @@ const Track = ({ number, data }) => {
     }
   };
 
-  const getAvailabilityText = () => {
-    switch (availability) {
+  const getAvailabilityText = (availability) => {
+    switch (!!availability) {
       case true:
         return "In stock";
 
@@ -306,9 +306,9 @@ const Track = ({ number, data }) => {
                     <Image
                       width={24}
                       height={24}
-                      src={`assets/svg/icons/${getPriceStatusSvgName()}.svg`}
+                      src={`assets/svg/icons/${getPriceStatusSvgName(priceStatus)}.svg`}
                       alt="price status"
-                      title={getPriceStatusSvgTitle()}
+                      title={getPriceStatusSvgTitle(priceStatus)}
                       className="opacity-90"
                     />
                   </div>
@@ -324,7 +324,7 @@ const Track = ({ number, data }) => {
                       height={24}
                       src={`assets/svg/icons/${getAvailabilitySvgName(availability)}.svg`}
                       alt="availability status"
-                      title={getAvailabilitySvgTitle()}
+                      title={getAvailabilitySvgTitle(availability)}
                       className="opacity-90"
                     />
                   </div>
@@ -379,15 +379,15 @@ const Track = ({ number, data }) => {
                 {track_checks
                   .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
                   .slice(0, 5)
-                  .map((check, index) => {
-                    const isOk = "price" in check;
+                  .map((trackCheck, index) => {
+                    const isOk = "price" in trackCheck;
                     return (
                       <div key={index} className="group relative">
                         <Image
                           width={30}
                           height={30}
                           src={`assets/svg/icons/${
-                            isOk ? "circle-check-success" : "circle-cross-error"
+                            isOk ? "circle-check-tertiary" : "circle-cross-error"
                           }.svg`}
                           alt={isOk ? "✅" : "❌"}
                           className="opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
@@ -396,11 +396,11 @@ const Track = ({ number, data }) => {
                           <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
                             <TextImportant className="text-sm font-medium text-primary">
                               {isOk
-                                ? `${formatPrice(check.price)}${currency} - ${getAvailabilityText(check.availability)}`
-                                : `⚠️ ${check.title}: ${check.reason}`}
+                                ? `✔️ ${formatPrice(trackCheck.price)}${currency} - ${getAvailabilityText(trackCheck.availability)}`
+                                : `⚠️ ${trackCheck.title}: ${trackCheck.reason}`}
                             </TextImportant>
                             <TextImportant className="mt-1 text-xs text-primary/70">
-                              {new Date(check.created_at).toLocaleString()}
+                              {new Date(trackCheck.created_at).toLocaleString()}
                             </TextImportant>
                           </div>
                           <div className="absolute left-1/2 top-full -mt-1 h-2 w-2 -translate-x-1/2 rotate-45 transform border-b border-r border-white/10 bg-gradient-to-br from-contrast/95 to-contrast shadow-md shadow-secondary/10"></div>

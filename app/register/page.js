@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { validatePassword } from "@/modules/DataValidation";
 import { Checkbox } from "@nextui-org/react";
 import { Section } from "../components/Section";
+import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
+import Script from "next/script";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -27,6 +29,8 @@ export default function Register() {
   const [isErrorPassword, setIsErrorPassword] = useState(false);
   const [isGoogleLoginProcessed, setIsGoogleLoginProcessed] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [isRecaptchaReady, setIsRecaptchaReady] = useState(false);
 
   const { localLogin, localLogout } = useAuthContext();
   const { showToast } = useToast();
@@ -88,8 +92,22 @@ export default function Register() {
     }
   }, [session, isGoogleLoginProcessed, localLogout, showToast, localLogin, router]);
 
+  const handleRecaptchaLoad = () => {
+    setIsRecaptchaReady(true);
+    window.grecaptcha.ready(() => {
+      window.grecaptcha
+        .execute(NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: "register" })
+        .then((token) => setRecaptchaToken(token));
+    });
+  };
+
   const registerClassical = async (e) => {
     e.preventDefault();
+
+    if (!isRecaptchaReady || !recaptchaToken) {
+      showToast("Please wait for reCAPTCHA verification.", "error");
+      return;
+    }
 
     if (!validatePassword(password)) {
       setIsErrorPassword(true);
@@ -104,6 +122,7 @@ export default function Register() {
     const response = await fetchData("/register/classical", "POST", {
       email: email,
       password: password,
+      recaptchaToken: recaptchaToken,
     });
 
     switch (response?.status) {
@@ -225,6 +244,16 @@ export default function Register() {
                 </Button>
               </div>
             </form>
+            <Script
+              src={`https://www.google.com/recaptcha/api.js?render=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+              onLoad={handleRecaptchaLoad}
+            />
+            <TextNormal className="text-center">
+              Already have an account?{" "}
+              <UnderlineLink href="/login" className="text-secondary hover:text-tertiary">
+                Sign In
+              </UnderlineLink>
+            </TextNormal>
           </div>
         </div>
       </Section>

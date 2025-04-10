@@ -258,7 +258,7 @@ export default function Settings() {
                       </TextLabel>
                       <Switch checked={notificationMailbox} opacityWhenOff />
                     </div>
-                    <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
+                    <div className="flex w-full flex-wrap items-center justify-center gap-4">
                       <Button
                         type="quaternary"
                         onClick={updateNotifications}
@@ -290,7 +290,7 @@ export default function Settings() {
                         setIsErrorPhone(!validatePhone(e.target.value));
                       }}
                     />
-                    <div className="flex items-center justify-center">
+                    <div className="flex w-full flex-wrap items-center justify-center gap-4">
                       <Button
                         type="quaternary"
                         buttonType="submit"

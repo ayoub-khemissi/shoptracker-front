@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Button from "../components/Button";
 import Constants from "@/utils/Constants";
@@ -39,7 +39,6 @@ export default function Tracklist() {
   const [, setRefresh] = useState(false);
   const [tracklist, setTracklist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const searchInputRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -91,10 +90,6 @@ export default function Tracklist() {
   useEffect(() => {
     setTab(getTrackStatusIdByTab(searchParams.get("tab")));
   }, [searchParams]);
-
-  useEffect(() => {
-    searchInputRef.current?.focus();
-  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -167,7 +162,6 @@ export default function Tracklist() {
         </div>
         <div className="px-4 pb-3">
           <Input
-            ref={searchInputRef}
             type="search"
             placeholder="Search by product name..."
             value={searchQuery}

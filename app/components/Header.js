@@ -32,6 +32,9 @@ const Header = () => {
       <NavLink className="w-full text-center text-2xl" href="/faq" onClick={closeMenu}>
         FAQ
       </NavLink>
+      <NavLink className="w-full text-center text-2xl" href="/contact" onClick={closeMenu}>
+        Contact
+      </NavLink>
       {user ? (
         <>
           <NavLink className="w-full text-center text-2xl" href="/tracker" onClick={closeMenu}>

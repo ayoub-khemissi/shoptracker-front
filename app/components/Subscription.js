@@ -72,98 +72,99 @@ const Subscription = ({ className = "" }) => {
     user.subscription;
 
   return (
-    <div className={`flex w-full flex-wrap justify-evenly gap-4 ${className}`}>
-      <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
-      <div className="w-80 space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
-        <TextSeparator className="w-full">Subscription</TextSeparator>
-        <div className="flex w-full items-center justify-between">
-          <TextNormal className="uppercase">Start date</TextNormal>
-          <TextImportant className="text-right">
-            {new Date(start_date).toLocaleDateString()}
-          </TextImportant>
-        </div>
-        {next_payment_date && (
+    <>
+      <div className={`flex w-full flex-wrap justify-evenly gap-4 ${className}`}>
+        <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
+        <div className="w-80 space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
+          <TextSeparator className="w-full">Subscription</TextSeparator>
           <div className="flex w-full items-center justify-between">
-            <TextNormal className="uppercase">Next payment date</TextNormal>
+            <TextNormal className="uppercase">Start date</TextNormal>
             <TextImportant className="text-right">
-              {new Date(next_payment_date).toLocaleDateString()}
+              {new Date(start_date).toLocaleDateString()}
             </TextImportant>
           </div>
-        )}
-        {payment_method && (
-          <div className="flex w-full items-center justify-between">
-            <TextNormal className="uppercase">Payment Method</TextNormal>
-            <TextImportant className="text-right">{payment_method}</TextImportant>
-          </div>
-        )}
-        {invoice_history && invoice_history.length > 0 && (
-          <>
-            <TextSeparator className="w-full">Invoice history</TextSeparator>
-            <div className="flex w-full flex-col justify-center space-y-3">
-              {invoice_history.map((invoice) => {
-                return (
-                  <NavLink
-                    target="_blank"
-                    title={`View invoice ${invoice.number}`}
-                    href={invoice.url}
-                    className="flex w-full items-center justify-between"
-                    key={`payment-${invoice.id}`}
-                  >
-                    <TextNormal className="uppercase">
-                      {new Date(invoice.date).toLocaleDateString()}
-                    </TextNormal>
-                    <TextImportant className="text-right">
-                      {formatPrice(invoice.amount)}
-                      {invoice.currency}
-                    </TextImportant>
-                  </NavLink>
-                );
-              })}
+          {next_payment_date && (
+            <div className="flex w-full items-center justify-between">
+              <TextNormal className="uppercase">Next payment date</TextNormal>
+              <TextImportant className="text-right">
+                {new Date(next_payment_date).toLocaleDateString()}
+              </TextImportant>
             </div>
-          </>
-        )}
-        {subscription?.stripe_price_id && (
-          <>
-            <div className="flex max-w-96 flex-col items-center justify-evenly space-y-5">
-              <TextSeparator className="w-full">Actions</TextSeparator>
-              <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
-                Cancel subscription
-              </Button>
+          )}
+          {payment_method && (
+            <div className="flex w-full items-center justify-between">
+              <TextNormal className="uppercase">Payment Method</TextNormal>
+              <TextImportant className="text-right">{payment_method}</TextImportant>
             </div>
-            <Modal
-              isVisible={cancelSubscriptionModalVisible}
-              onClose={() => {
+          )}
+          {invoice_history && invoice_history.length > 0 && (
+            <>
+              <TextSeparator className="w-full">Invoice history</TextSeparator>
+              <div className="flex w-full flex-col justify-center space-y-3">
+                {invoice_history.map((invoice) => {
+                  return (
+                    <NavLink
+                      target="_blank"
+                      title={`View invoice ${invoice.number}`}
+                      href={invoice.url}
+                      className="flex w-full items-center justify-between"
+                      key={`payment-${invoice.id}`}
+                    >
+                      <TextNormal className="uppercase">
+                        {new Date(invoice.date).toLocaleDateString()}
+                      </TextNormal>
+                      <TextImportant className="text-right">
+                        {formatPrice(invoice.amount)}
+                        {invoice.currency}
+                      </TextImportant>
+                    </NavLink>
+                  );
+                })}
+              </div>
+            </>
+          )}
+          {subscription?.stripe_price_id && (
+            <>
+              <div className="flex max-w-96 flex-col items-center justify-evenly space-y-5">
+                <TextSeparator className="w-full">Actions</TextSeparator>
+                <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
+                  Cancel subscription
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <Modal
+        isVisible={cancelSubscriptionModalVisible}
+        onClose={() => {
+          setCancelSubscriptionModalVisible(false);
+        }}
+      >
+        <div className="space-y-4">
+          <Title className="text-center text-xl text-error">
+            Are you sure you want to cancel your subscription?
+          </Title>
+          <TextNormal className="text-center">
+            This action cannot be undone. If you proceed, your subscription will be canceled. You
+            will receive a prorated refund based on the remaining time on your subscription.
+          </TextNormal>
+          <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
+            <Button
+              type="quaternary"
+              onClick={() => {
                 setCancelSubscriptionModalVisible(false);
               }}
             >
-              <div className="space-y-4">
-                <Title className="text-center text-xl">
-                  Are you sure you want to cancel your subscription?
-                </Title>
-                <TextNormal>
-                  This action cannot be undone. If you proceed, your subscription will be canceled.
-                  You will receive a prorated refund based on the remaining time on your
-                  subscription.
-                </TextNormal>
-                <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
-                  <Button
-                    type="primary"
-                    onClick={() => {
-                      setCancelSubscriptionModalVisible(false);
-                    }}
-                  >
-                    No
-                  </Button>
-                  <Button type="secondary" onClick={cancelSubscription}>
-                    Yes
-                  </Button>
-                </div>
-              </div>
-            </Modal>
-          </>
-        )}
-      </div>
-    </div>
+              No
+            </Button>
+            <Button type="secondary" onClick={cancelSubscription}>
+              Yes
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

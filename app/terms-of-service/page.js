@@ -5,7 +5,6 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import Section from "../components/Section";
-import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 
 export default function TermsOfService() {
   return (
@@ -181,11 +180,8 @@ export default function TermsOfService() {
 
           <AccordionItem key="12" aria-label="Contact Information" title="12. Contact Information">
             For questions or concerns regarding these Terms of Service, users may contact
-            ShopTracker at:{" "}
-            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-            </UnderlineLink>
-            .
+            ShopTracker via the{" "}
+            <UnderlineLink href="/contact?subject=terms-of-service">Contact page</UnderlineLink>.
           </AccordionItem>
         </Accordion>
       </Section>

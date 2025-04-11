@@ -4,7 +4,6 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
-import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 import Section from "../components/Section";
 
 export default function PrivacyPolicy() {
@@ -145,11 +144,8 @@ export default function PrivacyPolicy() {
                 data processing.
               </li>
             </ul>
-            To exercise these rights, contact us at{" "}
-            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-            </UnderlineLink>
-            .
+            To exercise these rights, contact us via the{" "}
+            <UnderlineLink href={"/contact?subject=privacy-policy"}>Contact page</UnderlineLink>.
           </AccordionItem>
 
           <AccordionItem key="7" aria-label="Minors" title="6. Minors">
@@ -183,18 +179,8 @@ export default function PrivacyPolicy() {
 
           <AccordionItem key="10" aria-label="Contact Information" title="9. Contact Information">
             If you have any questions or concerns about this Privacy Policy or our data practices,
-            contact us at:
-            <ul className="ml-4 list-disc">
-              <li>
-                <strong>Email</strong>:{" "}
-                <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-                  {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-                </UnderlineLink>
-              </li>
-              <li>
-                <strong>Mailing Address</strong>: ShopTracker, Paris, France
-              </li>
-            </ul>
+            contact us via the{" "}
+            <UnderlineLink href="/contact?subject=privacy-policy">Contact page</UnderlineLink>.
           </AccordionItem>
 
           <AccordionItem

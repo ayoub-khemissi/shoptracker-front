@@ -4,7 +4,6 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
-import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 import Section from "../components/Section";
 
 export default function TermsOfSale() {
@@ -167,12 +166,8 @@ export default function TermsOfSale() {
           </AccordionItem>
 
           <AccordionItem key="10" aria-label="Contact Information" title="10. Contact Information">
-            For questions regarding these Terms of Sale, users may contact ShopTracker at the
-            following email address:{" "}
-            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-            </UnderlineLink>
-            .
+            For questions regarding these Terms of Sale, users may contact ShopTracker via the{" "}
+            <UnderlineLink href="/contact?subject=terms-of-sale">Contact page</UnderlineLink>.
           </AccordionItem>
         </Accordion>
       </Section>

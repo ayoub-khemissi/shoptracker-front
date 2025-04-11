@@ -4,7 +4,6 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 import Section from "../components/Section";
 
 export default function Faq() {
@@ -57,11 +56,9 @@ export default function Faq() {
             title="4. Do you offer personalized plans?"
           >
             Yes, we offer personalized plans to meet your specific needs. If you're interested,
-            please send an email to{" "}
-            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-            </UnderlineLink>
-            , and our team will get back to you with tailored options.
+            please contact us via the{" "}
+            <UnderlineLink href={"/contact?subject=custom-offer"}>Contact page</UnderlineLink>, and
+            our team will get back to you with tailored options.
           </AccordionItem>
 
           <AccordionItem
@@ -104,11 +101,8 @@ export default function Faq() {
             title="8. What should I do if I encounter issues with tracking? How can I contact customer support?"
           >
             If you face any issues with tracking specific products, please check the compatibility
-            of the site. If the issue persists, contact our support for further assistance at{" "}
-            <UnderlineLink href={`mailto:${NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}`}>
-              {NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-            </UnderlineLink>
-            .
+            of the site. If the issue persists, contact our support for further assistance via the{" "}
+            <UnderlineLink href={"/contact?subject=support"}>Contact page</UnderlineLink>.
           </AccordionItem>
         </Accordion>
       </Section>

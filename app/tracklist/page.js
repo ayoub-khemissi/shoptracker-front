@@ -54,23 +54,41 @@ export default function Tracklist() {
     setTracklist((await response?.json())?.data || []);
   };
 
+  const filteredTracklist = tracklist.filter((t) =>
+    t.name?.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const inProgressCount = filteredTracklist.filter(
+    (t) => t.status_id === TRACK_STATUS_ENABLED,
+  ).length;
+  const wishlistCount = filteredTracklist.filter(
+    (t) => t.status_id === TRACK_STATUS_DISABLED,
+  ).length;
+  const invalidCount = filteredTracklist.filter((t) => t.status_id === TRACK_STATUS_INVALID).length;
+  const finishedCount = filteredTracklist.filter(
+    (t) => t.status_id === TRACK_STATUS_FINISHED,
+  ).length;
+  const totalCount = filteredTracklist.length;
+
   const getPaginatedTracklist = () => {
-    const filtered = tracklist
-      .filter((track) => tab === track.status_id)
-      .filter(
-        (track) =>
-          searchQuery.length === 0 || track.name?.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+    const filtered = filteredTracklist.filter((t) => (tab ? t.status_id === tab : true));
 
     const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
     return {
-      items: filtered.slice(startIndex, startIndex + itemsPerPage),
+      items: filtered.slice(startIndex, endIndex),
       totalPages: Math.ceil(filtered.length / itemsPerPage),
       totalItems: filtered.length,
     };
   };
 
   const { items: paginatedTracklist, totalPages, totalItems } = getPaginatedTracklist();
+
+  const handleTabChange = (newTab) => {
+    setCurrentPage(1);
+    router.push(`/tracklist?tab=${newTab}`);
+  };
 
   useEffect(() => {
     fetchTracklist();
@@ -109,7 +127,7 @@ export default function Tracklist() {
       <Section>
         <div className="flex items-center justify-center pb-3">
           <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
-            📈 Tracklist
+            📈 Tracklist ({totalCount})
             <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
           </Title>
         </div>
@@ -117,47 +135,59 @@ export default function Tracklist() {
         <div className="flex flex-wrap items-center justify-center pb-3 sm:flex-nowrap sm:space-x-4">
           <Button
             locked
-            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_ENABLED ? "shadow-lg shadow-secondary/10" : ""}`}
+            className={`relative m-1 transition-all duration-300 ${tab === TRACK_STATUS_ENABLED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_ENABLED ? "primary" : "contrast"}
             defaultCursor
-            onClick={() => {
-              router.push(`/tracklist?tab=${TRACKLIST_TAB_IN_PROGRESS}`);
-            }}
+            onClick={() => handleTabChange(TRACKLIST_TAB_IN_PROGRESS)}
           >
             In progress
+            {inProgressCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-quaternary text-xs text-primary">
+                {inProgressCount}
+              </span>
+            )}
           </Button>
           <Button
             locked
-            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_DISABLED ? "shadow-lg shadow-secondary/10" : ""}`}
+            className={`relative m-1 transition-all duration-300 ${tab === TRACK_STATUS_DISABLED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_DISABLED ? "primary" : "contrast"}
             defaultCursor
-            onClick={() => {
-              router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}`);
-            }}
+            onClick={() => handleTabChange(TRACKLIST_TAB_WISHLIST)}
           >
             Wishlist
+            {wishlistCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-tertiary text-xs text-white">
+                {wishlistCount}
+              </span>
+            )}
           </Button>
           <Button
             locked
-            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_INVALID ? "shadow-lg shadow-secondary/10" : ""}`}
+            className={`relative m-1 transition-all duration-300 ${tab === TRACK_STATUS_INVALID ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_INVALID ? "primary" : "contrast"}
             defaultCursor
-            onClick={() => {
-              router.push(`/tracklist?tab=${TRACKLIST_TAB_INVALID}`);
-            }}
+            onClick={() => handleTabChange(TRACKLIST_TAB_INVALID)}
           >
             Invalid
+            {invalidCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-error text-xs text-primary">
+                {invalidCount}
+              </span>
+            )}
           </Button>
           <Button
             locked
-            className={`m-1 transition-all duration-300 ${tab === TRACK_STATUS_FINISHED ? "shadow-lg shadow-secondary/10" : ""}`}
+            className={`relative m-1 transition-all duration-300 ${tab === TRACK_STATUS_FINISHED ? "shadow-lg shadow-secondary/10" : ""}`}
             type={tab === TRACK_STATUS_FINISHED ? "primary" : "contrast"}
             defaultCursor
-            onClick={() => {
-              router.push(`/tracklist?tab=${TRACKLIST_TAB_FINISHED}`);
-            }}
+            onClick={() => handleTabChange(TRACKLIST_TAB_FINISHED)}
           >
             Finished
+            {finishedCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-success text-xs text-primary">
+                {finishedCount}
+              </span>
+            )}
           </Button>
         </div>
         <div className="px-4 pb-3">

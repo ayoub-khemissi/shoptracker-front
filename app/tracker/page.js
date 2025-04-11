@@ -8,7 +8,7 @@ import Title from "../components/Title";
 import { useToast } from "../contexts/ToastContext";
 import { fetchData } from "@/modules/Fetch";
 import { useRouter } from "next/navigation";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 import TextNormal from "../components/TextNormal";
 import { NEXT_PUBLIC_BASE_URL } from "@/utils/Config";
 import ButtonLink from "../components/ButtonLink";

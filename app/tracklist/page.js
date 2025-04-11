@@ -11,7 +11,7 @@ import EmptyBoxSvg from "../../public/assets/svg/illustrations/empty-box.svg";
 import Title from "../components/Title";
 import ButtonLink from "../components/ButtonLink";
 import GlassPanel from "../components/GlassPanel";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 import Input from "../components/Input";
 
 const {

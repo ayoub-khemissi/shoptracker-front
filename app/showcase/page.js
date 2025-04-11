@@ -28,7 +28,7 @@ import Modal from "../components/Modal";
 import Constants from "@/utils/Constants";
 import Spinner from "../components/Spinner";
 import { LoadingScreen } from "../components/LoadingScreen";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 
 const { SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
 

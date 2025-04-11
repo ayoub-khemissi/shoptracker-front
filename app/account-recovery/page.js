@@ -9,7 +9,7 @@ import { validatePassword } from "@/modules/DataValidation";
 import { useState } from "react";
 import { useToast } from "../contexts/ToastContext";
 import { useRouter } from "next/navigation";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 
 const PHASE_INITIAL = 0,
   PHASE_CODE = 1,

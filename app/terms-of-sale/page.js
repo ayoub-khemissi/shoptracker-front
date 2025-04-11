@@ -5,7 +5,7 @@ import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 
 export default function TermsOfSale() {
   return (

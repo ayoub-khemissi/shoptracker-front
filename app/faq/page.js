@@ -5,7 +5,7 @@ import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
-import { Section } from "../components/Section";
+import Section from "../components/Section";
 
 export default function Faq() {
   return (

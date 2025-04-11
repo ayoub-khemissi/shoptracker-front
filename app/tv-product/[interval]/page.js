@@ -8,7 +8,7 @@ import Button from "@/app/components/Button";
 import { notFound } from "next/navigation";
 import { formatPrice } from "@/modules/TextFormatter";
 import Link from "next/link";
-import { Section } from "@/app/components/Section";
+import Section from "@/app/components/Section";
 
 const priceRange = {
   min: 500,

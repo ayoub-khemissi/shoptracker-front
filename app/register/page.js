@@ -9,6 +9,7 @@ import TextSeparator from "../components/TextSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import UnderlineLink from "../components/UnderlineLink";
+import Section from "../components/Section";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import { fetchData } from "@/modules/Fetch";
@@ -18,7 +19,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "@/modules/DataValidation";
 import { Checkbox } from "@nextui-org/react";
-import { Section } from "../components/Section";
 import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
 import Script from "next/script";
 

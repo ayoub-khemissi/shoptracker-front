@@ -9,6 +9,7 @@ import TextSeparator from "../components/TextSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import UnderlineLink from "../components/UnderlineLink";
+import Section from "../components/Section";
 import Image from "next/image";
 import GoogleLogoSvg from "../../public/assets/svg/icons/google-logo.svg";
 import { fetchData } from "@/modules/Fetch";
@@ -16,7 +17,6 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Section } from "../components/Section";
 
 export default function Login() {
   const [email, setEmail] = useState("");

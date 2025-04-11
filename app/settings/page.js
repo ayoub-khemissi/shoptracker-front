@@ -6,6 +6,7 @@ import TextLabel from "../components/TextLabel";
 import TextSeparator from "../components/TextSeparator";
 import Switch from "../components/Switch";
 import Subscription from "../components/Subscription";
+import Section from "../components/Section";
 import { fetchData, fetchLogout } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -16,7 +17,6 @@ import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
 import { validatePassword, validatePhone } from "@/modules/DataValidation";
 import Constants from "@/utils/Constants";
-import { Section } from "../components/Section";
 
 const { SETTINGS_TAB_NOTIFICATIONS, SETTINGS_TAB_ACCOUNT, SETTINGS_TAB_SUBSCRIPTION } = Constants;
 

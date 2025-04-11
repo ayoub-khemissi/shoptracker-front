@@ -1,6 +1,6 @@
 "use client";
 
-export const Section = ({ children, id, alt = false, centerX = false, centerY = false }) => {
+const Section = ({ children, id, alt = false, centerX = false, centerY = false }) => {
   const baseClasses = "w-full min-h-screen py-3 px-6 md:px-12 lg:px-28 lg:py-24";
 
   return (
@@ -37,3 +37,5 @@ export const Section = ({ children, id, alt = false, centerX = false, centerY = 
     </section>
   );
 };
+
+export default Section;

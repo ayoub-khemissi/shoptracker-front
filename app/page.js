@@ -12,7 +12,7 @@ import ScrollArrowsDownTertiarySvg from "../public/assets/svg/icons/scroll-arrow
 import PricingPage from "./components/PricingPage";
 import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
-import { Section } from "./components/Section";
+import Section from "./components/Section";
 
 export default async function Home() {
   const response = await fetchData("/track/stats");

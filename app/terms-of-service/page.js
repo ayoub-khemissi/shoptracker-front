@@ -4,8 +4,8 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import UnderlineLink from "../components/UnderlineLink";
+import Section from "../components/Section";
 import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
-import { Section } from "../components/Section";
 
 export default function TermsOfService() {
   return (

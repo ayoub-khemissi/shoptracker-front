@@ -5,13 +5,6 @@ export function middleware(req) {
   const url = req.nextUrl.pathname;
 
   if (
-    jwt?.value?.length > 0 &&
-    (url.startsWith("/login") || url.startsWith("/register") || url.startsWith("/account-recovery"))
-  ) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  if (
     !jwt?.value?.length > 0 &&
     (url.startsWith("/settings") || url.startsWith("/tracker") || url.startsWith("/tracklist"))
   ) {

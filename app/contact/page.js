@@ -5,8 +5,6 @@ import { useToast } from "../contexts/ToastContext";
 import { fetchData } from "@/modules/Fetch";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import UnderlineLink from "../components/UnderlineLink";
-import TextNormal from "../components/TextNormal";
 import Title from "../components/Title";
 import Section from "../components/Section";
 import Textarea from "../components/Textarea";
@@ -15,6 +13,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
 import { useSearchParams } from "next/navigation";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
 
 export default function Contact() {
   const searchParams = useSearchParams();
@@ -51,6 +50,7 @@ export default function Contact() {
   const { showToast } = useToast();
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [isRecaptchaReady, setIsRecaptchaReady] = useState(false);
+  const router = useRouter();
 
   const handleRecaptchaLoad = () => {
     setIsRecaptchaReady(true);
@@ -134,11 +134,11 @@ export default function Contact() {
             />
 
             <div className="flex w-full items-center justify-between">
-              <TextNormal>
-                Return to <UnderlineLink href="/">homepage</UnderlineLink>
-              </TextNormal>
+              <Button type="primary" onClick={router.back}>
+                Back
+              </Button>
 
-              <Button type="primary" buttonType="submit" disabled={isSubmitting}>
+              <Button type="quaternary" buttonType="submit" disabled={isSubmitting}>
                 {isSubmitting ? <Spinner /> : "Send"}
               </Button>
             </div>

@@ -220,7 +220,7 @@ export default function Register() {
                 }}
               />
               <div className="flex w-full items-start justify-between">
-                <div className="flex w-full flex-col space-y-4">
+                <div className="flex w-2/3 flex-col space-y-4">
                   <Checkbox
                     defaultSelected
                     color="warning"
@@ -235,19 +235,14 @@ export default function Register() {
                     <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
                     <UnderlineLink href="/privacy">GDPR Privacy Policy</UnderlineLink>.
                   </Checkbox>
-                  <TextNormal>
-                    Already have an account? <UnderlineLink href="/login">Sign In</UnderlineLink>
-                  </TextNormal>
                 </div>
-                <Button buttonType="submit" type="primary">
-                  Sign Up
-                </Button>
+                <div className="flex w-1/3 items-center justify-end">
+                  <Button buttonType="submit" type="primary">
+                    Sign Up
+                  </Button>
+                </div>
               </div>
             </form>
-            <Script
-              src={`https://www.google.com/recaptcha/api.js?render=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-              onLoad={handleRecaptchaLoad}
-            />
             <TextNormal className="text-center">
               Already have an account?{" "}
               <UnderlineLink href="/login" className="text-secondary hover:text-tertiary">
@@ -256,6 +251,10 @@ export default function Register() {
             </TextNormal>
           </div>
         </div>
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          onLoad={handleRecaptchaLoad}
+        />
       </Section>
     </>
   );

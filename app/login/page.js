@@ -185,20 +185,21 @@ export default function Login() {
                 }}
               />
               <div className="flex w-full items-start justify-between">
-                <div className="flex w-full flex-col space-y-4">
-                  <TextNormal>
-                    Don't have an account yet?{" "}
-                    <UnderlineLink href="/register">Sign Up</UnderlineLink>
-                  </TextNormal>
+                <div className="flex w-2/3 flex-col space-y-4">
                   <div>
                     <UnderlineLink href="/account-recovery">Forgot password?</UnderlineLink>
                   </div>
                 </div>
-                <Button buttonType="submit" type="primary">
-                  Sign In
-                </Button>
+                <div className="flex w-1/3 items-center justify-end">
+                  <Button buttonType="submit" type="primary">
+                    Sign In
+                  </Button>
+                </div>
               </div>
             </form>
+            <TextNormal>
+              Don't have an account yet? <UnderlineLink href="/register">Sign Up</UnderlineLink>
+            </TextNormal>
           </div>
         </div>
       </Section>

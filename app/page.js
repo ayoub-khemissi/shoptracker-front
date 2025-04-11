@@ -81,7 +81,7 @@ export default async function Home() {
             <Image className="h-60" src={ConfirmationSvg} alt="product confirmation" />
             <TextNormal className="text-center text-xl lg:text-2xl">
               Wait a few seconds while the agent retrieves the product information and start the
-              track 🕵.
+              tracking 🕵.
             </TextNormal>
           </div>
           <div className="flex flex-col items-center justify-center space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">

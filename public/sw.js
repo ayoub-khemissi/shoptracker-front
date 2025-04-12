@@ -3,12 +3,26 @@ self.addEventListener("push", function (event) {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: data.icon || "/assets/img/logo-shoptracker-100x100.png",
-      badge: "/assets/img/logo-shoptracker-32x32.png",
-      vibrate: [100, 50, 100],
+      icon: data.icon || "/public/assets/img/logo-shoptracker-100x100.png",
+      badge: "/public/assets/img/logo-shoptracker-32x32.png",
+      vibrate: [500, 200, 500, 200, 500],
+      tag: data.tag || "shoptracker-default",
+      renotify: true,
+      actions: [
+        {
+          action: "tracklist",
+          title: "Tracklist",
+          icon: "/public/assets/img/logo-shoptracker-32x32.png",
+        },
+        {
+          action: "product",
+          title: "View product",
+          icon: "/public/assets/img/logo-shoptracker-32x32.png",
+        },
+      ],
       data: {
         dateOfArrival: Date.now(),
-        primaryKey: "2",
+        url: data.url,
       },
     };
 
@@ -19,8 +33,19 @@ self.addEventListener("push", function (event) {
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
 
-  const urlToOpen = event.notification.data?.url || "https://shoptracker.eu/tracklist";
-
   // eslint-disable-next-line no-undef
-  event.waitUntil(clients.openWindow(urlToOpen));
+  const cli = clients;
+  const defaultUrl = "https://shoptracker.eu/tracklist";
+
+  switch (event.action) {
+    case "tracklist":
+      event.waitUntil(cli.openWindow(defaultUrl));
+      break;
+    case "product":
+      event.waitUntil(cli.openWindow(event.notification.data.url || defaultUrl));
+      break;
+    default:
+      event.waitUntil(cli.openWindow(event.notification.data.url || defaultUrl));
+      break;
+  }
 });

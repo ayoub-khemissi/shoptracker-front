@@ -377,8 +377,9 @@ const Track = ({ number, data }) => {
               <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
               <div className="relative flex w-full justify-between px-[15px]">
                 {track_checks
-                  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                   .slice(0, 5)
+                  .reverse()
                   .map((trackCheck, index) => {
                     const isOk = "price" in trackCheck;
                     return (

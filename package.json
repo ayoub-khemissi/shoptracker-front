@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H shoptrackerdev.eu -p 3000",
+    "devs": "next dev -H shoptrackerdev.eu -p 3000 --experimental-https",
     "local": "next dev",
     "build": "next build",
     "start": "next start",

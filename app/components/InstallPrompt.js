@@ -39,7 +39,7 @@ export default function InstallPrompt() {
     const { outcome } = await deferredPrompt.prompt();
 
     if (outcome !== "accepted") {
-      localStorage.setItem("installPromptRejected", new Date().toISOString());
+      localStorage.setItem("installPromptRejected", new Date().getTime().toString());
     }
 
     setDeferredPrompt(null);
@@ -50,7 +50,7 @@ export default function InstallPrompt() {
     <Modal
       isVisible={isVisible}
       onClose={() => {
-        localStorage.setItem("installPromptRejected", new Date().toISOString());
+        localStorage.setItem("installPromptRejected", new Date().getTime().toString());
         setIsVisible(false);
       }}
     >

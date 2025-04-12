@@ -17,6 +17,10 @@ import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
 import { validatePassword, validatePhone } from "@/modules/DataValidation";
 import Constants from "@/utils/Constants";
+import {
+  subscribeToBrowserNotification,
+  unsubscribeFromBrowserNotification,
+} from "@/modules/BrowserNotification";
 
 const { SETTINGS_TAB_NOTIFICATIONS, SETTINGS_TAB_ACCOUNT, SETTINGS_TAB_SUBSCRIPTION } = Constants;
 
@@ -25,8 +29,13 @@ export default function Settings() {
   const [tab, setTab] = useState(searchParams.get("tab") || SETTINGS_TAB_NOTIFICATIONS);
   const { showToast } = useToast();
   const { user, localLogout, saveUser } = useAuthContext();
-  const [notificationMailbox, setNotificationMailbox] = useState(!!user?.alert_email);
-  const [notificationTextMessage, setNotificationTextMessage] = useState(!!user?.alert_text);
+  const [alertEmail, setAlertEmail] = useState(!!user?.alert_email);
+  const [alertSms, setAlertSms] = useState(!!user?.alert_sms);
+  const [alertBrowser, setAlertBrowser] = useState(!!user?.alert_browser);
+  const [alertPush, setAlertPush] = useState(!!user?.alert_push);
+  const [alertBrowserSubscription, setAlertBrowserSubscription] = useState(
+    user?.alert_browser_subscription || null,
+  );
   const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -77,10 +86,12 @@ export default function Settings() {
 
   const updateNotifications = async () => {
     const response = await fetchData("/notifications/update", "PATCH", {
-      alertEmail: notificationMailbox,
-      alertText: notificationTextMessage,
-      alertBrowserNotification: false,
-      alertPushNotification: true,
+      alertEmail: alertEmail,
+      alertSms: alertSms,
+      alertBrowser: alertBrowser,
+      alertPush: alertPush,
+      alertBrowserSubscription: alertBrowserSubscription,
+      alertPushSubscription: user?.alert_push_subscription || null,
     });
 
     if (!response || response.status !== 200) {
@@ -91,8 +102,12 @@ export default function Settings() {
       return;
     }
 
-    user.alert_email = notificationMailbox;
-    user.alert_text = notificationTextMessage;
+    user.alert_email = alertEmail;
+    user.alert_sms = alertSms;
+    user.alert_browser = alertBrowser;
+    user.alert_push = alertPush;
+    user.alert_browser_subscription = alertBrowserSubscription;
+    user.alert_push_subscription = user?.alert_push_subscription || null;
     saveUser(user);
 
     showToast("Notifications settings saved! 🥳", "success");
@@ -220,6 +235,23 @@ export default function Settings() {
                     <div
                       className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                       onClick={() => {
+                        if (alertEmail && !alertSms && !alertBrowser && !alertPush) {
+                          showToast("You must choose at least one notification method.", "error");
+                          return;
+                        }
+
+                        setAlertEmail(!alertEmail);
+                      }}
+                    >
+                      <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
+                        In your mailbox
+                      </TextLabel>
+                      <Switch checked={alertEmail} opacityWhenOff />
+                    </div>
+
+                    <div
+                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      onClick={() => {
                         if (!user?.phone) {
                           showToast(
                             "You must add a phone number below to receive text notifications.",
@@ -228,36 +260,64 @@ export default function Settings() {
                           return;
                         }
 
-                        if (notificationTextMessage && !notificationMailbox) {
+                        if (alertSms && !alertEmail && !alertBrowser && !alertPush) {
                           showToast("You must choose at least one notification method.", "error");
                           return;
                         }
 
-                        setNotificationTextMessage(!notificationTextMessage);
+                        setAlertSms(!alertSms);
                       }}
                     >
                       <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
-                        By text message
+                        By WhatsApp
                       </TextLabel>
-                      <Switch checked={notificationTextMessage} opacityWhenOff />
+                      <Switch checked={alertSms} opacityWhenOff />
                     </div>
 
                     <div
                       className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
-                      onClick={() => {
-                        if (notificationMailbox && !notificationTextMessage) {
+                      onClick={async () => {
+                        if (alertBrowser && !alertSms && !alertEmail && !alertPush) {
                           showToast("You must choose at least one notification method.", "error");
                           return;
                         }
 
-                        setNotificationMailbox(!notificationMailbox);
+                        const subscription = alertBrowser
+                          ? await unsubscribeFromBrowserNotification(navigator, window)
+                          : await subscribeToBrowserNotification(navigator, window);
+
+                        if (subscription) {
+                          setAlertBrowserSubscription(alertBrowser ? null : subscription);
+                          setAlertBrowser(!alertBrowser);
+                        } else {
+                          showToast("Failed to toggle browser notifications", "error");
+                        }
                       }}
                     >
                       <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
-                        In your mailbox
+                        In your browser <span className="text-xs">(mobile & desktop)</span>
                       </TextLabel>
-                      <Switch checked={notificationMailbox} opacityWhenOff />
+                      <Switch checked={alertBrowser} opacityWhenOff />
                     </div>
+
+                    <div
+                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 opacity-50 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      onClick={() => {
+                        if (alertPush && !alertSms && !alertEmail && !alertBrowser) {
+                          showToast("You must choose at least one notification method.", "error");
+                          return;
+                        }
+
+                        setAlertPush(false);
+                      }}
+                    >
+                      <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
+                        By push notifications{" "}
+                        <span className="text-xs text-secondary">(not available)</span>
+                      </TextLabel>
+                      <Switch checked={alertPush} opacityWhenOff />
+                    </div>
+
                     <div className="flex w-full flex-wrap items-center justify-center gap-4">
                       <Button
                         type="quaternary"

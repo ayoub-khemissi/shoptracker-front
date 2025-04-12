@@ -13,6 +13,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { LoadingScreen } from "./components/LoadingScreen";
 import InstallPrompt from "./components/InstallPrompt";
+import BrowserNotificationPrompt from "./components/BrowserNotificationPrompt";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -131,6 +132,7 @@ export default function RootLayout({ children }) {
                 <Footer />
                 <Cookies />
                 <InstallPrompt />
+                <BrowserNotificationPrompt />
               </Suspense>
             </ToastProvider>
           </AuthProvider>

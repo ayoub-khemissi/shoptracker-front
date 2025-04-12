@@ -54,24 +54,28 @@ export default function Tracklist() {
     setTracklist((await response?.json())?.data || []);
   };
 
-  const filteredTracklist = tracklist.filter((t) =>
-    t.name?.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredTracklist = tracklist.filter(
+    (track) =>
+      (!track.name && searchQuery.length === 0) ||
+      track.name?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const inProgressCount = filteredTracklist.filter(
-    (t) => t.status_id === TRACK_STATUS_ENABLED,
+    (track) => track.status_id === TRACK_STATUS_ENABLED,
   ).length;
   const wishlistCount = filteredTracklist.filter(
-    (t) => t.status_id === TRACK_STATUS_DISABLED,
+    (track) => track.status_id === TRACK_STATUS_DISABLED,
   ).length;
-  const invalidCount = filteredTracklist.filter((t) => t.status_id === TRACK_STATUS_INVALID).length;
+  const invalidCount = filteredTracklist.filter(
+    (track) => track.status_id === TRACK_STATUS_INVALID,
+  ).length;
   const finishedCount = filteredTracklist.filter(
-    (t) => t.status_id === TRACK_STATUS_FINISHED,
+    (track) => track.status_id === TRACK_STATUS_FINISHED,
   ).length;
   const totalCount = filteredTracklist.length;
 
   const getPaginatedTracklist = () => {
-    const filtered = filteredTracklist.filter((t) => (tab ? t.status_id === tab : true));
+    const filtered = filteredTracklist.filter((track) => (tab ? track.status_id === tab : true));
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;

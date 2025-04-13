@@ -283,7 +283,7 @@ export default function Settings() {
             Account
           </Button>
         </div>
-        <div className="relative overflow-hidden rounded-2xl lg:p-8">
+        <div className="relative overflow-hidden rounded-2xl">
           <div className="relative z-10">
             {tab === SETTINGS_TAB_NOTIFICATIONS && (
               <div className="flex flex-wrap items-start justify-evenly gap-y-4">

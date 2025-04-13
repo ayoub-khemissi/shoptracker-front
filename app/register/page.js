@@ -19,8 +19,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "@/modules/DataValidation";
 import { Checkbox } from "@nextui-org/react";
-import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
-import Script from "next/script";
+import { useReCaptcha } from "next-recaptcha-v3";
+import RecaptchaLinks from "../components/RecaptchaLinks";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -29,12 +29,10 @@ export default function Register() {
   const [isErrorPassword, setIsErrorPassword] = useState(false);
   const [isGoogleLoginProcessed, setIsGoogleLoginProcessed] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
-  const [isRecaptchaReady, setIsRecaptchaReady] = useState(false);
-
   const { localLogin, localLogout } = useAuthContext();
   const { showToast } = useToast();
   const router = useRouter();
+  const { executeRecaptcha } = useReCaptcha();
 
   const { data: session } = useSession();
 
@@ -92,20 +90,13 @@ export default function Register() {
     }
   }, [session, isGoogleLoginProcessed, localLogout, showToast, localLogin, router]);
 
-  const handleRecaptchaLoad = () => {
-    setIsRecaptchaReady(true);
-    window.grecaptcha.ready(() => {
-      window.grecaptcha
-        .execute(NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: "register" })
-        .then((token) => setRecaptchaToken(token));
-    });
-  };
-
   const registerClassical = async (e) => {
     e.preventDefault();
 
-    if (!isRecaptchaReady || !recaptchaToken) {
-      showToast("Please wait for reCAPTCHA verification.", "error");
+    const recaptchaToken = await executeRecaptcha("register");
+
+    if (!recaptchaToken) {
+      showToast("Please wait for reCAPTCHA verification.", "info");
       return;
     }
 
@@ -237,7 +228,7 @@ export default function Register() {
                   </Checkbox>
                 </div>
                 <div className="flex w-1/3 items-center justify-end">
-                  <Button buttonType="submit" type="primary">
+                  <Button buttonType="submit" type="quaternary">
                     Sign Up
                   </Button>
                 </div>
@@ -249,12 +240,9 @@ export default function Register() {
                 Sign In
               </UnderlineLink>
             </TextNormal>
+            <RecaptchaLinks />
           </div>
         </div>
-        <Script
-          src={`https://www.google.com/recaptcha/api.js?render=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-          onLoad={handleRecaptchaLoad}
-        />
       </Section>
     </>
   );

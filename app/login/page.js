@@ -191,7 +191,7 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="flex w-1/3 items-center justify-end">
-                  <Button buttonType="submit" type="primary">
+                  <Button buttonType="submit" type="quaternary">
                     Sign In
                   </Button>
                 </div>

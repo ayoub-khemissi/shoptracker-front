@@ -14,6 +14,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { LoadingScreen } from "./components/LoadingScreen";
 import InstallPrompt from "./components/InstallPrompt";
 import BrowserNotificationPrompt from "./components/BrowserNotificationPrompt";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
+import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -127,12 +129,14 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <ToastProvider>
               <Suspense fallback={<LoadingScreen />}>
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <Cookies />
-                <InstallPrompt />
-                <BrowserNotificationPrompt />
+                <ReCaptchaProvider siteKey={NEXT_PUBLIC_RECAPTCHA_SITE_KEY}>
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                  <Cookies />
+                  <InstallPrompt />
+                  <BrowserNotificationPrompt />
+                </ReCaptchaProvider>
               </Suspense>
             </ToastProvider>
           </AuthProvider>

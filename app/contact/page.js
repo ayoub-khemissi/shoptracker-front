@@ -8,12 +8,11 @@ import Button from "../components/Button";
 import Title from "../components/Title";
 import Section from "../components/Section";
 import Textarea from "../components/Textarea";
-import Spinner from "../components/Spinner";
 import { useAuthContext } from "../contexts/AuthContext";
-import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
+import { useReCaptcha } from "next-recaptcha-v3";
 import { useSearchParams } from "next/navigation";
-import Script from "next/script";
 import { useRouter } from "next/navigation";
+import RecaptchaLinks from "../components/RecaptchaLinks";
 
 export default function Contact() {
   const searchParams = useSearchParams();
@@ -46,27 +45,17 @@ export default function Contact() {
   const [email, setEmail] = useState(user?.email || "");
   const [subject, setSubject] = useState(mailInfo().subject);
   const [content, setContent] = useState(mailInfo().content);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
-  const [isRecaptchaReady, setIsRecaptchaReady] = useState(false);
   const router = useRouter();
-
-  const handleRecaptchaLoad = () => {
-    setIsRecaptchaReady(true);
-    window.grecaptcha.ready(() => {
-      window.grecaptcha
-        .execute(NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: "contact" })
-        .then((token) => setRecaptchaToken(token));
-    });
-  };
+  const { executeRecaptcha } = useReCaptcha();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    if (!isRecaptchaReady || !recaptchaToken) {
-      showToast("Please wait for reCAPTCHA verification.", "error");
+    const recaptchaToken = await executeRecaptcha("contact");
+
+    if (!recaptchaToken) {
+      showToast("Please wait for reCAPTCHA verification.", "info");
       return;
     }
 
@@ -87,8 +76,6 @@ export default function Contact() {
       }
     } catch (error) {
       showToast("Network error. Please check your connection.", "error");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -138,17 +125,15 @@ export default function Contact() {
                 Back
               </Button>
 
-              <Button type="quaternary" buttonType="submit" disabled={isSubmitting}>
-                {isSubmitting ? <Spinner /> : "Send"}
+              <Button type="quaternary" buttonType="submit">
+                Send
               </Button>
             </div>
+
+            <RecaptchaLinks />
           </form>
         </div>
       </div>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-        onLoad={handleRecaptchaLoad}
-      />
     </Section>
   );
 }

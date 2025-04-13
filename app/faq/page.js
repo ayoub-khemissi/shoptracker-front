@@ -47,7 +47,8 @@ export default function Faq() {
           >
             ShopTracker supports a very large variety of e-commerce sites. However, it is not
             compatible with all sites, especially those that display their products in a modal while
-            showing other products in the background.
+            showing other products in the background or when all products are displayed on the same
+            page.
           </AccordionItem>
 
           <AccordionItem
@@ -103,6 +104,19 @@ export default function Faq() {
             If you face any issues with tracking specific products, please check the compatibility
             of the site. If the issue persists, contact our support for further assistance via the{" "}
             <UnderlineLink href={"/contact?subject=support"}>Contact page</UnderlineLink>.
+          </AccordionItem>
+
+          <AccordionItem
+            key="9"
+            aria-label="The website is slow, especially on the landing page."
+            title="9. The website is slow, especially on the landing page."
+          >
+            Please ensure to enable hardware acceleration in your browser. On Google Chrome:
+            Settings &gt; System &gt; Hardware acceleration &gt; Enable. On Firefox:{" "}
+            <UnderlineLink href="https://support.mozilla.org/en-US/kb/performance-settings">
+              click here
+            </UnderlineLink>
+            .
           </AccordionItem>
         </Accordion>
       </Section>

@@ -1,13 +1,12 @@
 "use client";
 
+import Section from "./Section";
 import ShopTrackerLogo from "./ShopTrackerLogo";
 
 export const LoadingScreen = () => (
-  <div className="flex min-h-screen w-full flex-col items-center justify-center bg-contrast">
-    <div className="animate-pulse">
-      <ShopTrackerLogo className="text-5xl" />
-    </div>
-    <div className="mt-8 h-2 w-64 overflow-hidden rounded-full bg-contrast-alt">
+  <Section centerX centerY>
+    <ShopTrackerLogo className="animate-pulse text-5xl" />
+    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-contrast-alt">
       <div
         className="h-full animate-[loading_2s_ease-in-out_infinite] bg-gradient-to-r from-secondary via-tertiary to-quaternary"
         style={{
@@ -16,5 +15,5 @@ export const LoadingScreen = () => (
         }}
       />
     </div>
-  </div>
+  </Section>
 );

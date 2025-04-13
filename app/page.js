@@ -58,7 +58,7 @@ export default async function Home() {
         </div>
         <div className="flex items-center justify-center py-4">
           <ButtonLink type="quaternary" href="/register">
-            Try it now for free! ✨
+            Try It Free Now! ✨
           </ButtonLink>
         </div>
         <div className="hidden items-center justify-center py-4 lg:flex">
@@ -100,7 +100,7 @@ export default async function Home() {
         </div>
         <div className="flex items-center justify-center py-4">
           <ButtonLink type="tertiary" href="/register">
-            Sign up for a demo! 🚀
+            Try the Demo Now! 🚀
           </ButtonLink>
         </div>
         <div className="hidden items-center justify-center py-4 lg:flex">

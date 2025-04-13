@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import TextNormal from "./components/TextNormal";
 import Title from "./components/Title";
 import Link from "next/link";
@@ -14,12 +17,38 @@ import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
 import Section from "./components/Section";
 import ButtonLink from "./components/ButtonLink";
+import { useAuthContext } from "./contexts/AuthContext";
+import { LoadingScreen } from "./components/LoadingScreen";
 
-export default async function Home() {
-  const response = await fetchData("/track/stats");
-  const data = (await response?.json())?.data;
-  const totalTracksEnabled = data?.total_tracks_enabled || 0;
-  const totalTrackChecks = data?.total_track_checks || 0;
+export default function Home() {
+  const [stats, setStats] = useState({ total_tracks_enabled: 0, total_track_checks: 0 });
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuthContext();
+
+  const { total_tracks_enabled, total_track_checks } = stats;
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const response = await fetchData("/track/stats");
+
+      if (response?.status === 200) {
+        const data = (await response?.json())?.data;
+        if (data) {
+          setStats({
+            total_tracks_enabled: data.total_tracks_enabled || 0,
+            total_track_checks: data.total_track_checks || 0,
+          });
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
@@ -36,7 +65,7 @@ export default async function Home() {
           <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
             <Image className="h-80" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {formatNumberWithSpaces(totalTracksEnabled)} products are being tracked
+              {formatNumberWithSpaces(total_tracks_enabled)} products are being tracked
               <br /> right now.
             </TextNormal>
             <div className="absolute inset-0 opacity-20">
@@ -47,7 +76,7 @@ export default async function Home() {
           <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
             <Image className="h-80" src={StockPricesSvg} alt="stock prices" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
-              {formatNumberWithSpaces(totalTrackChecks)} checks performed
+              {formatNumberWithSpaces(total_track_checks)} checks performed
               <br /> since the launch.
             </TextNormal>
             <div className="absolute inset-0 opacity-20">
@@ -57,7 +86,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center py-4">
-          <ButtonLink type="quaternary" href="/register">
+          <ButtonLink type="quaternary" href={user ? "/tracker" : "/register"}>
             Try It Free Now! ✨
           </ButtonLink>
         </div>
@@ -99,7 +128,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center py-4">
-          <ButtonLink type="tertiary" href="/register">
+          <ButtonLink type="tertiary" href={user ? "/tracker" : "/register"}>
             Try the Demo Now! 🚀
           </ButtonLink>
         </div>

@@ -314,7 +314,7 @@ export default function Settings() {
                       onClick={() => {
                         if (!user?.phone) {
                           showToast(
-                            "You must add a phone number below to receive text notifications.",
+                            "You must add a phone number to receive text notifications.",
                             "error",
                           );
                           return;

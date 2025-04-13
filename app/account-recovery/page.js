@@ -161,8 +161,8 @@ export default function AccountRecovery() {
         <div className="flex w-full items-center justify-center">
           <div className="flex max-w-[512px] flex-col space-y-4 self-center">
             <TextNormal>
-              To recover your account, please enter your email address below. We will send you a
-              code to reset your password.
+              To recover your account, please enter your email address. We will send you a code to
+              reset your password.
             </TextNormal>
             <form className="w-full space-y-4" onSubmit={(e) => handleFormSubmit(e, phase)}>
               <Input
@@ -182,7 +182,7 @@ export default function AccountRecovery() {
               {phase === PHASE_CODE && (
                 <>
                   <TextNormal>
-                    We have sent you a code to your email. Please enter the code below to reset your
+                    We have sent you a code to your email. Please enter the code to reset your
                     password.
                   </TextNormal>
                   <Input

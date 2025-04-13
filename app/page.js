@@ -13,6 +13,7 @@ import PricingPage from "./components/PricingPage";
 import { fetchData } from "@/modules/Fetch";
 import { formatNumberWithSpaces } from "@/modules/TextFormatter";
 import Section from "./components/Section";
+import ButtonLink from "./components/ButtonLink";
 
 export default async function Home() {
   const response = await fetchData("/track/stats");
@@ -23,7 +24,7 @@ export default async function Home() {
   return (
     <>
       <Section id="top" centerY>
-        <Title className="text-center text-2xl lg:text-4xl">
+        <Title className="pb-4 text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop
           <br />{" "}
           <span className="text-secondary transition duration-200 hover:text-tertiary">
@@ -31,7 +32,7 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="grid grid-cols-1 gap-8 py-8 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 py-4 lg:grid-cols-2">
           <div className="flex flex-col items-center justify-center space-y-6 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm">
             <Image className="h-80" src={ShoppingSvg} alt="shopping" />
             <TextNormal className="text-center text-2xl lg:text-3xl">
@@ -55,6 +56,11 @@ export default async function Home() {
             </div>
           </div>
         </div>
+        <div className="flex items-center justify-center py-4">
+          <ButtonLink type="quaternary" href="/register">
+            Try it now for free! ✨
+          </ButtonLink>
+        </div>
         <div className="hidden items-center justify-center py-4 lg:flex">
           <Link href="#how-to" className="animate-bounce">
             <Image src={ScrollArrowsDownSecondarySvg} alt="scroll down arrow" />
@@ -70,7 +76,7 @@ export default async function Home() {
           </span>
           !
         </Title>
-        <div className="grid grid-cols-1 gap-8 py-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 py-4 md:grid-cols-2 lg:grid-cols-3">
           <div className="flex flex-col items-center justify-between space-y-10 rounded-xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:transform">
             <Image className="h-60" src={ProductUrlSvg} alt="product url" />
             <TextNormal className="text-center text-xl lg:text-2xl">
@@ -91,6 +97,11 @@ export default async function Home() {
               dropped 🎉!
             </TextNormal>
           </div>
+        </div>
+        <div className="flex items-center justify-center py-4">
+          <ButtonLink type="tertiary" href="/register">
+            Sign up for a demo! 🚀
+          </ButtonLink>
         </div>
         <div className="hidden items-center justify-center py-4 lg:flex">
           <Link href="#pricing" className="animate-bounce">

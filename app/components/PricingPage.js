@@ -136,10 +136,10 @@ const PricingPage = () => {
       <TextSeparator className="py-4">Or</TextSeparator>
       <div className="flex items-center justify-center">
         <ButtonLink
-          href={"/contact?subject=custom-offer"}
+          href="/contact?subject=custom-offer"
           title={NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
         >
-          Request a custom offer 💎
+          Request a custom offer 👑
         </ButtonLink>
       </div>
     </>

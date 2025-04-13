@@ -43,6 +43,10 @@ export default function Settings() {
   const [isErrorConfirmNewPassword, setIsErrorConfirmNewPassword] = useState(false);
   const [phone, setPhone] = useState(user?.phone);
   const [isErrorPhone, setIsErrorPhone] = useState(false);
+  const [isErrorVerifyPhone, setIsErrorVerifyPhone] = useState(false);
+  const [phoneStep, setPhoneStep] = useState("enter");
+  const [verifyPhoneCode, setVerifyPhoneCode] = useState("");
+  const [isSendingCode, setIsSendingCode] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,37 +54,93 @@ export default function Settings() {
     setTab(currentTab || SETTINGS_TAB_NOTIFICATIONS);
   }, [searchParams]);
 
-  const updatePhone = async (e) => {
-    e.preventDefault();
+  const sendPhoneVerificationCode = async () => {
+    if (!validatePhone(phone)) {
+      showToast("Invalid phone number, please try again.", "error");
+      setIsErrorPhone(true);
+      return;
+    }
 
-    const response = await fetchData("/phone/update", "PATCH", {
-      phone: phone,
-    });
+    setIsSendingCode(true);
+    const response = await fetchData("/phone/code/generate", "POST", { phone });
+    setIsSendingCode(false);
 
     switch (response?.status) {
       case 200: {
-        user.phone = phone;
-        saveUser(user);
-        setIsErrorPhone(false);
-        showToast("Phone number saved! 🥳", "success");
+        setPhoneStep("verify");
+        showToast("Verification code sent on WhatsApp!", "success");
         break;
       }
 
       case 400:
         setIsErrorPhone(true);
         showToast("Invalid phone number, please try again.", "error");
-        return;
+        break;
 
       case 409:
         setIsErrorPhone(true);
         showToast("This phone number is already taken.", "error");
-        return;
+        break;
+
+      case 429: {
+        const msg = (await response.json()).msg;
+        showToast(msg, "info");
+        setPhoneStep("verify");
+        break;
+      }
 
       default:
         showToast(
-          "An error occurred while saving your phone number. Please try again later.",
+          "An error occurred while sending verification code. Please try again later.",
           "error",
         );
+        break;
+    }
+  };
+
+  const verifyPhoneCodeHandler = async (e) => {
+    e.preventDefault();
+
+    if (verifyPhoneCode.length < 6) {
+      showToast("Invalid verification code, please try again.", "error");
+      setIsErrorVerifyPhone(true);
+      return;
+    }
+    const response = await fetchData("/phone/code/verify", "POST", {
+      verifyPhoneCode,
+    });
+
+    switch (response?.status) {
+      case 200: {
+        setPhoneStep("enter");
+        setVerifyPhoneCode("");
+
+        setAlertSms(true);
+        user.alert_sms = true;
+        user.phone = phone;
+        saveUser(user);
+
+        showToast("Phone number verified successfully 🎉", "success");
+        break;
+      }
+
+      case 400:
+        setIsErrorVerifyPhone(true);
+        showToast("Invalid verification code, please try again.", "error");
+        break;
+
+      case 409:
+        setPhoneStep("enter");
+        setIsErrorPhone(true);
+        showToast("This phone number is already taken.", "error");
+        break;
+
+      default:
+        showToast(
+          "An error occurred while verifying phone number. Please try again later.",
+          "error",
+        );
+        break;
     }
   };
 
@@ -329,14 +389,16 @@ export default function Settings() {
                     </div>
                   </div>
                 </div>
-                <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
+                <form
+                  onSubmit={verifyPhoneCodeHandler}
+                  className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm"
+                >
                   <TextSeparator className="text-lg font-medium">
                     Whatsapp Phone Number
                   </TextSeparator>
-                  <form className="space-y-4" onSubmit={updatePhone}>
+                  <div className="space-y-4">
                     <Input
                       id="phone"
-                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                       labelText="Whatsapp Phone Number"
                       type="text"
                       placeholder="+1234567890"
@@ -349,18 +411,52 @@ export default function Settings() {
                         setPhone(e.target.value);
                         setIsErrorPhone(!validatePhone(e.target.value));
                       }}
+                      disabled={phoneStep === "verify"}
                     />
-                    <div className="flex w-full flex-wrap items-center justify-center gap-4">
-                      <Button
-                        type="quaternary"
-                        buttonType="submit"
-                        className="transition-all duration-300 hover:shadow-lg hover:shadow-quaternary/20"
-                      >
-                        Update phone number
-                      </Button>
+
+                    <Input
+                      id="verifyPhoneCode"
+                      labelText="Verification Code"
+                      type="number"
+                      min={0}
+                      max={999999}
+                      step={1}
+                      pattern="[0-9]{6}"
+                      placeholder="Enter 6-digit code"
+                      value={verifyPhoneCode}
+                      required={phoneStep === "verify"}
+                      onChange={(e) => {
+                        setVerifyPhoneCode(e.target.value);
+                        setIsErrorVerifyPhone(false);
+                      }}
+                      disabled={phoneStep === "enter"}
+                      className={phoneStep === "enter" ? "hidden" : ""}
+                      isError={isErrorVerifyPhone}
+                      errorText="Please enter the 6-digit code sent on WhatsApp."
+                    />
+
+                    <div className="flex items-center justify-center gap-4">
+                      {phoneStep === "enter" ? (
+                        <Button
+                          type="quaternary"
+                          onClick={sendPhoneVerificationCode}
+                          disabled={isSendingCode || !validatePhone(phone)}
+                        >
+                          {isSendingCode ? "Sending..." : "Send Code"}
+                        </Button>
+                      ) : (
+                        <>
+                          <Button type="secondary" onClick={() => setPhoneStep("enter")}>
+                            Change Number
+                          </Button>
+                          <Button buttonType="submit" type="quaternary">
+                            Verify
+                          </Button>
+                        </>
+                      )}
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
             )}
 

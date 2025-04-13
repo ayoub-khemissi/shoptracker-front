@@ -92,7 +92,7 @@ const Subscription = ({ className = "" }) => {
       <div className={`flex w-full flex-wrap justify-evenly gap-4 ${className}`}>
         <Plan
           callToActionType={
-            isPlanUltimate() ? PLAN_CALL_TO_ACTION_TYPE_UPGRADE : PLAN_CALL_TO_ACTION_TYPE_NONE
+            isPlanUltimate() ? PLAN_CALL_TO_ACTION_TYPE_NONE : PLAN_CALL_TO_ACTION_TYPE_UPGRADE
           }
           stripePriceId={stripe_price_id}
         />

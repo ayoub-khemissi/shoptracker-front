@@ -13,6 +13,7 @@ import ButtonLink from "../components/ButtonLink";
 import GlassPanel from "../components/GlassPanel";
 import Section from "../components/Section";
 import Input from "../components/Input";
+import { LoadingScreen } from "../components/LoadingScreen";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -40,6 +41,7 @@ export default function Tracklist() {
   const [tracklist, setTracklist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 5;
 
   const getTrackStatusIdByTab = (tab) => {
@@ -52,6 +54,7 @@ export default function Tracklist() {
   const fetchTracklist = async () => {
     const response = await fetchData("/tracklist");
     setTracklist((await response?.json())?.data || []);
+    setLoading(false);
   };
 
   const filteredTracklist = tracklist.filter(
@@ -120,6 +123,10 @@ export default function Tracklist() {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

@@ -22,7 +22,7 @@ const Cookies = () => {
     setCookieModalVisible(false);
   };
 
-  if (currentPathname === "/privacy") {
+  if (currentPathname === "/privacy-policy") {
     return null;
   }
 
@@ -50,7 +50,7 @@ const Cookies = () => {
           <br />
           By continuing to use ShopTracker, you consent to the use of these essential cookies and
           agree to our <br />
-          <UnderlineLink href="/privacy" className="text-secondary hover:text-tertiary">
+          <UnderlineLink href="/privacy-policy" className="text-secondary hover:text-tertiary">
             Privacy Policy
           </UnderlineLink>
           .

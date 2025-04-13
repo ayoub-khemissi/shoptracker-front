@@ -6,7 +6,6 @@ import { useState } from "react";
 import Title from "./Title";
 import Switch from "./Switch";
 import Constants from "@/utils/Constants";
-import { NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL } from "@/utils/Config";
 import TextSeparator from "./TextSeparator";
 import ButtonLink from "./ButtonLink";
 
@@ -137,12 +136,7 @@ const PricingPage = () => {
       </div>
       <TextSeparator className="py-4">Or</TextSeparator>
       <div className="flex items-center justify-center">
-        <ButtonLink
-          href="/contact?subject=custom-offer"
-          title={NEXT_PUBLIC_SHOPTRACKER_CUSTOMER_SUPPORT_EMAIL}
-        >
-          Request a custom offer 👑
-        </ButtonLink>
+        <ButtonLink href="/contact?subject=custom-offer">Request a custom offer 👑</ButtonLink>
       </div>
     </>
   );

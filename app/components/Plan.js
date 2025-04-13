@@ -17,6 +17,11 @@ import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import { redirectToCheckout } from "@/modules/Stripe";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Modal from "./Modal";
+import { Checkbox } from "@nextui-org/react";
+import UnderlineLink from "./UnderlineLink";
+import Title from "./Title";
 
 const {
   PLAN_CALL_TO_ACTION_TYPE_NONE,
@@ -44,7 +49,6 @@ const {
 
 const Plan = ({
   className = "",
-  key,
   callToActionType = PLAN_CALL_TO_ACTION_TYPE_CHECKOUT,
   stripePriceId,
 }) => {
@@ -61,6 +65,9 @@ const Plan = ({
     popular,
     billingPeriod,
   } = getPlanData(stripePriceId);
+
+  const [showConsentModal, setShowConsentModal] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   const getBillingPeriodText = () => {
     switch (billingPeriod) {
@@ -168,6 +175,26 @@ const Plan = ({
     return popular ? CircleCheckSecondarySvg : CircleCheckTertiarySvg;
   };
 
+  const handleProceedToPayment = async () => {
+    if (!isTermsAccepted) return;
+
+    setShowConsentModal(false);
+    const response = await fetchData(`/checkout/session`, "POST", {
+      stripePriceId: stripePriceId,
+    });
+
+    switch (response?.status) {
+      case 200: {
+        const { sessionId } = (await response.json()).data;
+        redirectToCheckout(sessionId);
+        break;
+      }
+      default:
+        showToast("Failed to create a checkout session. Please try again later.", "error");
+        break;
+    }
+  };
+
   const checkoutSession = async () => {
     if (!user) {
       router.push("/register");
@@ -179,21 +206,7 @@ const Plan = ({
       return;
     }
 
-    const response = await fetchData(`/checkout/session`, "POST", {
-      stripePriceId: stripePriceId,
-    });
-
-    switch (response?.status) {
-      case 200: {
-        const { sessionId } = (await response.json()).data;
-        redirectToCheckout(sessionId);
-        break;
-      }
-
-      default:
-        showToast("Failed to create a checkout session. Please try again later.", "error");
-        break;
-    }
+    setShowConsentModal(true);
   };
 
   const getCallToActionButton = () => {
@@ -223,85 +236,129 @@ const Plan = ({
   };
 
   return (
-    <div
-      {...(key && { key: key })}
-      className={`${
-        popular
-          ? "border-sky-300/30 bg-gradient-to-br from-sky-400/20 via-white/10 to-blue-600/20 shadow-lg shadow-sky-500/20"
-          : "border-primary/30 bg-contrast/80"
-      } relative w-80 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
-    >
-      {popular && callToActionType === PLAN_CALL_TO_ACTION_TYPE_CHECKOUT && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 px-6 py-1.5 shadow-lg">
-          <TextNormal className="text-xs font-semibold uppercase tracking-wider text-white">
-            Most Popular ✨
-          </TextNormal>
-        </div>
-      )}
+    <>
+      <div
+        className={`${
+          popular
+            ? "border-sky-300/30 bg-gradient-to-br from-sky-400/20 via-white/10 to-blue-600/20 shadow-lg shadow-sky-500/20"
+            : "border-primary/30 bg-contrast/80"
+        } relative w-80 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
+      >
+        {popular && callToActionType === PLAN_CALL_TO_ACTION_TYPE_CHECKOUT && (
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 px-6 py-1.5 shadow-lg">
+            <TextNormal className="text-xs font-semibold uppercase tracking-wider text-white">
+              Most Popular ✨
+            </TextNormal>
+          </div>
+        )}
 
-      <div className="space-y-6 p-6">
-        <div className="space-y-2 text-center">
-          <Subtitle className={`text-xl font-bold ${popular ? "text-sky-300" : "text-primary"}`}>
-            {name}
+        <div className="space-y-6 p-6">
+          <div className="space-y-2 text-center">
+            <Subtitle className={`text-xl font-bold ${popular ? "text-sky-300" : "text-primary"}`}>
+              {name}
+            </Subtitle>
+            <TextImportant
+              className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
+            >
+              {formatPrice(price)}
+              <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
+            </TextImportant>
+            <TextImportant
+              className={`text-sm leading-6 ${popular ? "text-sky-100" : "text-primary/80"}`}
+            >
+              {getDescriptionByStripePriceId()}
+            </TextImportant>
+          </div>
+
+          {getCallToActionButton()}
+        </div>
+
+        <Separator type={popular ? "contrast" : "primary"} className="opacity-20" />
+
+        <div className="space-y-4 p-6">
+          <Subtitle
+            className={`text-sm uppercase tracking-wider ${popular ? "text-sky-300" : "text-primary"}`}
+          >
+            Features
           </Subtitle>
-          <TextImportant
-            className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
-          >
-            {formatPrice(price)}
-            <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
-          </TextImportant>
-          <TextImportant
-            className={`text-sm leading-6 ${popular ? "text-sky-100" : "text-primary/80"}`}
-          >
-            {getDescriptionByStripePriceId()}
-          </TextImportant>
-        </div>
 
-        {getCallToActionButton()}
-      </div>
-
-      <Separator type={popular ? "contrast" : "primary"} className="opacity-20" />
-
-      <div className="space-y-4 p-6">
-        <Subtitle
-          className={`text-sm uppercase tracking-wider ${popular ? "text-sky-300" : "text-primary"}`}
-        >
-          Features
-        </Subtitle>
-
-        <div className="space-y-4">
-          {[
-            `Track ${track_enabled_max_products} ${track_enabled_max_products > 1 ? "products simultaneously" : "product at a time"}`,
-            `Check performed every ${convertMillisecondsToText(track_check_interval)}`,
-            `${track_disabled_max_products} products maximum in the wishlist`,
-            `${track_user_max_searches_per_day} user searches per day`,
-          ].map((feature, index) => (
-            <div key={index} className="group flex items-center space-x-3">
-              <div
-                className={`flex-shrink-0 rounded-full p-1 ${
-                  popular ? "bg-gradient-to-br from-sky-400 to-blue-600" : "bg-primary/10"
-                }`}
-              >
-                <Image
-                  className="h-4 w-4 brightness-110"
-                  src={getCircleCheckSvgByPopularity()}
-                  alt="feature check"
-                />
+          <div className="space-y-4">
+            {[
+              `Track ${track_enabled_max_products} ${track_enabled_max_products > 1 ? "products simultaneously" : "product at a time"}`,
+              `Check performed every ${convertMillisecondsToText(track_check_interval)}`,
+              `${track_disabled_max_products} products maximum in the wishlist`,
+              `${track_user_max_searches_per_day} user searches per day`,
+            ].map((feature, index) => (
+              <div key={index} className="group flex items-center space-x-3">
+                <div
+                  className={`flex-shrink-0 rounded-full p-1 ${
+                    popular ? "bg-gradient-to-br from-sky-400 to-blue-600" : "bg-primary/10"
+                  }`}
+                >
+                  <Image
+                    className="h-4 w-4 brightness-110"
+                    src={getCircleCheckSvgByPopularity()}
+                    alt="feature check"
+                  />
+                </div>
+                <TextNormal
+                  className={`text-sm ${
+                    popular
+                      ? "text-sky-100/90 group-hover:text-white"
+                      : "text-primary/80 group-hover:text-primary"
+                  } transition-colors duration-200`}
+                >
+                  {feature}
+                </TextNormal>
               </div>
-              <TextNormal
-                className={`text-sm ${
-                  popular
-                    ? "text-sky-100/90 group-hover:text-white"
-                    : "text-primary/80 group-hover:text-primary"
-                } transition-colors duration-200`}
-              >
-                {feature}
-              </TextNormal>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <Modal
+        isVisible={showConsentModal}
+        onClose={() => {
+          setShowConsentModal(false);
+          setIsTermsAccepted(false);
+        }}
+      >
+        <Title className="mb-4 text-center text-2xl font-bold">Before you proceed</Title>
+        <div className="mb-6">
+          <Checkbox
+            defaultSelected
+            color="warning"
+            isRequired
+            required
+            aria-required
+            isSelected={isTermsAccepted}
+            onChange={(e) => setIsTermsAccepted(e.target.checked)}
+          >
+            <TextNormal className="text-sm">
+              By checking this box, I confirm that I am entitled to a 7-day free trial on my first
+              subscription and may request a full refund within this period. I agree that the
+              service will begin immediately, and I waive my right of withdrawal after the trial
+              period ends. I have read and accept the{" "}
+              <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
+              <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>.
+            </TextNormal>
+          </Checkbox>
+        </div>
+        <div className="flex justify-between gap-x-4">
+          <Button
+            type="contrast"
+            onClick={() => {
+              setShowConsentModal(false);
+              setIsTermsAccepted(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button type="quaternary" onClick={handleProceedToPayment} disabled={!isTermsAccepted}>
+            Continue to Payment
+          </Button>
+        </div>
+      </Modal>
+    </>
   );
 };
 

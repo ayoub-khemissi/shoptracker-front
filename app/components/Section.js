@@ -6,7 +6,7 @@ const Section = ({ children, id, alt = false, centerX = false, centerY = false }
   return (
     <section
       {...(id && { id })}
-      className={`${baseClasses} relative overflow-hidden lg:flex lg:flex-col ${centerX ? "lg:items-center" : ""} ${centerY ? "lg:justify-center" : ""}`}
+      className={`${baseClasses} relative flex flex-col overflow-hidden ${centerX ? "items-center" : ""} ${centerY ? "justify-center" : ""}`}
     >
       <div className="absolute inset-0">
         <div

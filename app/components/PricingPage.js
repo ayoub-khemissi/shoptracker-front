@@ -11,6 +11,7 @@ import TextSeparator from "./TextSeparator";
 import ButtonLink from "./ButtonLink";
 
 const {
+  PLAN_CALL_TO_ACTION_TYPE_CHECKOUT,
   SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
   SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY,
   SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY,
@@ -130,6 +131,7 @@ const PricingPage = () => {
             key={plan.id}
             className="mb-4 transition duration-300 hover:scale-105 hover:transform 2xl:mb-0"
             stripePriceId={plan.id}
+            callToActionType={PLAN_CALL_TO_ACTION_TYPE_CHECKOUT}
           />
         ))}
       </div>

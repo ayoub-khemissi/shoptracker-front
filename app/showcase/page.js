@@ -30,7 +30,7 @@ import Spinner from "../components/Spinner";
 import { LoadingScreen } from "../components/LoadingScreen";
 import Section from "../components/Section";
 
-const { SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
+const { PLAN_CALL_TO_ACTION_TYPE_CHECKOUT, SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY } = Constants;
 
 export default function Showcase() {
   const [input, setInput] = useState("");
@@ -125,7 +125,10 @@ export default function Showcase() {
           <CircleButton>
             <Image className="h-6 w-6" src={GoogleLogoSvg} alt="google sign" />
           </CircleButton>
-          <Plan stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY} />
+          <Plan
+            callToActionType={PLAN_CALL_TO_ACTION_TYPE_CHECKOUT}
+            stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY}
+          />
           <ButtonLink href="/checkout">Sélectionner</ButtonLink>
           <TextSeparator>Or</TextSeparator>
           <Track

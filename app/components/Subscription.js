@@ -15,7 +15,13 @@ import Button from "./Button";
 import Modal from "./Modal";
 import Title from "./Title";
 
-const { SUBSCRIPTION_STRIPE_PRICE_ID_FREE } = Constants;
+const {
+  PLAN_CALL_TO_ACTION_TYPE_NONE,
+  PLAN_CALL_TO_ACTION_TYPE_UPGRADE,
+  SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY,
+  SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY,
+} = Constants;
 
 const Subscription = ({ className = "" }) => {
   const { user, saveUser } = useAuthContext();
@@ -56,6 +62,13 @@ const Subscription = ({ className = "" }) => {
     }
   };
 
+  const isPlanUltimate = () => {
+    return (
+      subscription?.stripe_price_id === SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY ||
+      subscription?.stripe_price_id === SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY
+    );
+  };
+
   useEffect(() => {
     getSubscription();
   }, [getSubscription]);
@@ -63,7 +76,10 @@ const Subscription = ({ className = "" }) => {
   if (!user?.subscription?.stripe_price_id) {
     return (
       <div className={`flex w-full flex-wrap justify-center ${className}`}>
-        <Plan hasCallToAction={false} stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE} />
+        <Plan
+          callToActionType={PLAN_CALL_TO_ACTION_TYPE_UPGRADE}
+          stripePriceId={SUBSCRIPTION_STRIPE_PRICE_ID_FREE}
+        />
       </div>
     );
   }
@@ -74,7 +90,12 @@ const Subscription = ({ className = "" }) => {
   return (
     <>
       <div className={`flex w-full flex-wrap justify-evenly gap-4 ${className}`}>
-        <Plan hasCallToAction={false} stripePriceId={stripe_price_id} />
+        <Plan
+          callToActionType={
+            isPlanUltimate() ? PLAN_CALL_TO_ACTION_TYPE_UPGRADE : PLAN_CALL_TO_ACTION_TYPE_NONE
+          }
+          stripePriceId={stripe_price_id}
+        />
         <div className="w-80 space-y-4 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
           <TextSeparator className="w-full">Subscription</TextSeparator>
           <div className="flex w-full items-center justify-between">

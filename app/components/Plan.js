@@ -19,6 +19,9 @@ import { redirectToCheckout } from "@/modules/Stripe";
 import { useRouter } from "next/navigation";
 
 const {
+  PLAN_CALL_TO_ACTION_TYPE_NONE,
+  PLAN_CALL_TO_ACTION_TYPE_CHECKOUT,
+  PLAN_CALL_TO_ACTION_TYPE_UPGRADE,
   SUBSCRIPTION_STRIPE_PRICE_ID_FREE,
   SUBSCRIPTION_STRIPE_PRICE_ID_BASIC_MONTHLY,
   SUBSCRIPTION_STRIPE_PRICE_ID_PRO_MONTHLY,
@@ -39,7 +42,12 @@ const {
   SUBSCRIPTION_BILLING_PERIOD_FOREVER,
 } = Constants;
 
-const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
+const Plan = ({
+  className = "",
+  key,
+  callToActionType = PLAN_CALL_TO_ACTION_TYPE_CHECKOUT,
+  stripePriceId,
+}) => {
   const { user } = useAuthContext();
   const { showToast } = useToast();
   const router = useRouter();
@@ -161,6 +169,11 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
   };
 
   const checkoutSession = async () => {
+    if (!user) {
+      router.push("/register");
+      return;
+    }
+
     if (stripePriceId === SUBSCRIPTION_STRIPE_PRICE_ID_FREE) {
       router.push("/tracker");
       return;
@@ -183,15 +196,42 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
     }
   };
 
+  const getCallToActionButton = () => {
+    switch (callToActionType) {
+      case PLAN_CALL_TO_ACTION_TYPE_CHECKOUT:
+        return (
+          <div className="flex items-center justify-center">
+            <Button type={popular ? "quaternary" : "contrast"} onClick={checkoutSession}>
+              Select this plan
+            </Button>
+          </div>
+        );
+
+      case PLAN_CALL_TO_ACTION_TYPE_UPGRADE:
+        return (
+          <div className="flex items-center justify-center">
+            <ButtonLink type="quaternary" href={user ? "/pricing" : "/login"}>
+              Upgrade now ✨
+            </ButtonLink>
+          </div>
+        );
+
+      case PLAN_CALL_TO_ACTION_TYPE_NONE:
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
+      {...(key && { key: key })}
       className={`${
         popular
           ? "border-sky-300/30 bg-gradient-to-br from-sky-400/20 via-white/10 to-blue-600/20 shadow-lg shadow-sky-500/20"
           : "border-primary/30 bg-contrast/80"
       } relative w-80 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${className}`}
     >
-      {popular && hasCallToAction && (
+      {popular && callToActionType === PLAN_CALL_TO_ACTION_TYPE_CHECKOUT && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform whitespace-nowrap rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-sky-600 px-6 py-1.5 shadow-lg">
           <TextNormal className="text-xs font-semibold uppercase tracking-wider text-white">
             Most Popular ✨
@@ -217,19 +257,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
           </TextImportant>
         </div>
 
-        {hasCallToAction && (
-          <div className="flex items-center justify-center pt-2">
-            {user ? (
-              <Button type={popular ? "quaternary" : "contrast"} onClick={checkoutSession}>
-                Select this plan
-              </Button>
-            ) : (
-              <ButtonLink type={popular ? "quaternary" : "contrast"} href="/register">
-                Select this plan
-              </ButtonLink>
-            )}
-          </div>
-        )}
+        {getCallToActionButton()}
       </div>
 
       <Separator type={popular ? "contrast" : "primary"} className="opacity-20" />

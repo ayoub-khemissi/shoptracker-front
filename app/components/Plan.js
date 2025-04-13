@@ -224,15 +224,7 @@ const Plan = ({ className = "", hasCallToAction = true, stripePriceId }) => {
                 Select this plan
               </Button>
             ) : (
-              <ButtonLink
-                type="contrast"
-                href="/register"
-                className={`w-full rounded-xl py-3 font-medium transition-all duration-300 ${
-                  popular
-                    ? "bg-gradient-to-r from-sky-400 to-blue-600 text-white shadow-lg shadow-sky-500/20 hover:from-sky-500 hover:to-blue-700 hover:shadow-xl"
-                    : "border-2 border-primary hover:bg-primary hover:text-contrast"
-                }`}
-              >
+              <ButtonLink type={popular ? "quaternary" : "contrast"} href="/register">
                 Select this plan
               </ButtonLink>
             )}

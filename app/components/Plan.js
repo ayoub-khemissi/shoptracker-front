@@ -334,11 +334,10 @@ const Plan = ({
             onChange={(e) => setIsTermsAccepted(e.target.checked)}
           >
             <TextNormal className="text-sm">
-              By checking this box, I confirm that I am entitled to a 7-day free trial on my first
-              subscription and may request a full refund within this period. I agree that the
-              service will begin immediately, and I waive my right of withdrawal after the trial
-              period ends. I have read and accept the{" "}
-              <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
+              By checking this box, I confirm I am eligible for a 7-day free trial on my first
+              subscription. If I do not cancel within 7 days, I will be charged automatically. If
+              this is not my first subscription, I will be charged immediately. I have read and
+              accept the <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
               <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>.
             </TextNormal>
           </Checkbox>

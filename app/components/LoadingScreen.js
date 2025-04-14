@@ -6,7 +6,7 @@ import ShopTrackerLogo from "./ShopTrackerLogo";
 export const LoadingScreen = () => (
   <Section centerX centerY>
     <ShopTrackerLogo className="animate-pulse text-5xl" />
-    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-contrast-alt">
+    <div className="mt-2 h-2 w-full rounded-full bg-contrast-alt">
       <div
         className="h-full animate-[loading_2s_ease-in-out_infinite] bg-gradient-to-r from-secondary via-tertiary to-quaternary"
         style={{

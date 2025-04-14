@@ -51,15 +51,24 @@ export default function TermsOfSale() {
             Users may pay via credit card, PayPal, or a secure payment link provided by ShopTracker.
             <TextNormal className="text-tertiary">3.2 Recurring Payments</TextNormal>
             Subscriptions are billed on a recurring basis, either monthly or annually, depending on
-            the user's choice during registration.
+            the user's choice during subscription.
             <TextNormal className="text-tertiary">3.3 Free Trial Period</TextNormal>
-            ShopTracker may offer a free trial period to allow users to evaluate the service. Users
-            will be clearly informed if a subscription fee will be charged at the end of the trial.
-            Failure to cancel before the trial period ends will result in automatic billing. Users
-            can cancel at any time during the trial without incurring charges.
+            ShopTracker may offer a free trial period for the first subscription to allow users to
+            evaluate the service. Users who do not cancel within this period will be charged
+            automatically at the end of the trial. Failure to cancel before the trial period ends
+            will result in automatic billing. Users can cancel at any time during the trial without
+            incurring charges. If this is not the user's first subscription, the charge will occur
+            immediately.
             <TextNormal className="text-tertiary">3.4 Refund Policy</TextNormal>
-            If a subscription is canceled before its term expires, the user will receive a pro-rated
-            refund for the unused portion of the subscription.
+            Refunds are generally not provided once a subscription period has begun. However, in the
+            event of a critical technical issue that renders the service completely unusable for
+            more than 72 consecutive hours—with no temporary workaround available—users may request
+            a partial refund proportional to the time affected. Such requests must be submitted
+            within 7 days following the resolution of the issue. ShopTracker will assess each case
+            individually and reserves the right to approve or deny refund requests at its sole
+            discretion. Refunds will not be issued for issues caused by third-party services,
+            internet connectivity problems, user misuse, or early cancellations made for personal
+            reasons.
           </AccordionItem>
 
           <AccordionItem
@@ -72,8 +81,6 @@ export default function TermsOfSale() {
             monthly or annual plans.
             <TextNormal className="text-tertiary">4.2 Termination by the User</TextNormal>
             Users can terminate their subscription at any time through their account settings.
-            Terminated subscriptions will be refunded pro-rata based on the remaining unused
-            subscription period.
           </AccordionItem>
 
           <AccordionItem
@@ -110,7 +117,8 @@ export default function TermsOfSale() {
             <TextNormal className="text-tertiary">6.1 Service Availability</TextNormal>
             ShopTracker will strive to ensure continuous service availability but does not provide a
             guaranteed Service Level Agreement (SLA). Service interruptions, whether planned or
-            unplanned, do not qualify for compensation.
+            unplanned, do not qualify for compensation. However, exceptions may apply as outlined in
+            Section 3.4 (Refund Policy).
             <TextNormal className="text-tertiary">6.2 Limitations of Liability</TextNormal>
             ShopTracker disclaims any liability for:
             <ul className="ml-4 list-disc">

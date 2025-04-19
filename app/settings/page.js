@@ -547,8 +547,8 @@ export default function Settings() {
               Are you sure you want to delete your account?
             </Title>
             <TextNormal className="text-center">
-              This action cannot be undone. All of your data will be permanently deleted within 30
-              days.
+              All of your data will be permanently deleted. If you change your mind, you can cancel
+              the deletion process by logging in again within 30 days.
             </TextNormal>
             <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
               <Button

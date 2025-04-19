@@ -289,7 +289,7 @@ const Plan = ({
               `${track_disabled_max_products} products maximum in the wishlist`,
               `${track_user_max_searches_per_day} user searches per day`,
             ].map((feature, index) => (
-              <div key={index} className="group flex items-center space-x-3">
+              <div key={index} className="flex items-center space-x-3">
                 <div
                   className={`flex-shrink-0 rounded-full p-1 ${
                     popular ? "bg-gradient-to-br from-sky-400 to-blue-600" : "bg-primary/10"

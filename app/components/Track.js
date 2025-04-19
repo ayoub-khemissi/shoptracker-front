@@ -31,12 +31,18 @@ import { useRouter } from "next/navigation";
 
 const {
   TRACK_STATUS_ENABLED,
+  TRACK_STATUS_DISABLED,
+  TRACK_STATUS_INVALID,
+  TRACK_STATUS_FINISHED,
+
   TRACK_PRICE_STATUS_DECREASED,
   TRACK_PRICE_STATUS_INCREASED,
   TRACK_PRICE_STATUS_STABLE,
 
   TRACKLIST_TAB_IN_PROGRESS,
   TRACKLIST_TAB_WISHLIST,
+  TRACKLIST_TAB_INVALID,
+  TRACKLIST_TAB_FINISHED,
 } = Constants;
 
 const Track = ({ number, data }) => {
@@ -57,6 +63,25 @@ const Track = ({ number, data }) => {
     track_checks_ok,
     track_checks_ko,
   } = data;
+
+  const getCurrentTabByTrackStatus = () => {
+    switch (status_id) {
+      case TRACK_STATUS_ENABLED:
+        return TRACKLIST_TAB_IN_PROGRESS;
+
+      case TRACK_STATUS_DISABLED:
+        return TRACKLIST_TAB_WISHLIST;
+
+      case TRACK_STATUS_INVALID:
+        return TRACKLIST_TAB_INVALID;
+
+      case TRACK_STATUS_FINISHED:
+        return TRACKLIST_TAB_FINISHED;
+
+      default:
+        return TRACKLIST_TAB_IN_PROGRESS;
+    }
+  };
 
   const getTimeLeftBeforeCheck = useCallback(() => {
     const lastCheckTime = updated_at || created_at;
@@ -191,7 +216,7 @@ const Track = ({ number, data }) => {
 
     switch (response?.status) {
       case 200:
-        router.push(`/tracklist?tab=${TRACKLIST_TAB_WISHLIST}&refresh=true`);
+        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refresh=true`);
         showToast(`${name || "The track"} has been deleted.`, "info");
         break;
 
@@ -209,9 +234,7 @@ const Track = ({ number, data }) => {
 
     switch (response?.status) {
       case 200:
-        router.push(
-          `/tracklist?tab=${status_id === TRACK_STATUS_ENABLED ? TRACKLIST_TAB_WISHLIST : TRACKLIST_TAB_IN_PROGRESS}&refresh=true`,
-        );
+        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refresh=true`);
         showToast(
           `${name || "The track"} has been ${
             status_id === TRACK_STATUS_ENABLED ? "disabled" : "enabled"

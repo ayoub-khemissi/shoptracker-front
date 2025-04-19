@@ -68,6 +68,10 @@ const Plan = ({
   const [showConsentModal, setShowConsentModal] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
+  const subscription = user?.subscription;
+  const hasSubscription = !!subscription?.first_subscription_date;
+  const userStripePriceId = subscription?.stripe_price_id;
+
   const getBillingPeriodText = () => {
     switch (billingPeriod) {
       default:
@@ -183,9 +187,15 @@ const Plan = ({
 
     switch (response?.status) {
       case 200: {
-        const { sessionId } = (await response.json()).data;
+        const sessionId = (await response.json()).data;
         redirectToCheckout(sessionId);
         setShowConsentModal(false);
+        break;
+      }
+
+      case 400: {
+        const msg = (await response.json()).msg;
+        showToast(msg, "error");
         break;
       }
 
@@ -196,6 +206,10 @@ const Plan = ({
   };
 
   const checkoutSession = async () => {
+    if (userStripePriceId === stripePriceId) {
+      return;
+    }
+
     if (!user) {
       router.push("/register");
       return;
@@ -222,7 +236,11 @@ const Plan = ({
     switch (callToActionType) {
       case PLAN_CALL_TO_ACTION_TYPE_CHECKOUT:
         return (
-          <Button type={popular ? "quaternary" : "contrast"} onClick={checkoutSession}>
+          <Button
+            type={popular ? "quaternary" : "contrast"}
+            onClick={checkoutSession}
+            disabled={userStripePriceId === stripePriceId}
+          >
             {getCallToActionButtonTextForCheckout()}
           </Button>
         );
@@ -239,8 +257,6 @@ const Plan = ({
         return null;
     }
   };
-
-  const hasSubscription = !!user?.subscription?.first_subscription_date;
 
   const isFreeTrialAvailable = () => {
     return (

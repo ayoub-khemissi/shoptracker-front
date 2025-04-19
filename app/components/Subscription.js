@@ -69,7 +69,7 @@ const Subscription = ({ className = "" }) => {
     switch (response?.status) {
       case 200:
         setCancelSubscriptionModalVisible(false);
-        showToast("Your subscription has been reactivated. 🎉", "info");
+        showToast("Your subscription has been reactivated. 🎉", "success");
         await getSubscription();
         break;
 

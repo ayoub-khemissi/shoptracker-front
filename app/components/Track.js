@@ -406,7 +406,7 @@ const Track = ({ number, data }) => {
                   .map((trackCheck, index) => {
                     const isOk = "price" in trackCheck;
                     return (
-                      <div key={index} className="relative">
+                      <div key={index} className="group relative">
                         <Image
                           width={30}
                           height={30}

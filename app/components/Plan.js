@@ -12,7 +12,6 @@ import Constants from "@/utils/Constants";
 import Button from "./Button";
 import getPlanData from "@/modules/PlanData";
 import { useAuthContext } from "../contexts/AuthContext";
-import ButtonLink from "./ButtonLink";
 import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import { redirectToCheckout } from "@/modules/Stripe";
@@ -178,7 +177,6 @@ const Plan = ({
   const handleProceedToPayment = async () => {
     if (!isTermsAccepted) return;
 
-    setShowConsentModal(false);
     const response = await fetchData(`/checkout/session`, "POST", {
       stripePriceId: stripePriceId,
     });
@@ -187,8 +185,10 @@ const Plan = ({
       case 200: {
         const { sessionId } = (await response.json()).data;
         redirectToCheckout(sessionId);
+        setShowConsentModal(false);
         break;
       }
+
       default:
         showToast("Failed to create a checkout session. Please try again later.", "error");
         break;
@@ -209,30 +209,62 @@ const Plan = ({
     setShowConsentModal(true);
   };
 
+  const getCallToActionButtonTextForCheckout = () => {
+    switch (stripePriceId) {
+      case SUBSCRIPTION_STRIPE_PRICE_ID_FREE:
+        return user ? "Get started" : "Sign up now";
+      default:
+        return "Select this plan";
+    }
+  };
+
   const getCallToActionButton = () => {
     switch (callToActionType) {
       case PLAN_CALL_TO_ACTION_TYPE_CHECKOUT:
         return (
-          <div className="flex items-center justify-center">
-            <Button type={popular ? "quaternary" : "contrast"} onClick={checkoutSession}>
-              Select this plan
-            </Button>
-          </div>
+          <Button type={popular ? "quaternary" : "contrast"} onClick={checkoutSession}>
+            {getCallToActionButtonTextForCheckout()}
+          </Button>
         );
 
       case PLAN_CALL_TO_ACTION_TYPE_UPGRADE:
         return (
-          <div className="flex items-center justify-center">
-            <ButtonLink type="quaternary" href={user ? "/pricing" : "/login"}>
-              Upgrade now ✨
-            </ButtonLink>
-          </div>
+          <Button type="quaternary" onClick={() => router.push(user ? "/pricing" : "/login")}>
+            Upgrade now ✨
+          </Button>
         );
 
       case PLAN_CALL_TO_ACTION_TYPE_NONE:
       default:
         return null;
     }
+  };
+
+  const hasSubscription = !!user?.subscription?.first_subscription_date;
+
+  const isFreeTrialAvailable = () => {
+    return (
+      !hasSubscription &&
+      stripePriceId !== SUBSCRIPTION_STRIPE_PRICE_ID_FREE &&
+      callToActionType === PLAN_CALL_TO_ACTION_TYPE_CHECKOUT
+    );
+  };
+
+  const displayFreeTrialBadge = () => {
+    return !hasSubscription && callToActionType === PLAN_CALL_TO_ACTION_TYPE_CHECKOUT;
+  };
+
+  const getFreeTrialText = () => {
+    return isFreeTrialAvailable() ? (
+      <>
+        Enjoy a 7-day free trial! Just check this box to confirm you're eligible. You can cancel
+        anytime within the trial — otherwise, your subscription will start automatically.
+      </>
+    ) : (
+      <>
+        By checking this box, you agree to start your subscription now and be charged immediately.
+      </>
+    );
   };
 
   return (
@@ -252,24 +284,31 @@ const Plan = ({
           </div>
         )}
 
-        <div className="space-y-6 p-6">
-          <div className="space-y-2 text-center">
-            <Subtitle className={`text-xl font-bold ${popular ? "text-sky-300" : "text-primary"}`}>
-              {name}
-            </Subtitle>
-            <TextImportant
-              className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
+        <div className="flex flex-col items-center justify-center space-y-2 p-6 text-center">
+          <Subtitle className={`text-xl font-bold ${popular ? "text-sky-300" : "text-primary"}`}>
+            {name}
+          </Subtitle>
+          <TextImportant
+            className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
+          >
+            {formatPrice(price)}
+            <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
+          </TextImportant>
+          {displayFreeTrialBadge() && (
+            <span
+              className={`inline-block rounded-full border border-gray-200 bg-gray-50 px-2.5 py-0.5 align-middle text-xs font-medium text-contrast ${isFreeTrialAvailable() ? "visible" : "invisible"}`}
+              role="status"
+              aria-label="7-day free trial"
+              tabIndex={0}
             >
-              {formatPrice(price)}
-              <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
-            </TextImportant>
-            <TextImportant
-              className={`text-sm leading-6 ${popular ? "text-sky-100" : "text-primary/80"}`}
-            >
-              {getDescriptionByStripePriceId()}
-            </TextImportant>
-          </div>
-
+              7-day free trial
+            </span>
+          )}
+          <TextImportant
+            className={`text-sm leading-6 ${popular ? "text-sky-100" : "text-primary/80"}`}
+          >
+            {getDescriptionByStripePriceId()}
+          </TextImportant>
           {getCallToActionButton()}
         </div>
 
@@ -334,10 +373,8 @@ const Plan = ({
             onChange={(e) => setIsTermsAccepted(e.target.checked)}
           >
             <TextNormal className="text-sm">
-              By checking this box, I confirm I am eligible for a 7-day free trial on my first
-              subscription. If I do not cancel within 7 days, I will be charged automatically. If
-              this is not my first subscription, I will be charged immediately. I have read and
-              accept the <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
+              {getFreeTrialText()} I confirm I have read and accept the{" "}
+              <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
               <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>.
             </TextNormal>
           </Checkbox>

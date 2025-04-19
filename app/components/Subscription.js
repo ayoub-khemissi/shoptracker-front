@@ -84,8 +84,28 @@ const Subscription = ({ className = "" }) => {
     );
   }
 
-  const { stripe_price_id, start_date, next_payment_date, payment_method, invoice_history } =
-    user.subscription;
+  const {
+    stripe_price_id,
+    start_date,
+    next_payment_date,
+    payment_method,
+    invoice_history,
+    billing_period,
+    trial_end,
+    first_subscription_date,
+    last_subscription_date,
+  } = user.subscription;
+
+  const isTrialActive =
+    first_subscription_date &&
+    first_subscription_date === last_subscription_date &&
+    trial_end > Date.now();
+
+  const getCancelSubscriptionText = () => {
+    return isTrialActive
+      ? " and your free trial will also be canceled."
+      : ` at the end of the period: ${new Date(next_payment_date).toLocaleDateString()}.`;
+  };
 
   return (
     <>
@@ -106,9 +126,11 @@ const Subscription = ({ className = "" }) => {
           </div>
           {next_payment_date && (
             <div className="flex w-full items-center justify-between">
-              <TextNormal className="uppercase">Next payment date</TextNormal>
+              <TextNormal className="uppercase">
+                {isTrialActive ? "Trial end date" : "Next payment date"}
+              </TextNormal>
               <TextImportant className="text-right">
-                {new Date(next_payment_date).toLocaleDateString()}
+                {new Date(isTrialActive ? trial_end : next_payment_date).toLocaleDateString()}
               </TextImportant>
             </div>
           )}
@@ -116,6 +138,12 @@ const Subscription = ({ className = "" }) => {
             <div className="flex w-full items-center justify-between">
               <TextNormal className="uppercase">Payment Method</TextNormal>
               <TextImportant className="text-right">{payment_method}</TextImportant>
+            </div>
+          )}
+          {billing_period && (
+            <div className="flex w-full items-center justify-between">
+              <TextNormal className="uppercase">Billing period</TextNormal>
+              <TextImportant className="text-right">{billing_period}</TextImportant>
             </div>
           )}
           {invoice_history && invoice_history.length > 0 && (
@@ -167,8 +195,8 @@ const Subscription = ({ className = "" }) => {
             Are you sure you want to cancel your subscription?
           </Title>
           <TextNormal className="text-center">
-            This action cannot be undone. If you proceed, your subscription will be canceled. You
-            will receive a prorated refund based on the remaining time on your subscription.
+            This action cannot be undone. If you proceed, your subscription will be canceled
+            {getCancelSubscriptionText()}
           </TextNormal>
           <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
             <Button

@@ -34,6 +34,8 @@ const TABS = [
   { id: TRACK_STATUS_FINISHED, name: TRACKLIST_TAB_FINISHED },
 ];
 
+const itemsPerPage = 5;
+
 export default function Tracklist() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -42,7 +44,6 @@ export default function Tracklist() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const itemsPerPage = 5;
 
   const getTrackStatusIdByTab = (tab) => {
     const tabData = TABS.find((tabData) => tabData.name === tab);
@@ -215,18 +216,14 @@ export default function Tracklist() {
         {totalItems === 0 && (
           <div className="flex flex-col items-center justify-center space-y-6">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />
-            {tab === TRACK_STATUS_ENABLED && (
-              <>
-                <Title className="text-xl text-secondary lg:text-2xl">No track found 😕</Title>
-                <ButtonLink
-                  type="quaternary"
-                  href="/tracker"
-                  className="transform transition-all duration-300 hover:scale-105"
-                >
-                  Start Tracking Now ✨
-                </ButtonLink>
-              </>
-            )}
+            <Title className="text-xl text-secondary lg:text-2xl">No track found 😕</Title>
+            <ButtonLink
+              type="quaternary"
+              href="/tracker"
+              className="transform transition-all duration-300 hover:scale-105"
+            >
+              Start Tracking Now ✨
+            </ButtonLink>
           </div>
         )}
         {totalPages > 1 && (

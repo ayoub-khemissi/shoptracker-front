@@ -52,6 +52,7 @@ const Subscription = ({ className = "" }) => {
 
     switch (response?.status) {
       case 200:
+        setCancelSubscriptionModalVisible(false);
         showToast("Your subscription has been canceled. 👋😔", "info");
         await getSubscription();
         break;
@@ -62,11 +63,72 @@ const Subscription = ({ className = "" }) => {
     }
   };
 
+  const reactivateSubscription = async () => {
+    const response = await fetchData(`/subscription/reactivate`, "POST");
+
+    switch (response?.status) {
+      case 200:
+        setCancelSubscriptionModalVisible(false);
+        showToast("Your subscription has been reactivated. 🎉", "info");
+        await getSubscription();
+        break;
+
+      default:
+        showToast("Failed to reactivate your subscription. Please try again later.", "error");
+        break;
+    }
+  };
+
   const isPlanUltimate = () => {
     return (
       subscription?.stripe_price_id === SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_MONTHLY ||
       subscription?.stripe_price_id === SUBSCRIPTION_STRIPE_PRICE_ID_ULTIMATE_ANNUALLY
     );
+  };
+
+  const getNextPaymentBlock = () => {
+    if (next_payment_date) {
+      return (
+        <div className="flex w-full items-center justify-between">
+          <TextNormal className="uppercase">Next payment date</TextNormal>
+          <TextImportant className="text-right">
+            {new Date(next_payment_date).toLocaleDateString()}
+          </TextImportant>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  const getTrialEndBlock = () => {
+    if (isTrialActive) {
+      return (
+        <div className="flex w-full items-center justify-between">
+          <TextNormal className="uppercase">Trial end date</TextNormal>
+          <TextImportant className="text-right">
+            {new Date(trial_end).toLocaleDateString()}
+          </TextImportant>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  const getSubscriptionEndBlock = () => {
+    if (cancel_at_period_end) {
+      return (
+        <div className="flex w-full items-center justify-between">
+          <TextNormal className="uppercase">End date</TextNormal>
+          <TextImportant className="text-right">
+            {new Date(current_period_end).toLocaleDateString()}
+          </TextImportant>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -92,6 +154,8 @@ const Subscription = ({ className = "" }) => {
     invoice_history,
     billing_period,
     trial_end,
+    cancel_at_period_end,
+    current_period_end,
     first_subscription_date,
     last_subscription_date,
   } = user.subscription;
@@ -104,7 +168,7 @@ const Subscription = ({ className = "" }) => {
   const getCancelSubscriptionText = () => {
     return isTrialActive
       ? " and your free trial will also be canceled."
-      : ` at the end of the period: ${new Date(next_payment_date).toLocaleDateString()}.`;
+      : ` at the end of the period: ${new Date(next_payment_date).toLocaleDateString()}. You will continue to have access to all features until this date. If you change your mind, you can reactivate your subscription at any time before the end of the period.`;
   };
 
   return (
@@ -124,16 +188,8 @@ const Subscription = ({ className = "" }) => {
               {new Date(start_date).toLocaleDateString()}
             </TextImportant>
           </div>
-          {next_payment_date && (
-            <div className="flex w-full items-center justify-between">
-              <TextNormal className="uppercase">
-                {isTrialActive ? "Trial end date" : "Next payment date"}
-              </TextNormal>
-              <TextImportant className="text-right">
-                {new Date(isTrialActive ? trial_end : next_payment_date).toLocaleDateString()}
-              </TextImportant>
-            </div>
-          )}
+          {getTrialEndBlock()}
+          {getSubscriptionEndBlock() || getNextPaymentBlock()}
           {payment_method && (
             <div className="flex w-full items-center justify-between">
               <TextNormal className="uppercase">Payment Method</TextNormal>
@@ -176,9 +232,15 @@ const Subscription = ({ className = "" }) => {
             <>
               <div className="flex max-w-96 flex-col items-center justify-evenly space-y-5">
                 <TextSeparator className="w-full">Actions</TextSeparator>
-                <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
-                  Cancel subscription
-                </Button>
+                {cancel_at_period_end ? (
+                  <Button type="quaternary" onClick={reactivateSubscription}>
+                    Reactivate subscription
+                  </Button>
+                ) : (
+                  <Button type="secondary" onClick={() => setCancelSubscriptionModalVisible(true)}>
+                    Cancel subscription
+                  </Button>
+                )}
               </div>
             </>
           )}
@@ -195,7 +257,7 @@ const Subscription = ({ className = "" }) => {
             Are you sure you want to cancel your subscription?
           </Title>
           <TextNormal className="text-center">
-            This action cannot be undone. If you proceed, your subscription will be canceled
+            If you proceed, your subscription will be canceled
             {getCancelSubscriptionText()}
           </TextNormal>
           <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">

@@ -41,6 +41,10 @@ const Constants = {
   SETTINGS_TAB_NOTIFICATIONS: "notifications",
   SETTINGS_TAB_ACCOUNT: "account",
   SETTINGS_TAB_SUBSCRIPTION: "subscription",
+
+  DASHBOARD_TAB_REVENUE_METRICS: "revenue-metrics",
+  DASHBOARD_TAB_USER_METRICS: "user-metrics",
+  DASHBOARD_TAB_TRACK_METRICS: "track-metrics",
 };
 
 export default Constants;

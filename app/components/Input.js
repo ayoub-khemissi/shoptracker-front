@@ -33,7 +33,7 @@ const Input = ({
   const isSearch = type === "search";
 
   return (
-    <div className={`flex flex-col space-y-2 ${className}`}>
+    <div className={`flex flex-col items-start space-y-2 text-left ${className}`}>
       {labelText && (
         <label
           id={`label-${id}`}
@@ -43,7 +43,7 @@ const Input = ({
           {labelText}
         </label>
       )}
-      <div className="relative">
+      <div className="relative w-full">
         <input
           id={id}
           name={id}

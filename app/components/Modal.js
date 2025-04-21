@@ -38,12 +38,12 @@ const Modal = ({ children, isVisible = false, onClose = () => {}, isClosable = t
         <span className="sm:inline-block sm:h-screen sm:align-middle">&#8203;</span>
 
         <div
-          className="inline-block w-full transform overflow-visible rounded-xl border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-1 text-left align-bottom shadow-xl shadow-secondary/5 backdrop-blur-md transition-all duration-300 ease-out sm:my-8 sm:w-full sm:max-w-lg sm:align-middle"
+          className="inline-block max-h-[42rem] max-w-[42rem] transform overflow-visible rounded-xl border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-6 align-bottom shadow-xl shadow-secondary/5 backdrop-blur-md transition-all duration-300 ease-out sm:my-8 sm:align-middle"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="p-6">{children}</div>
+          {children}
         </div>
       </div>
     </div>

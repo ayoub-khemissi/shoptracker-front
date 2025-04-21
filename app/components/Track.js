@@ -28,6 +28,9 @@ import { fetchData } from "@/modules/Fetch";
 import { useToast } from "../contexts/ToastContext";
 import getPlanData from "@/modules/PlanData";
 import { useRouter } from "next/navigation";
+import Button from "./Button";
+import Checkbox from "./Checkbox";
+import Input from "./Input";
 
 const {
   TRACK_STATUS_ENABLED,
@@ -46,10 +49,6 @@ const {
 } = Constants;
 
 const Track = ({ number, data }) => {
-  const router = useRouter();
-  const [modalVisible, setModalVisible] = useState(false);
-  const { user } = useAuthContext();
-  const { showToast } = useToast();
   const {
     id,
     url,
@@ -57,12 +56,22 @@ const Track = ({ number, data }) => {
     description,
     initial_price,
     currency,
+    track_stock,
+    track_price,
+    track_price_threshold,
+    status_id,
     created_at,
     updated_at,
-    status_id,
     track_checks_ok,
     track_checks_ko,
   } = data;
+  const router = useRouter();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [trackStock, setTrackStock] = useState(!!track_stock);
+  const [trackPrice, setTrackPrice] = useState(!!track_price);
+  const [trackPriceThreshold, setTrackPriceThreshold] = useState(track_price_threshold);
+  const { user } = useAuthContext();
+  const { showToast } = useToast();
 
   const getCurrentTabByTrackStatus = () => {
     switch (status_id) {
@@ -258,6 +267,44 @@ const Track = ({ number, data }) => {
     }
   };
 
+  const handleTrackPrice = () => {
+    if (trackPrice && !trackStock) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
+    setTrackPrice(!trackPrice);
+  };
+
+  const handleTrackStock = () => {
+    if (trackStock && !trackPrice) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
+    setTrackStock(!trackStock);
+  };
+
+  const handleUpdateTrack = async () => {
+    const response = await fetchData("/track/update", "PATCH", {
+      id: id,
+      trackStock: !!trackStock,
+      trackPrice: !!trackPrice,
+      trackPriceThreshold: Number(trackPriceThreshold) || 0,
+    });
+
+    switch (response?.status) {
+      case 200:
+        showToast("Track updated successfully 🎉", "success");
+        setModalVisible(false);
+        break;
+
+      default:
+        showToast("An error occurred. Please try again later.", "error");
+        break;
+    }
+  };
+
   const priceStatus = getPriceStatus();
   const availability = getAvailability();
   const chartData = track_checks_ok.map((trackCheck) => ({
@@ -383,11 +430,7 @@ const Track = ({ number, data }) => {
           </div>
         )}
       </div>
-      <Modal
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        className="overflow-visible rounded-xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
-      >
+      <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
           {truncateString(name, 70)}
         </Title>
@@ -436,38 +479,69 @@ const Track = ({ number, data }) => {
             </div>
           </div>
         )}
-        <ChartContainer config={{}} className="h-full w-full">
-          <ResponsiveContainer className="h-full w-full">
-            <AreaChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} horizontal={true} />
-              <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-              <YAxis axisLine={false} tickLine={false} tickMargin={8} />
-              <Area
-                dataKey="price"
-                type="linear"
-                fill="transparent"
-                fillOpacity={0.4}
-                stroke="#B78BFF"
+        <div className="flex flex-wrap items-center justify-center">
+          <ChartContainer config={{}} className="h-full w-full pb-3">
+            <ResponsiveContainer className="h-full w-full">
+              <AreaChart accessibilityLayer data={chartData}>
+                <CartesianGrid vertical={false} horizontal={true} />
+                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+                <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+                <Area
+                  dataKey="price"
+                  type="linear"
+                  fill="transparent"
+                  fillOpacity={0.4}
+                  stroke="#B78BFF"
+                />
+                <Legend />
+                <Tooltip
+                  cursor={false}
+                  contentStyle={{
+                    backgroundColor: "#1E1E25CC",
+                    border: "none",
+                    padding: 12,
+                    margin: 0,
+                    borderRadius: 8,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+          <div className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap">
+            <div className="flex h-full w-full flex-col justify-between gap-y-4 xl:w-1/2">
+              <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
+              <Input
+                id="price-below"
+                className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
+                labelText="Notify me when price below:"
+                step={10}
+                min={0}
+                max={100000000}
+                type="number"
+                placeholder="99 €"
+                onChange={(e) => setTrackPriceThreshold(e.target.value)}
+                value={trackPriceThreshold}
+                disabled={!trackPrice}
+                required={trackPrice}
               />
-              <Legend />
-              <Tooltip
-                cursor={false}
-                contentStyle={{
-                  backgroundColor: "#1E1E25CC",
-                  border: "none",
-                  padding: 12,
-                  margin: 0,
-                  borderRadius: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
+            </div>
+            <div className="flex w-full flex-col justify-between gap-y-4 xl:w-1/2">
+              <Checkbox
+                labelText="Track restocking"
+                checked={trackStock}
+                onClick={handleTrackStock}
               />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartContainer>
+              <Button className="w-full" type="quaternary" onClick={handleUpdateTrack}>
+                Update track
+              </Button>
+            </div>
+          </div>
+        </div>
       </Modal>
     </>
   );

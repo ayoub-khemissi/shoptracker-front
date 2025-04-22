@@ -420,7 +420,6 @@ export default function Settings() {
                       type="number"
                       min={0}
                       max={999999}
-                      step={1}
                       pattern="[0-9]{6}"
                       placeholder="Enter 6-digit code"
                       value={verifyPhoneCode}

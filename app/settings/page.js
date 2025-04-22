@@ -471,17 +471,9 @@ export default function Settings() {
                 <div className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm">
                   <TextSeparator className="text-lg font-medium">Change Password</TextSeparator>
                   <form className="space-y-4" onSubmit={changePassword}>
-                    <Input
-                      id="email"
-                      className="w-full cursor-not-allowed rounded-xl border border-white/20 bg-white/5 px-4 py-3"
-                      labelText="Email"
-                      type="email"
-                      value={user?.email}
-                      disabled
-                    />
+                    <Input id="email" labelText="Email" type="email" value={user?.email} disabled />
                     <Input
                       id="newPassword"
-                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                       labelText="New Password"
                       type="password"
                       placeholder="••••••••••••"
@@ -497,7 +489,6 @@ export default function Settings() {
                     />
                     <Input
                       id="newConfirmPassword"
-                      className="w-full rounded-xl border border-white/20 bg-white/5 px-4 py-3 transition-all duration-300 hover:border-white/30 focus:border-secondary/50 focus:bg-white/10"
                       labelText="Confirm New Password"
                       type="password"
                       placeholder="••••••••••••"
@@ -525,7 +516,7 @@ export default function Settings() {
                   <TextSeparator className="text-lg font-medium text-error">
                     Danger Zone
                   </TextSeparator>
-                  <div className="flex items-center justify-center p-4">
+                  <div className="flex items-center justify-center">
                     <Button type="secondary" onClick={() => setDeleteAccountModalVisible(true)}>
                       Delete account
                     </Button>

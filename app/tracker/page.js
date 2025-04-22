@@ -82,6 +82,11 @@ export default function Tracker() {
   const handleSubmitTrack = async (e) => {
     e.preventDefault();
 
+    if (!trackPrice && !trackStock) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
     const response = await fetchData("/track", "POST", {
       url: url,
       additionalInfo: additionalInfo,
@@ -166,9 +171,8 @@ export default function Tracker() {
                   id="price-below"
                   className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
                   labelText="Notify me when price below:"
-                  step={10}
-                  min={0}
-                  max={100000000}
+                  min={1}
+                  max={10000000000000}
                   type="number"
                   placeholder="99 €"
                   onChange={(e) => setTrackPriceThreshold(e.target.value)}

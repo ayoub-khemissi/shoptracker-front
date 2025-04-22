@@ -69,7 +69,7 @@ const Track = ({ number, data }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [trackStock, setTrackStock] = useState(!!track_stock);
   const [trackPrice, setTrackPrice] = useState(!!track_price);
-  const [trackPriceThreshold, setTrackPriceThreshold] = useState(track_price_threshold);
+  const [trackPriceThreshold, setTrackPriceThreshold] = useState(track_price_threshold || "");
   const { user } = useAuthContext();
   const { showToast } = useToast();
 
@@ -285,7 +285,14 @@ const Track = ({ number, data }) => {
     setTrackStock(!trackStock);
   };
 
-  const handleUpdateTrack = async () => {
+  const handleUpdateTrack = async (e) => {
+    e.preventDefault();
+
+    if (!trackPrice && !trackStock) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
     const response = await fetchData("/track/update", "PATCH", {
       id: id,
       trackStock: !!trackStock,
@@ -512,16 +519,18 @@ const Track = ({ number, data }) => {
               </AreaChart>
             </ResponsiveContainer>
           </ChartContainer>
-          <div className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap">
+          <form
+            onSubmit={handleUpdateTrack}
+            className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap"
+          >
             <div className="flex h-full w-full flex-col justify-between gap-y-4 xl:w-1/2">
               <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
               <Input
                 id="price-below"
                 className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
                 labelText="Notify me when price below:"
-                step={10}
-                min={0}
-                max={100000000}
+                min={1}
+                max={10000000000000}
                 type="number"
                 placeholder="99 €"
                 onChange={(e) => setTrackPriceThreshold(e.target.value)}
@@ -536,11 +545,11 @@ const Track = ({ number, data }) => {
                 checked={trackStock}
                 onClick={handleTrackStock}
               />
-              <Button className="w-full" type="quaternary" onClick={handleUpdateTrack}>
+              <Button className="w-full" type="quaternary" buttonType="submit">
                 Update track
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       </Modal>
     </>

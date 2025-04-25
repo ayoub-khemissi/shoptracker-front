@@ -71,7 +71,7 @@ const Header = () => {
             <DropdownTrigger className="shrink-0 cursor-pointer">
               <Avatar
                 isBordered
-                src={"assets/img/logo-shoptracker.png"}
+                src={"/assets/img/logo-shoptracker.png"}
                 width={40}
                 height={40}
                 alt="profile picture"
@@ -134,7 +134,7 @@ const Header = () => {
               <DropdownTrigger className="shrink-0 cursor-pointer">
                 <Avatar
                   isBordered
-                  src={"assets/img/logo-shoptracker.png"}
+                  src={"/assets/img/logo-shoptracker.png"}
                   width={48}
                   height={48}
                   alt="profile picture"

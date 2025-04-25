@@ -20,6 +20,65 @@ export default function TVProduct({ params }) {
   const { interval } = params;
   const [timeLeft, setTimeLeft] = useState(0);
 
+  const getIntervalMs = (interval) => {
+    switch (interval) {
+      case "30s":
+        return 30 * 1000;
+      case "5m":
+        return 5 * 60 * 1000;
+      case "15m":
+        return 15 * 60 * 1000;
+      case "30m":
+        return 30 * 60 * 1000;
+      case "1h":
+        return 60 * 60 * 1000;
+      case "2h":
+        return 2 * 60 * 60 * 1000;
+      case "6h":
+        return 6 * 60 * 60 * 1000;
+      case "12h":
+        return 12 * 60 * 60 * 1000;
+      case "1d":
+        return 24 * 60 * 60 * 1000;
+      default:
+        return 5 * 60 * 1000;
+    }
+  };
+
+  const generateProductData = (seed) => {
+    const rng = (min, max) => {
+      const rand = Math.sin(seed + min + max) * 10000;
+      return (min + (rand - Math.floor(rand)) * (max - min + 1)).toFixed(2);
+    };
+
+    const product = {
+      name: "Ultra 4k Smart TV",
+      brand: "Celestium",
+    };
+
+    const price = rng(priceRange.min, priceRange.max);
+    const availability = rng(0, 1) > 0.5;
+
+    return {
+      ...product,
+      price,
+      availability,
+    };
+  };
+
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    const result = [];
+    if (hours > 0) result.push(`${hours}h`);
+    if (mins > 0) result.push(`${mins}m`);
+    if (secs > 0 || result.length === 0) result.push(`${secs}s`);
+
+    return result.join(" ");
+  };
+
   useEffect(() => {
     const intervalMs = getIntervalMs(interval);
     const now = new Date();
@@ -52,25 +111,16 @@ export default function TVProduct({ params }) {
   const seed = Math.floor(Date.now() / getIntervalMs(interval));
   const productData = generateProductData(seed);
 
-  const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    const result = [];
-    if (hours > 0) result.push(`${hours}h`);
-    if (mins > 0) result.push(`${mins}m`);
-    if (secs > 0 || result.length === 0) result.push(`${secs}s`);
-
-    return result.join(" ");
-  };
+  const { name, brand, price, availability } = productData;
 
   return (
     <>
-      <title>Ultra 4k Smart TV - Celestium</title>
+      <title>
+        {name} - {brand}
+      </title>
       <meta
         name="description"
-        content="Experience stunning clarity with the Ultra 4K Smart TV from Celestium. Smart features, vibrant colors, and seamless streaming—entertainment has never looked this good."
+        content={`Experience stunning clarity with the ${name} from ${brand}. Smart features, vibrant colors, and seamless streaming—entertainment has never looked this good.`}
       />
       <Section centerX centerY>
         <div className="relative w-full max-w-4xl space-y-8 rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-lg transition-all duration-300 hover:border-blue-500/30 hover:shadow-blue-500/20">
@@ -86,32 +136,30 @@ export default function TVProduct({ params }) {
             <div className="space-y-4 text-white">
               <div className="space-y-2">
                 <TextNormal className="text-2xl font-bold text-blue-300 drop-shadow-md">
-                  {productData.name}
+                  {name}
                 </TextNormal>
-                <TextNormal className="text-lg text-gray-400 opacity-80">
-                  {productData.brand}
-                </TextNormal>
+                <TextNormal className="text-lg text-gray-400 opacity-80">{brand}</TextNormal>
               </div>
               <div className="space-y-3 rounded-xl border border-white/10 bg-white/5 p-4">
                 <TextNormal className="text-4xl font-bold text-blue-200 drop-shadow-lg">
-                  {formatPrice(productData.price)}€
+                  {formatPrice(price)}€
                 </TextNormal>
                 <TextNormal
                   className={`text-lg font-semibold ${
-                    productData.inStock
-                      ? "animate-pulse text-green-400"
-                      : "text-red-400 line-through"
+                    availability ? "animate-pulse text-green-400" : "text-red-400 line-through"
                   }`}
                 >
-                  {productData.inStock ? "In Stock" : "Out of Stock"}
+                  {availability ? "In Stock" : "Out of Stock"}
                 </TextNormal>
                 <TextNormal className="rounded-md border border-blue-500/30 bg-white/10 p-2 text-sm italic text-blue-200">
                   💡 Price will vary between {priceRange.min}€ and {priceRange.max}€
                 </TextNormal>
               </div>
-              <Button type="quaternary" className="w-full" disabled={!productData.inStock}>
-                Add to Cart
-              </Button>
+              {availability && (
+                <Button type="quaternary" className="w-full" disabled={!availability}>
+                  Add to Cart
+                </Button>
+              )}
               <TextNormal className="rounded-md border border-white/10 bg-white/5 p-2 text-center text-sm opacity-60">
                 Next update in:
                 <span className="ml-2 font-bold text-blue-300">{formatTime(timeLeft)}</span>
@@ -142,51 +190,4 @@ export default function TVProduct({ params }) {
       </Section>
     </>
   );
-}
-
-// Fonctions helper
-function getIntervalMs(interval) {
-  switch (interval) {
-    case "30s":
-      return 30 * 1000;
-    case "5m":
-      return 5 * 60 * 1000;
-    case "15m":
-      return 15 * 60 * 1000;
-    case "30m":
-      return 30 * 60 * 1000;
-    case "1h":
-      return 60 * 60 * 1000;
-    case "2h":
-      return 2 * 60 * 60 * 1000;
-    case "6h":
-      return 6 * 60 * 60 * 1000;
-    case "12h":
-      return 12 * 60 * 60 * 1000;
-    case "1d":
-      return 24 * 60 * 60 * 1000;
-    default:
-      return 5 * 60 * 1000;
-  }
-}
-
-function generateProductData(seed) {
-  const rng = (min, max) => {
-    const rand = Math.sin(seed + min + max) * 10000;
-    return (min + (rand - Math.floor(rand)) * (max - min + 1)).toFixed(2);
-  };
-
-  const product = {
-    name: "Ultra 4k Smart TV",
-    brand: "Celestium",
-  };
-
-  const price = rng(priceRange.min, priceRange.max);
-  const inStock = rng(0, 1) > 0.5;
-
-  return {
-    ...product,
-    price,
-    inStock,
-  };
 }

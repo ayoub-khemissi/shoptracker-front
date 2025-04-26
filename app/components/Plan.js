@@ -389,7 +389,7 @@ const Plan = ({
             onChange={(e) => setIsTermsAccepted(e.target.checked)}
           >
             <TextNormal className="text-left text-sm">
-              {getFreeTrialText()} I confirm I have read and accept the{" "}
+              {getFreeTrialText()} You also confirm that you have read and accept the{" "}
               <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
               <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>.
             </TextNormal>

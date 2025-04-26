@@ -202,17 +202,16 @@ export default function Tracklist() {
             )}
           </Button>
         </div>
-        <div className="px-4 pb-3">
-          <Input
-            type="search"
-            placeholder="Search by product name..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1);
-            }}
-          />
-        </div>
+        <Input
+          className="pb-3"
+          type="search"
+          placeholder="Search by product name..."
+          value={searchQuery}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
         {totalItems === 0 && (
           <div className="flex flex-col items-center justify-center space-y-6">
             <GlassPanel imageSrc={EmptyBoxSvg} imageAlt="empty-box" />

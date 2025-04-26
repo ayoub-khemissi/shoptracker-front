@@ -377,8 +377,8 @@ const Plan = ({
           setIsTermsAccepted(false);
         }}
       >
-        <Title className="mb-4 text-center text-2xl font-bold">Before you proceed</Title>
-        <div className="mb-6">
+        <div className="space-y-4">
+          <Title className="text-center text-2xl font-bold">Before you proceed</Title>
           <Checkbox
             defaultSelected
             color="warning"
@@ -388,26 +388,26 @@ const Plan = ({
             isSelected={isTermsAccepted}
             onChange={(e) => setIsTermsAccepted(e.target.checked)}
           >
-            <TextNormal className="text-sm">
+            <TextNormal className="text-left text-sm">
               {getFreeTrialText()} I confirm I have read and accept the{" "}
               <UnderlineLink href="/terms-of-sale">Terms of Sale</UnderlineLink> and{" "}
               <UnderlineLink href="/terms-of-service">Terms of Service</UnderlineLink>.
             </TextNormal>
           </Checkbox>
-        </div>
-        <div className="flex justify-between gap-x-4">
-          <Button
-            type="contrast"
-            onClick={() => {
-              setShowConsentModal(false);
-              setIsTermsAccepted(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button type="quaternary" onClick={handleProceedToPayment} disabled={!isTermsAccepted}>
-            Continue to Payment
-          </Button>
+          <div className="flex justify-between gap-4">
+            <Button
+              type="contrast"
+              onClick={() => {
+                setShowConsentModal(false);
+                setIsTermsAccepted(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button type="quaternary" onClick={handleProceedToPayment} disabled={!isTermsAccepted}>
+              Continue to Payment
+            </Button>
+          </div>
         </div>
       </Modal>
     </>

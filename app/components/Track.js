@@ -438,118 +438,122 @@ const Track = ({ number, data }) => {
         )}
       </div>
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
-        <Title className="pb-4 text-center text-xl leading-none text-primary lg:text-2xl">
-          {truncateString(name, 70)}
-        </Title>
-        {track_checks.length > 0 && (
-          <div className="mb-8">
-            <Title className="mb-4 text-center text-lg leading-none text-primary">
-              Recent Checks Status
+        <div className="space-y-4">
+          <div>
+            <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
+              {truncateString(name, 70)}
             </Title>
-            <div className="relative px-6">
-              <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
-              <div className="relative flex w-full justify-between px-[15px]">
-                {track_checks
-                  .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                  .slice(0, 5)
-                  .reverse()
-                  .map((trackCheck, index) => {
-                    const isOk = "price" in trackCheck;
-                    return (
-                      <div key={index} className="group relative">
-                        <Image
-                          width={30}
-                          height={30}
-                          src={`assets/svg/icons/${
-                            isOk ? "circle-check-tertiary" : "circle-cross-error"
-                          }.svg`}
-                          alt={isOk ? "✅" : "❌"}
-                          className="opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                        />
-                        <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 transform opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                          <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
-                            <TextImportant className="text-sm font-medium text-primary">
-                              {isOk
-                                ? `✔️ ${formatPrice(trackCheck.price)}${currency} - ${getAvailabilityText(trackCheck.availability)}`
-                                : `⚠️ ${trackCheck.title}: ${trackCheck.reason}`}
-                            </TextImportant>
-                            <TextImportant className="mt-1 text-xs text-primary/70">
-                              {new Date(trackCheck.created_at).toLocaleString()}
-                            </TextImportant>
+            {track_checks.length > 0 && (
+              <div className="mb-4">
+                <Title className="mb-4 text-center text-lg leading-none text-primary">
+                  Recent Checks Status
+                </Title>
+                <div className="relative px-6">
+                  <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
+                  <div className="relative flex w-full justify-between px-[15px]">
+                    {track_checks
+                      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                      .slice(0, 5)
+                      .reverse()
+                      .map((trackCheck, index) => {
+                        const isOk = "price" in trackCheck;
+                        return (
+                          <div key={index} className="group relative">
+                            <Image
+                              width={30}
+                              height={30}
+                              src={`assets/svg/icons/${
+                                isOk ? "circle-check-tertiary" : "circle-cross-error"
+                              }.svg`}
+                              alt={isOk ? "✅" : "❌"}
+                              className="opacity-90 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                            />
+                            <div className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 transform opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                              <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
+                                <TextImportant className="text-sm font-medium text-primary">
+                                  {isOk
+                                    ? `✔️ ${formatPrice(trackCheck.price)}${currency} - ${getAvailabilityText(trackCheck.availability)}`
+                                    : `⚠️ ${trackCheck.title}: ${trackCheck.reason}`}
+                                </TextImportant>
+                                <TextImportant className="mt-1 text-xs text-primary/70">
+                                  {new Date(trackCheck.created_at).toLocaleString()}
+                                </TextImportant>
+                              </div>
+                              <div className="absolute left-1/2 top-full -mt-1 h-2 w-2 -translate-x-1/2 rotate-45 transform border-b border-r border-white/10 bg-gradient-to-br from-contrast/95 to-contrast shadow-md shadow-secondary/10"></div>
+                            </div>
                           </div>
-                          <div className="absolute left-1/2 top-full -mt-1 h-2 w-2 -translate-x-1/2 rotate-45 transform border-b border-r border-white/10 bg-gradient-to-br from-contrast/95 to-contrast shadow-md shadow-secondary/10"></div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                        );
+                      })}
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
-        <div className="flex flex-wrap items-center justify-center">
-          <ChartContainer config={{}} className="h-full w-full pb-3">
-            <ResponsiveContainer className="h-full w-full">
-              <AreaChart accessibilityLayer data={chartData}>
-                <CartesianGrid vertical={false} horizontal={true} />
-                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis axisLine={false} tickLine={false} tickMargin={8} />
-                <Area
-                  dataKey="price"
-                  type="linear"
-                  fill="transparent"
-                  fillOpacity={0.4}
-                  stroke="#B78BFF"
+          <div className="flex flex-wrap items-center justify-center">
+            <ChartContainer config={{}} className="h-full w-full pb-3">
+              <ResponsiveContainer className="h-full w-full">
+                <AreaChart accessibilityLayer data={chartData}>
+                  <CartesianGrid vertical={false} horizontal={true} />
+                  <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+                  <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+                  <Area
+                    dataKey="price"
+                    type="linear"
+                    fill="transparent"
+                    fillOpacity={0.4}
+                    stroke="#B78BFF"
+                  />
+                  <Legend />
+                  <Tooltip
+                    cursor={false}
+                    contentStyle={{
+                      backgroundColor: "#1E1E25CC",
+                      border: "none",
+                      padding: 12,
+                      margin: 0,
+                      borderRadius: 8,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+            <form
+              onSubmit={handleUpdateTrack}
+              className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap"
+            >
+              <div className="flex h-full w-full flex-col justify-between gap-y-4 xl:w-1/2">
+                <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
+                <Input
+                  id="price-below"
+                  className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
+                  labelText="Notify me when price below:"
+                  min={1}
+                  max={10000000000000}
+                  type="number"
+                  placeholder="99 €"
+                  onChange={(e) => setTrackPriceThreshold(e.target.value)}
+                  value={trackPriceThreshold}
+                  disabled={!trackPrice}
+                  required={trackPrice}
                 />
-                <Legend />
-                <Tooltip
-                  cursor={false}
-                  contentStyle={{
-                    backgroundColor: "#1E1E25CC",
-                    border: "none",
-                    padding: 12,
-                    margin: 0,
-                    borderRadius: 8,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
+              </div>
+              <div className="flex w-full flex-col justify-between gap-y-4 xl:w-1/2">
+                <Checkbox
+                  labelText="Track restocking"
+                  checked={trackStock}
+                  onClick={handleTrackStock}
                 />
-              </AreaChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-          <form
-            onSubmit={handleUpdateTrack}
-            className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap"
-          >
-            <div className="flex h-full w-full flex-col justify-between gap-y-4 xl:w-1/2">
-              <Checkbox labelText="Track price" checked={trackPrice} onClick={handleTrackPrice} />
-              <Input
-                id="price-below"
-                className={`transition-all duration-300 ${trackPrice ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-50"}`}
-                labelText="Notify me when price below:"
-                min={1}
-                max={10000000000000}
-                type="number"
-                placeholder="99 €"
-                onChange={(e) => setTrackPriceThreshold(e.target.value)}
-                value={trackPriceThreshold}
-                disabled={!trackPrice}
-                required={trackPrice}
-              />
-            </div>
-            <div className="flex w-full flex-col justify-between gap-y-4 xl:w-1/2">
-              <Checkbox
-                labelText="Track restocking"
-                checked={trackStock}
-                onClick={handleTrackStock}
-              />
-              <Button className="w-full" type="quaternary" buttonType="submit">
-                Update track
-              </Button>
-            </div>
-          </form>
+                <Button className="w-full" type="quaternary" buttonType="submit">
+                  Update track
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </Modal>
     </>

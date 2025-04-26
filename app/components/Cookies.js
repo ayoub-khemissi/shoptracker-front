@@ -34,13 +34,13 @@ const Cookies = () => {
       }}
       isClosable={false}
     >
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="space-y-4">
         <Title className="text-center text-2xl">
           We Only Use
           <br />
           <span className="text-secondary">Essential Cookies</span>!
         </Title>
-        <TextNormal className="py-4">
+        <TextNormal>
           At ShopTracker, your privacy is our priority. We only use cookies necessary for secure
           login, navigation, and maintaining your preferences.
           <br />

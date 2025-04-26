@@ -184,21 +184,23 @@ export default function Showcase() {
               setModalVisible(false);
             }}
           >
-            <Title className="pb-4 text-center text-2xl lg:text-4xl">
-              Personnalise
-              <br />
-              <span className="text-secondary">ton abonnement</span> !
-            </Title>
-            <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
-              <Button
-                type="contrast"
-                onClick={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Retour
-              </Button>
-              <Button type="primary">Valider</Button>
+            <div className="space-y-4">
+              <Title className="pb-4 text-center text-2xl lg:text-4xl">
+                Personnalise
+                <br />
+                <span className="text-secondary">ton abonnement</span> !
+              </Title>
+              <div className="flex w-full flex-wrap items-center justify-center gap-4 md:justify-between">
+                <Button
+                  type="contrast"
+                  onClick={() => {
+                    setModalVisible(false);
+                  }}
+                >
+                  Retour
+                </Button>
+                <Button type="primary">Valider</Button>
+              </div>
             </div>
           </Modal>
           <Spinner />

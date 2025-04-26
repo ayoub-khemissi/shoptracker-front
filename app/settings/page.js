@@ -532,7 +532,7 @@ export default function Settings() {
           }}
           className="rounded-2xl border border-white/10 bg-contrast/95 shadow-2xl backdrop-blur-lg"
         >
-          <div className="space-y-6 p-4">
+          <div className="space-y-4">
             <Title className="text-center text-xl text-error">
               Are you sure you want to delete your account?
             </Title>

@@ -439,7 +439,7 @@ const Track = ({ number, data }) => {
       </div>
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <div className="space-y-4">
-          <div>
+          <div className="space-y-4">
             <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
               {truncateString(name, 70)}
             </Title>

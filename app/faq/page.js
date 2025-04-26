@@ -45,10 +45,10 @@ export default function Faq() {
             aria-label="Which e-commerce sites are supported?"
             title="3. Which e-commerce sites are supported?"
           >
-            ShopTracker supports a very large variety of e-commerce sites. However, it is not
-            compatible with all sites, especially those that display their products in a modal while
-            showing other products in the background or when all products are displayed on the same
-            page.
+            ShopTracker supports a very large variety of e-commerce sites. However, some sites may
+            not be compatible with ShopTracker due to their structure or the way they display their
+            products. Some other sites may simply block ShopTracker's requests. Make sure to check
+            the compatibility of the site by tracking a product before engaging to a subscription.
           </AccordionItem>
 
           <AccordionItem

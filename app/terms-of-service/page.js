@@ -157,28 +157,38 @@ export default function TermsOfService() {
 
           <AccordionItem
             key="10"
-            aria-label="Governing Law and International Use"
-            title="10. Governing Law and International Use"
+            aria-label="Service compatibility"
+            title="10. Service compatibility"
           >
-            <TextNormal className="text-tertiary">10.1 Jurisdiction</TextNormal>
+            ShopTracker is not responsible for the compatibility of websites with the platform.
+            Users are responsible for ensuring that the website they are tracking is compatible with
+            ShopTracker before engaging to a subscription.
+          </AccordionItem>
+
+          <AccordionItem
+            key="11"
+            aria-label="Governing Law and International Use"
+            title="11. Governing Law and International Use"
+          >
+            <TextNormal className="text-tertiary">11.1 Jurisdiction</TextNormal>
             These ToS are governed by the laws of France. Any disputes will be resolved in the
             competent courts where ShopTracker's headquarters are located.
-            <TextNormal className="text-tertiary">10.2 International Use</TextNormal>
+            <TextNormal className="text-tertiary">11.2 International Use</TextNormal>
             Users outside the European Union must ensure compliance with local laws. ShopTracker
             disclaims liability for any violations arising from use in non-EU regions.
           </AccordionItem>
 
           <AccordionItem
-            key="11"
+            key="12"
             aria-label="Amendments to the Terms"
-            title="11. Amendments to the Terms"
+            title="12. Amendments to the Terms"
           >
             ShopTracker reserves the right to update these ToS at any time. Users will be notified
             of significant changes by email or via the platform. Continued use of the service
             constitutes acceptance of the revised terms.
           </AccordionItem>
 
-          <AccordionItem key="12" aria-label="Contact Information" title="12. Contact Information">
+          <AccordionItem key="13" aria-label="Contact Information" title="13. Contact Information">
             For questions or concerns regarding these Terms of Service, users may contact
             ShopTracker via the{" "}
             <UnderlineLink href="/contact?subject=terms-of-service">Contact page</UnderlineLink>.

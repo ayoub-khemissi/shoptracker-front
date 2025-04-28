@@ -33,6 +33,7 @@ export default function Settings() {
   const [alertSms, setAlertSms] = useState(!!user?.alert_sms);
   const [alertBrowser, setAlertBrowser] = useState(!!user?.alert_browser);
   const [alertPush, setAlertPush] = useState(!!user?.alert_push);
+  const [marketingEmail, setMarketingEmail] = useState(!!user?.marketing_email);
   const [alertBrowserSubscription, setAlertBrowserSubscription] = useState(
     user?.alert_browser_subscription || null,
   );
@@ -230,6 +231,32 @@ export default function Settings() {
 
       default:
         showToast("Failed to change password. Please try again later.", "error");
+        break;
+    }
+  };
+
+  const handleUpdateMarketingEmail = async (e) => {
+    e.preventDefault();
+
+    const response = await fetchData("/update/marketing/email", "PATCH", {
+      enabled: marketingEmail,
+    });
+
+    switch (response?.status) {
+      case 200:
+        user.marketing_email = marketingEmail;
+        saveUser(user);
+        showToast("Marketing preferences updated successfully 🎉", "success");
+        break;
+
+      case 400:
+      case 401:
+        showToast("Invalid token, please try again.", "error");
+        break;
+
+      case 404:
+      default:
+        showToast("Failed to update marketing preferences. Please try again later.", "error");
         break;
     }
   };
@@ -453,6 +480,34 @@ export default function Settings() {
                           </Button>
                         </>
                       )}
+                    </div>
+                  </div>
+                </form>
+                <form
+                  onSubmit={handleUpdateMarketingEmail}
+                  className="w-full max-w-md space-y-6 rounded-xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-sm"
+                >
+                  <TextSeparator className="text-lg font-medium">
+                    Marketing preferences
+                  </TextSeparator>
+                  <div className="space-y-4">
+                    <div
+                      className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                      onClick={() => setMarketingEmail(!marketingEmail)}
+                    >
+                      <TextLabel className="transition-colors duration-300 group-hover:text-secondary">
+                        In your mailbox
+                      </TextLabel>
+                      <Switch checked={marketingEmail} opacityWhenOff />
+                    </div>
+                    <div className="flex w-full flex-wrap items-center justify-center gap-4">
+                      <Button
+                        type="quaternary"
+                        buttonType="submit"
+                        className="transition-all duration-300 hover:shadow-lg hover:shadow-secondary/20"
+                      >
+                        Save
+                      </Button>
                     </div>
                   </div>
                 </form>

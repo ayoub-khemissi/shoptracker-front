@@ -45,6 +45,8 @@ const Constants = {
   DASHBOARD_TAB_REVENUE_METRICS: "revenue-metrics",
   DASHBOARD_TAB_USER_METRICS: "user-metrics",
   DASHBOARD_TAB_TRACK_METRICS: "track-metrics",
+
+  URL_PARAMS_TO_SAVE: ["promo"],
 };
 
 export default Constants;

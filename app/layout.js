@@ -4,6 +4,7 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 import { AuthProvider } from "./contexts/AuthContext";
 import Header from "./components/Header";
+import UrlParamsSaver from "./components/UrlParamsSaver";
 import Footer from "./components/Footer";
 import Cookies from "./components/Cookies";
 import { ToastProvider } from "./contexts/ToastContext";
@@ -126,6 +127,7 @@ export default function RootLayout({ children }) {
         className={`${montserrat.className} flex min-h-screen flex-col bg-contrast text-primary dark`}
       >
         <SessionProvider>
+          <UrlParamsSaver />
           <AuthProvider>
             <ToastProvider>
               <Suspense fallback={<LoadingScreen />}>

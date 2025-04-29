@@ -62,8 +62,9 @@ const Track = ({ number, data }) => {
     status_id,
     created_at,
     updated_at,
-    track_checks_ok,
-    track_checks_ko,
+    track_checks_chart,
+    track_checks_ok_recent,
+    track_checks_ko_recent,
   } = data;
   const router = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
@@ -105,7 +106,7 @@ const Track = ({ number, data }) => {
   const [timeLeftBeforeCheck, setTimeLeftBeforeCheck] = useState(getTimeLeftBeforeCheck());
 
   const formatFullPrice = () => {
-    const price = track_checks_ok[track_checks_ok.length - 1]?.price || initial_price;
+    const price = track_checks_chart[track_checks_chart.length - 1]?.price || initial_price;
 
     if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
       return (
@@ -126,8 +127,8 @@ const Track = ({ number, data }) => {
   };
 
   const getPriceStatus = () => {
-    if (track_checks_ok.length > 0) {
-      const { price: lastTrackCheckPrice } = track_checks_ok[track_checks_ok.length - 1];
+    if (track_checks_chart.length > 0) {
+      const { price: lastTrackCheckPrice } = track_checks_chart[track_checks_chart.length - 1];
 
       if (lastTrackCheckPrice === initial_price) {
         return TRACK_PRICE_STATUS_STABLE;
@@ -142,7 +143,7 @@ const Track = ({ number, data }) => {
   };
 
   const getAvailability = () => {
-    return !!track_checks_ok[track_checks_ok.length - 1]?.availability;
+    return !!track_checks_chart[track_checks_chart.length - 1]?.availability;
   };
 
   const getPriceStatusSvgName = (priceStatus) => {
@@ -314,7 +315,7 @@ const Track = ({ number, data }) => {
 
   const priceStatus = getPriceStatus();
   const availability = getAvailability();
-  const chartData = track_checks_ok.map((trackCheck) => ({
+  const chartData = track_checks_chart.map((trackCheck) => ({
     date: new Date(trackCheck.created_at).toLocaleString(),
     price: trackCheck.price,
   }));
@@ -327,7 +328,7 @@ const Track = ({ number, data }) => {
     return () => clearInterval(timeLeftBeforeCheckInterval);
   }, [getTimeLeftBeforeCheck]);
 
-  const track_checks = [...track_checks_ok, ...track_checks_ko];
+  const track_checks_recent = [...track_checks_ok_recent, ...track_checks_ko_recent];
 
   return (
     <>
@@ -443,7 +444,7 @@ const Track = ({ number, data }) => {
             <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
               {truncateString(name, 70)}
             </Title>
-            {track_checks.length > 0 && (
+            {track_checks_chart.length > 0 && (
               <div className="mb-4">
                 <Title className="mb-4 text-center text-lg leading-none text-primary">
                   Recent Checks Status
@@ -451,8 +452,8 @@ const Track = ({ number, data }) => {
                 <div className="relative px-6">
                   <div className="absolute left-1/2 top-1/2 h-0.5 w-[calc(100%-12px)] -translate-x-1/2 -translate-y-1/2 transform bg-white/10"></div>
                   <div className="relative flex w-full justify-between px-[15px]">
-                    {track_checks
-                      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    {track_checks_recent
+                      .sort((a, b) => b.created_at - a.created_at)
                       .slice(0, 5)
                       .reverse()
                       .map((trackCheck, index) => {

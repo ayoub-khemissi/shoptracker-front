@@ -144,7 +144,7 @@ export default function Showcase() {
               created_at: 1721682189515,
               updated_at: 1721682389515,
               status_id: 1,
-              track_checks_ok: [
+              track_checks_chart: [
                 {
                   id: 1,
                   price: 88.99,
@@ -158,12 +158,26 @@ export default function Showcase() {
                   created_at: 1820744025719,
                 },
               ],
-              track_checks_ko: [
+              track_checks_ko_recent: [
                 {
                   id: 1,
                   title: "The Price is Missing",
                   reason: "The product's price is not shown on the page.",
                   created_at: 1820744035984,
+                },
+              ],
+              track_checks_ok_recent: [
+                {
+                  id: 1,
+                  price: 88.99,
+                  availability: true,
+                  created_at: 1820744029719,
+                },
+                {
+                  id: 2,
+                  price: 98.99,
+                  availability: true,
+                  created_at: 1820744025719,
                 },
               ],
             }}

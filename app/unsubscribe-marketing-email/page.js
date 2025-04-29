@@ -14,12 +14,12 @@ export default function UnsubscribeMarketingEmail() {
   const { user, saveUser } = useAuthContext();
   const router = useRouter();
 
-  const token = searchParams.get("token") || null;
+  const tokenParam = searchParams.get("token") || null;
 
   useEffect(() => {
     const handleUpdateMarketingEmail = async () => {
       const response = await fetchData("/update/marketing/email", "PATCH", {
-        token: token,
+        token: tokenParam,
         enabled: false,
       });
 
@@ -48,7 +48,7 @@ export default function UnsubscribeMarketingEmail() {
     };
 
     handleUpdateMarketingEmail();
-  }, [token, router, user, saveUser, showToast]);
+  }, [tokenParam, router, user, saveUser, showToast]);
 
   return (
     <>

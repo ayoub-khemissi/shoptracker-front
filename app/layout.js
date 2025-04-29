@@ -128,7 +128,6 @@ export default function RootLayout({ children }) {
         className={`${montserrat.className} flex min-h-screen flex-col bg-contrast text-primary dark`}
       >
         <SessionProvider>
-          <UrlParamsSaver />
           <AuthProvider>
             <ToastProvider>
               <Suspense fallback={<LoadingScreen />}>
@@ -140,6 +139,7 @@ export default function RootLayout({ children }) {
                   <InstallPrompt />
                   <BrowserNotificationPrompt />
                   <ScrollToTop />
+                  <UrlParamsSaver />
                 </ReCaptchaProvider>
               </Suspense>
             </ToastProvider>

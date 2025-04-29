@@ -15,6 +15,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { LoadingScreen } from "./components/LoadingScreen";
 import InstallPrompt from "./components/InstallPrompt";
 import BrowserNotificationPrompt from "./components/BrowserNotificationPrompt";
+import ScrollToTop from "./components/ScrollToTop";
 import { ReCaptchaProvider } from "next-recaptcha-v3";
 import { NEXT_PUBLIC_RECAPTCHA_SITE_KEY } from "@/utils/Config";
 
@@ -138,6 +139,7 @@ export default function RootLayout({ children }) {
                   <Cookies />
                   <InstallPrompt />
                   <BrowserNotificationPrompt />
+                  <ScrollToTop />
                 </ReCaptchaProvider>
               </Suspense>
             </ToastProvider>

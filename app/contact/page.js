@@ -80,60 +80,67 @@ export default function Contact() {
   };
 
   return (
-    <Section>
-      <div className="flex items-center justify-center pb-3">
-        <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
-          📩 Contact Us
-          <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
-        </Title>
-      </div>
-      <div className="flex items-center justify-center">
-        <div className="flex w-full max-w-md flex-col items-center space-y-6">
-          <form className="w-full space-y-4" onSubmit={handleSubmit}>
-            <Input
-              id="email"
-              labelText="Email"
-              type="email"
-              placeholder="xyz@mail.com"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <Input
-              id="subject"
-              labelText="Subject"
-              type="text"
-              placeholder="Message subject"
-              value={subject}
-              required
-              onChange={(e) => setSubject(e.target.value)}
-            />
-
-            <Textarea
-              id="content"
-              labelText="Message"
-              placeholder="Describe your request in detail..."
-              value={content}
-              required
-              rows={6}
-              onChange={(e) => setContent(e.target.value)}
-            />
-
-            <div className="flex w-full items-center justify-between">
-              <Button type="primary" onClick={router.back}>
-                Back
-              </Button>
-
-              <Button type="quaternary" buttonType="submit">
-                Send
-              </Button>
-            </div>
-
-            <RecaptchaLinks />
-          </form>
+    <>
+      <title>Contact | ShopTracker</title>
+      <meta
+        name="description"
+        content="Contact page for ShopTracker. This page allows users to contact ShopTracker."
+      />
+      <Section>
+        <div className="flex items-center justify-center pb-3">
+          <Title className="relative inline-block pb-2 text-3xl lg:text-4xl">
+            📩 Contact Us
+            <div className="absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-secondary via-tertiary to-quaternary"></div>
+          </Title>
         </div>
-      </div>
-    </Section>
+        <div className="flex items-center justify-center">
+          <div className="flex w-full max-w-md flex-col items-center space-y-6">
+            <form className="w-full space-y-4" onSubmit={handleSubmit}>
+              <Input
+                id="email"
+                labelText="Email"
+                type="email"
+                placeholder="xyz@mail.com"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <Input
+                id="subject"
+                labelText="Subject"
+                type="text"
+                placeholder="Message subject"
+                value={subject}
+                required
+                onChange={(e) => setSubject(e.target.value)}
+              />
+
+              <Textarea
+                id="content"
+                labelText="Message"
+                placeholder="Describe your request in detail..."
+                value={content}
+                required
+                rows={6}
+                onChange={(e) => setContent(e.target.value)}
+              />
+
+              <div className="flex w-full items-center justify-between">
+                <Button type="primary" onClick={router.back}>
+                  Back
+                </Button>
+
+                <Button type="quaternary" buttonType="submit">
+                  Send
+                </Button>
+              </div>
+
+              <RecaptchaLinks />
+            </form>
+          </div>
+        </div>
+      </Section>
+    </>
   );
 }

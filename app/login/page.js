@@ -126,7 +126,7 @@ export default function Login() {
 
   return (
     <>
-      <title>Sign In</title>
+      <title>Sign In | ShopTracker</title>
       <meta
         name="description"
         content="Sign in page for ShopTracker. This page allows users to log in to their account."

@@ -39,7 +39,7 @@ export default function Showcase() {
 
   return (
     <>
-      <title>Showcase</title>
+      <title>Showcase | ShopTracker</title>
       <meta
         name="description"
         content="Showcase page for ShopTracker. This page displays the different components and features available in the application."

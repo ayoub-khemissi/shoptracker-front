@@ -52,7 +52,7 @@ export default function UnsubscribeMarketingEmail() {
 
   return (
     <>
-      <title>Unsubscribe</title>
+      <title>Unsubscribe | ShopTracker</title>
       <meta
         name="description"
         content="Unsubscribe from ShopTracker. This page allows you to unsubscribe from ShopTracker."

@@ -9,7 +9,7 @@ import Section from "../components/Section";
 export default function PrivacyPolicy() {
   return (
     <>
-      <title>Privacy Policy</title>
+      <title>Privacy Policy | ShopTracker</title>
       <meta
         name="description"
         content="Privacy policy page for ShopTracker. This page explains how we collect, use, and protect your personal data."

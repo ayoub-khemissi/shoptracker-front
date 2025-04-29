@@ -9,7 +9,7 @@ import Section from "../components/Section";
 export default function TermsOfSale() {
   return (
     <>
-      <title>Terms of Sale</title>
+      <title>Terms of Sale | ShopTracker</title>
       <meta
         name="description"
         content="Terms of Sale page for ShopTracker. This page provides information about the purchase of services from ShopTracker, including payment terms, refund policy, and other important details."

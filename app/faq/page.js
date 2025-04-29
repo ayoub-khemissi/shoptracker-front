@@ -9,7 +9,7 @@ import Section from "../components/Section";
 export default function Faq() {
   return (
     <>
-      <title>Frequently Asked Questions</title>
+      <title>Frequently Asked Questions | ShopTracker</title>
       <meta
         name="description"
         content="Frequently Asked Questions (Q&A) page for ShopTracker. This page provides answers to common questions about ShopTracker and how it works."

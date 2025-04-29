@@ -263,7 +263,7 @@ export default function Settings() {
 
   return (
     <>
-      <title>Settings</title>
+      <title>Settings | ShopTracker</title>
       <meta
         name="description"
         content="Settings page for ShopTracker. This page allows users to edit their account settings."

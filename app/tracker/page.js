@@ -121,7 +121,7 @@ export default function Tracker() {
 
   return (
     <>
-      <title>Tracker</title>
+      <title>Tracker | ShopTracker</title>
       <meta
         name="description"
         content="Tracker page for ShopTracker. This page allows users to track products by entering the URL of the product page from e-commerce websites."

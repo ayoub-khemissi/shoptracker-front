@@ -145,7 +145,7 @@ export default function Register() {
 
   return (
     <>
-      <title>Sign Up</title>
+      <title>Sign Up | ShopTracker</title>
       <meta
         name="description"
         content="Sign up page for ShopTracker. This page allows users to create an account and sign up for the service."

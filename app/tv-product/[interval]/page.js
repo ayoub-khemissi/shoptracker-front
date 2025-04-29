@@ -116,7 +116,7 @@ export default function TVProduct({ params }) {
   return (
     <>
       <title>
-        {name} - {brand}
+        {name} - {brand} | ShopTracker
       </title>
       <meta
         name="description"

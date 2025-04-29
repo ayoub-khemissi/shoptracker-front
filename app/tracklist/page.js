@@ -131,7 +131,7 @@ export default function Tracklist() {
 
   return (
     <>
-      <title>Tracklist</title>
+      <title>Tracklist | ShopTracker</title>
       <meta
         name="description"
         content="Tracklist page for ShopTracker. This page displays the tracklist of products being tracked."

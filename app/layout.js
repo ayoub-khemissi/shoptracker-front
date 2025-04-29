@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth text-balance">
       <head>
-        <title>ShopTracker - Track Restocks & Price Drops Online</title>
+        <title>ShopTracker | Track Restocks & Price Drops Online</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"

@@ -52,6 +52,11 @@ export default function Home() {
 
   return (
     <>
+      <title>ShopTracker | Track Restocks & Price Drops Online</title>
+      <meta
+        name="description"
+        content="Easily track restocks and price drops of products from almost any e-commerce platform. Get instant alerts and never miss a deal again!"
+      />
       <Section id="top" centerY>
         <Title className="pb-4 text-center text-2xl lg:text-4xl">
           Get an alert on the availability and price drop

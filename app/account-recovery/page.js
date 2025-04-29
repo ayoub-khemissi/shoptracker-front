@@ -146,7 +146,7 @@ export default function AccountRecovery() {
 
   return (
     <>
-      <title>Account Recovery</title>
+      <title>Account Recovery | ShopTracker</title>
       <meta
         name="description"
         content="Account recovery page for ShopTracker. This page allows users to reset their password or recover their account."

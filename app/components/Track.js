@@ -440,13 +440,45 @@ const Track = ({ number, data }) => {
       </div>
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <div className="space-y-4">
-          <div className="space-y-4">
-            <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
-              {truncateString(name, 70)}
-            </Title>
-            {track_checks_chart.length > 0 && (
-              <div className="mb-4">
-                <Title className="mb-4 text-center text-lg leading-none text-primary">
+          <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
+            {truncateString(name, 70)}
+          </Title>
+          <div className="flex flex-wrap items-center justify-center space-y-4">
+            <ChartContainer config={{}} className="h-full w-full">
+              <ResponsiveContainer className="h-full w-full">
+                <AreaChart accessibilityLayer data={chartData}>
+                  <CartesianGrid vertical={false} horizontal={true} />
+                  <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+                  <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+                  <Area
+                    dataKey="price"
+                    type="linear"
+                    fill="transparent"
+                    fillOpacity={0.4}
+                    stroke="#B78BFF"
+                  />
+                  <Legend />
+                  <Tooltip
+                    cursor={false}
+                    contentStyle={{
+                      backgroundColor: "#1E1E25CC",
+                      border: "none",
+                      padding: 12,
+                      margin: 0,
+                      borderRadius: 8,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+            {track_checks_recent.length > 0 && (
+              <div className="w-full space-y-4">
+                <Title className="text-center text-lg leading-none text-primary">
                   Recent Checks Status
                 </Title>
                 <div className="relative px-6">
@@ -489,40 +521,6 @@ const Track = ({ number, data }) => {
                 </div>
               </div>
             )}
-          </div>
-          <div className="flex flex-wrap items-center justify-center">
-            <ChartContainer config={{}} className="h-full w-full pb-3">
-              <ResponsiveContainer className="h-full w-full">
-                <AreaChart accessibilityLayer data={chartData}>
-                  <CartesianGrid vertical={false} horizontal={true} />
-                  <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis axisLine={false} tickLine={false} tickMargin={8} />
-                  <Area
-                    dataKey="price"
-                    type="linear"
-                    fill="transparent"
-                    fillOpacity={0.4}
-                    stroke="#B78BFF"
-                  />
-                  <Legend />
-                  <Tooltip
-                    cursor={false}
-                    contentStyle={{
-                      backgroundColor: "#1E1E25CC",
-                      border: "none",
-                      padding: 12,
-                      margin: 0,
-                      borderRadius: 8,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </ChartContainer>
             <form
               onSubmit={handleUpdateTrack}
               className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap"

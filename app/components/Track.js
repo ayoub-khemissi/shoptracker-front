@@ -454,12 +454,17 @@ const Track = ({ number, data }) => {
                   </TextImportant>
                 </>
               ) : (
-                <>
-                  <div className="flex items-center justify-center text-2xl">😕</div>
-                  <TextImportant className="text-center text-sm leading-4 text-primary/80">
-                    No data available
-                  </TextImportant>
-                </>
+                <div className="flex flex-col items-center justify-center space-y-3">
+                  <div className="flex items-center justify-center gap-x-2">
+                    <div className="flex items-center justify-center text-2xl">😕</div>
+                    <TextImportant className="text-center text-sm leading-4 text-primary/80">
+                      No data available
+                    </TextImportant>
+                  </div>
+                  <Button type="quaternary" onClick={startPauseTrack}>
+                    {status_id === TRACK_STATUS_INVALID ? "Restart the track" : "Start the track"}
+                  </Button>
+                </div>
               )}
             </div>
           </div>

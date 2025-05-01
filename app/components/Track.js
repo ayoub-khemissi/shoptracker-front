@@ -434,7 +434,33 @@ const Track = ({ number, data }) => {
           </InvisibleButton>
         ) : (
           <div className="flex flex-1 items-center justify-center bg-white/5 p-8">
-            <Spinner className="h-10 w-10 opacity-80" />
+            <div className="flex items-center justify-center space-x-3 md:col-span-2">
+              {status_id === TRACK_STATUS_ENABLED ? (
+                <>
+                  <div className="flex items-center justify-center">
+                    {timeLeftBeforeCheck > 0 ? (
+                      <Image
+                        className="h-6 w-6 opacity-80"
+                        src={ClockPrimarySvg}
+                        alt="next track check"
+                      />
+                    ) : (
+                      <Spinner className="h-6 w-6" />
+                    )}
+                  </div>
+                  <TextImportant className="text-center text-sm leading-4 text-primary/80">
+                    {convertMillisecondsToText(timeLeftBeforeCheck)}
+                  </TextImportant>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-center text-2xl">😕</div>
+                  <TextImportant className="text-center text-sm leading-4 text-primary/80">
+                    No data available
+                  </TextImportant>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>

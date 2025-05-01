@@ -226,7 +226,7 @@ const Track = ({ number, data }) => {
 
     switch (response?.status) {
       case 200:
-        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refresh=true`);
+        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refreshTime=${Date.now()}`);
         showToast(`${name || "The track"} has been deleted.`, "info");
         break;
 
@@ -244,7 +244,7 @@ const Track = ({ number, data }) => {
 
     switch (response?.status) {
       case 200:
-        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refresh=true`);
+        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refreshTime=${Date.now()}`);
         showToast(
           `${name || "The track"} has been ${
             status_id === TRACK_STATUS_ENABLED ? "disabled" : "enabled"
@@ -268,25 +268,7 @@ const Track = ({ number, data }) => {
     }
   };
 
-  const handleTrackPrice = () => {
-    if (trackPrice && !trackStock) {
-      showToast("You must choose at least one tracking option.", "error");
-      return;
-    }
-
-    setTrackPrice(!trackPrice);
-  };
-
-  const handleTrackStock = () => {
-    if (trackStock && !trackPrice) {
-      showToast("You must choose at least one tracking option.", "error");
-      return;
-    }
-
-    setTrackStock(!trackStock);
-  };
-
-  const handleUpdateTrack = async (e) => {
+  const updateTrack = async (e) => {
     e.preventDefault();
 
     if (!trackPrice && !trackStock) {
@@ -305,12 +287,31 @@ const Track = ({ number, data }) => {
       case 200:
         showToast("Track updated successfully 🎉", "success");
         setModalVisible(false);
+        router.push(`/tracklist?tab=${getCurrentTabByTrackStatus()}&refreshTime=${Date.now()}`);
         break;
 
       default:
         showToast("An error occurred. Please try again later.", "error");
         break;
     }
+  };
+
+  const handleTrackPrice = () => {
+    if (trackPrice && !trackStock) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
+    setTrackPrice(!trackPrice);
+  };
+
+  const handleTrackStock = () => {
+    if (trackStock && !trackPrice) {
+      showToast("You must choose at least one tracking option.", "error");
+      return;
+    }
+
+    setTrackStock(!trackStock);
   };
 
   const priceStatus = getPriceStatus();
@@ -553,7 +554,7 @@ const Track = ({ number, data }) => {
               </div>
             )}
             <form
-              onSubmit={handleUpdateTrack}
+              onSubmit={updateTrack}
               className="flex w-full flex-wrap justify-between gap-4 sm:flex-nowrap"
             >
               <div className="flex h-full w-full flex-col justify-between gap-y-4 xl:w-1/2">

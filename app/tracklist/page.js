@@ -39,7 +39,7 @@ const itemsPerPage = 5;
 export default function Tracklist() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [, setRefresh] = useState(false);
+  const [, setRefreshTime] = useState(null);
   const [tracklist, setTracklist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,13 +103,13 @@ export default function Tracklist() {
   }, []);
 
   useEffect(() => {
-    const isRefreshing = searchParams.get("refresh") === "true";
+    const isRefreshing = searchParams.get("refreshTime");
 
     if (isRefreshing) {
       fetchTracklist();
-      setRefresh(true);
+      setRefreshTime(isRefreshing);
     } else {
-      setRefresh(false);
+      setRefreshTime(null);
     }
   }, [searchParams]);
 

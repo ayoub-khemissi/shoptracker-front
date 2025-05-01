@@ -370,7 +370,7 @@ const Track = ({ number, data }) => {
             className="flex-1 transition-colors duration-200 hover:bg-white/5"
             onClick={() => setModalVisible(true)}
           >
-            <div className="flex h-full flex-col items-center justify-between space-y-3 px-6 py-5">
+            <div className="flex h-full flex-col items-center justify-between space-y-3 p-6">
               <Title className="text-center text-lg leading-5 text-secondary/90 transition-colors duration-200 hover:text-secondary">
                 {truncateString(name, 50)}
               </Title>

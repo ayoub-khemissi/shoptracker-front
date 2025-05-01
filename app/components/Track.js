@@ -466,9 +466,14 @@ const Track = ({ number, data }) => {
       </div>
       <Modal isVisible={modalVisible} onClose={() => setModalVisible(false)}>
         <div className="space-y-4">
-          <Title className="text-center text-xl leading-none text-primary lg:text-2xl">
-            {truncateString(name, 70)}
-          </Title>
+          <NavLink
+            target="_blank"
+            type="primary"
+            href={url}
+            className="text-center text-xl leading-none"
+          >
+            {truncateString(name, 70)} 🔗
+          </NavLink>
           <div className="flex flex-wrap items-center justify-center space-y-4">
             <ChartContainer config={{}} className="h-full w-full">
               <ResponsiveContainer className="h-full w-full">

@@ -55,16 +55,3 @@ export function validateBoolean(data) {
 export function validateNumber(data) {
   return typeof data === "number";
 }
-
-/**
- * Validate whether the given phone number is in a valid format.
- *
- * The phone number must start with a plus sign (+) followed by 10 to 15 digits.
- *
- * @param {string} phone The phone number to validate.
- * @returns {boolean} true if the phone number is valid, false otherwise.
- */
-export function validatePhone(phone) {
-  const phoneRegex = /^\+\d{10,15}$/;
-  return phone && phoneRegex.test(phone);
-}

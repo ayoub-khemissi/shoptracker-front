@@ -43,6 +43,7 @@ export default function Register() {
     localLogin,
     showToast,
     router,
+    referrerCode,
   }) => {
     if (!googleEmail || !googleJwt) {
       localLogout();
@@ -53,10 +54,12 @@ export default function Register() {
     const response = await fetchData("/register/google", "POST", {
       email: googleEmail,
       googleJwt: googleJwt,
+      referrerCode: referrerCode,
     });
 
     switch (response?.status) {
       case 200:
+      case 201:
         showToast("Registered successfully! 🎉", "success");
         localLogin((await response.json()).data);
 
@@ -77,6 +80,7 @@ export default function Register() {
   useEffect(() => {
     if (session && session.user && session.googleJwt && !isGoogleLoginProcessed) {
       const { user, googleJwt } = session;
+      const referrerCode = localStorage.getItem("referrerCode");
 
       setIsGoogleLoginProcessed(true);
       registerGoogle({
@@ -86,6 +90,7 @@ export default function Register() {
         localLogin,
         showToast,
         router,
+        referrerCode,
       });
     }
   }, [session, isGoogleLoginProcessed, localLogout, showToast, localLogin, router]);
@@ -110,10 +115,13 @@ export default function Register() {
       return;
     }
 
+    const referrerCode = localStorage.getItem("referrerCode");
+
     const response = await fetchData("/register/classical", "POST", {
       email: email,
       password: password,
       recaptchaToken: recaptchaToken,
+      referrerCode: referrerCode,
     });
 
     switch (response?.status) {

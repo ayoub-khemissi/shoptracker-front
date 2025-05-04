@@ -46,7 +46,7 @@ const Constants = {
   DASHBOARD_TAB_USER_METRICS: "user-metrics",
   DASHBOARD_TAB_TRACK_METRICS: "track-metrics",
 
-  URL_PARAMS_TO_SAVE: ["promo"],
+  URL_PARAMS_TO_SAVE: ["referrerCode"],
 };
 
 export default Constants;

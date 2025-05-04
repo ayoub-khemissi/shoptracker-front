@@ -7,6 +7,8 @@ import EyeShowSvg from "../../public/assets/svg/icons/eye-show.svg";
 import EyeHideSvg from "../../public/assets/svg/icons/eye-hide.svg";
 import Image from "next/image";
 import InvisibleButton from "./InvisibleButton";
+import { countryCodes } from "@/utils/CountryCodes";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 const montserrat = Montserrat({ weight: "500", subsets: ["latin"] });
 
@@ -31,6 +33,18 @@ const Input = ({
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
   const isSearch = type === "search";
+  const isPhone = type === "phone";
+
+  const phoneCountryCode = () => {
+    try {
+      const parsedPhoneNumber = parsePhoneNumberFromString(value);
+      return (
+        countryCodes.find((country) => country.code === parsedPhoneNumber?.country)?.flag || "🌍"
+      );
+    } catch (error) {
+      return "🌍";
+    }
+  };
 
   return (
     <div className={`flex flex-col items-start space-y-2 text-left ${className}`}>
@@ -78,6 +92,11 @@ const Input = ({
           </InvisibleButton>
         )}
         {isSearch && <div className="absolute right-4 top-1/2 -translate-y-1/2 transform">🔎</div>}
+        {isPhone && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 transform">
+            {phoneCountryCode()}
+          </div>
+        )}
       </div>
       {isError && errorText && <TextNormal className="text-sm text-error">{errorText}</TextNormal>}
     </div>

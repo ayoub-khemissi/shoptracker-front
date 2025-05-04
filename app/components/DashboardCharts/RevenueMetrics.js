@@ -181,12 +181,12 @@ const RevenueMetrics = ({ data }) => {
       {/* MRR Card */}
       <div
         className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
-        aria-label={`Current Monthly Recurring Revenue: $${mrr}`}
+        aria-label={`Current Monthly Recurring Revenue: ${mrr}€`}
         tabIndex={0}
       >
         <span className="text-lg font-semibold text-gray-700">Current MRR</span>
         <span className="w-full text-3xl font-bold text-green-600">
-          ${mrr?.toFixed(2) ?? "0.00"}
+          {mrr?.toFixed(2) ?? "0.00"}€
         </span>
       </div>
 
@@ -257,16 +257,12 @@ const RevenueMetrics = ({ data }) => {
       {/* Total Amount Paid Card */}
       <div
         className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
-        aria-label={`Total Amount Paid: $${total_amount_paid?.toFixed(2) ?? "0.00"}`}
+        aria-label={`Total Amount Paid: ${total_amount_paid?.toFixed(2) ?? "0.00"}€`}
         tabIndex={0}
       >
         <span className="text-lg font-semibold text-gray-700">Total Amount Paid</span>
         <span className="w-full text-3xl font-bold text-green-700">
-          $
-          {total_amount_paid?.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }) ?? "0.00"}
+          {total_amount_paid?.toFixed(2) ?? "0.00"}€
         </span>
       </div>
 
@@ -316,7 +312,7 @@ const RevenueMetrics = ({ data }) => {
             <YAxis dataKey="referrer_name" type="category" tick={{ fontSize: 12 }} width={120} />
             <Tooltip
               formatter={(value) =>
-                `$${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                `${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€`
               }
             />
             <Bar dataKey="total_amount_paid" isAnimationActive>
@@ -344,7 +340,7 @@ const RevenueMetrics = ({ data }) => {
             <YAxis allowDecimals tick={{ fontSize: 12 }} />
             <Tooltip
               formatter={(value) =>
-                `$${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                `${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€`
               }
             />
             <Legend />

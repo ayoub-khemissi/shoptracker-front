@@ -476,7 +476,7 @@ const Track = ({ number, data }) => {
             target="_blank"
             type="primary"
             href={url}
-            className="text-center text-xl leading-none"
+            className="text-wrap text-center text-xl leading-none"
           >
             {truncateString(name, 70)} 🔗
           </NavLink>

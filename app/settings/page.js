@@ -15,12 +15,13 @@ import Modal from "../components/Modal";
 import Title from "../components/Title";
 import TextNormal from "../components/TextNormal";
 import Input from "../components/Input";
-import { validatePassword, validatePhone } from "@/modules/DataValidation";
+import { validatePassword } from "@/modules/DataValidation";
 import Constants from "@/utils/Constants";
 import {
   subscribeToBrowserNotification,
   unsubscribeFromBrowserNotification,
 } from "@/modules/BrowserNotification";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 const { SETTINGS_TAB_NOTIFICATIONS, SETTINGS_TAB_ACCOUNT, SETTINGS_TAB_SUBSCRIPTION } = Constants;
 
@@ -54,6 +55,14 @@ export default function Settings() {
     const currentTab = searchParams.get("tab");
     setTab(currentTab || SETTINGS_TAB_NOTIFICATIONS);
   }, [searchParams]);
+
+  const validatePhone = (phone) => {
+    try {
+      return isValidPhoneNumber(phone);
+    } catch (error) {
+      return false;
+    }
+  };
 
   const sendPhoneVerificationCode = async () => {
     if (!validatePhone(phone)) {
@@ -427,12 +436,11 @@ export default function Settings() {
                     <Input
                       id="phone"
                       labelText="Whatsapp Phone Number"
-                      type="text"
+                      type="phone"
                       placeholder="+1234567890"
                       value={phone}
                       required
                       isError={isErrorPhone}
-                      pattern="^\+\d{10,15}$"
                       errorText="The phone number must start with a plus sign (+) followed by 10 to 15 digits."
                       onChange={(e) => {
                         setPhone(e.target.value);

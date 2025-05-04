@@ -59,6 +59,24 @@ const CHART_COLORS = [
  * @property {string|null} month
  * @property {number} churned
  *
+ * @typedef {Object} InvoiceOverTime
+ * @property {string} month
+ * @property {number} total_invoices
+ *
+ * @typedef {Object} InvoiceByReferrerOverTime
+ * @property {string} referrer_name
+ * @property {string} month
+ * @property {number} total_invoices
+ *
+ * @typedef {Object} TotalAmountPaidByReferrer
+ * @property {string} referrer_name
+ * @property {number} total_amount_paid
+ *
+ * @typedef {Object} AmountPaidByReferrerOverTime
+ * @property {string} referrer_name
+ * @property {string} month
+ * @property {number} total_amount_paid
+ *
  * @typedef {Object} RevenueMetricsData
  * @property {ActiveSubscription[]} activeSubscriptions
  * @property {number} mrr
@@ -68,7 +86,13 @@ const CHART_COLORS = [
  * @property {SubscriptionOverTime[]} subscriptionsOverTime
  * @property {number} churned_users
  * @property {ChurnOverTime[]} churnOverTime
- * @property {number} users_no_stripe // number of users without Stripe customer ID
+ * @property {number} users_no_stripe
+ * @property {InvoiceOverTime[]} invoicesOverTime
+ * @property {number} total_invoices
+ * @property {InvoiceByReferrerOverTime[]} invoicesByReferrerOverTime
+ * @property {number} total_amount_paid
+ * @property {TotalAmountPaidByReferrer[]} totalAmountPaidByReferrer
+ * @property {AmountPaidByReferrerOverTime[]} amountPaidByReferrerOverTime
  */
 
 /**
@@ -82,6 +106,12 @@ const RevenueMetrics = ({ data }) => {
     activeSubscriptions,
     mrr,
     mrrOverTime,
+    invoicesOverTime,
+    total_invoices,
+    invoicesByReferrerOverTime,
+    total_amount_paid,
+    totalAmountPaidByReferrer,
+    amountPaidByReferrerOverTime,
     plansDistribution,
     activePlansDistribution,
     subscriptionsOverTime,
@@ -89,6 +119,46 @@ const RevenueMetrics = ({ data }) => {
     churnOverTime,
     users_no_stripe,
   } = data;
+
+  // Prepare data for stacked BarChart: amount paid by referrer over time
+  const paidReferrerNames = Array.from(
+    new Set(amountPaidByReferrerOverTime?.map((i) => i.referrer_name) || []),
+  );
+  const paidReferrerMonths = Array.from(
+    new Set(amountPaidByReferrerOverTime?.map((i) => i.month) || []),
+  );
+  const amountPaidByReferrerByMonth = paidReferrerMonths.map((month) => {
+    const monthData = { month };
+    paidReferrerNames.forEach((referrer) => {
+      const found = amountPaidByReferrerOverTime?.find(
+        (i) => i.month === month && i.referrer_name === referrer,
+      );
+      monthData[referrer] = found ? found.total_amount_paid : 0;
+    });
+    return monthData;
+  });
+
+  // Prepare data for horizontal BarChart: total amount paid by referrer
+  const totalAmountPaidByReferrerData = (totalAmountPaidByReferrer || []).map((item, idx) => ({
+    ...item,
+    color: CHART_COLORS[idx % CHART_COLORS.length],
+  }));
+
+  // Prepare data for stacked BarChart: invoices by referrer over time
+  const referrerNames = Array.from(
+    new Set(invoicesByReferrerOverTime?.map((i) => i.referrer_name) || []),
+  );
+  const referrerMonths = Array.from(new Set(invoicesByReferrerOverTime?.map((i) => i.month) || []));
+  const invoicesByReferrerByMonth = referrerMonths.map((month) => {
+    const monthData = { month };
+    referrerNames.forEach((referrer) => {
+      const found = invoicesByReferrerOverTime?.find(
+        (i) => i.month === month && i.referrer_name === referrer,
+      );
+      monthData[referrer] = found ? found.total_invoices : 0;
+    });
+    return monthData;
+  });
 
   // Prepare subscriptions over time for stacked BarChart
   const plans = Array.from(new Set(subscriptionsOverTime?.map((s) => s.plan_name) || []));
@@ -143,6 +213,152 @@ const RevenueMetrics = ({ data }) => {
               name="MRR"
             />
           </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Invoices Over Time (Line Chart) */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label="Invoices over time chart"
+        tabIndex={0}
+      >
+        <h2 className="mb-4 text-lg font-semibold text-gray-700">Invoices Over Time</h2>
+        <ResponsiveContainer width="100%" height={340}>
+          <LineChart data={invoicesOverTime || []}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+            <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="total_invoices"
+              stroke="#6366f1"
+              strokeWidth={3}
+              dot={{ r: 5, stroke: "#6366f1", fill: "#fff" }}
+              activeDot={{ r: 7 }}
+              name="Total Invoices"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Total Invoices Card */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label={`Total Invoices: ${total_invoices}`}
+        tabIndex={0}
+      >
+        <span className="text-lg font-semibold text-gray-700">Total Invoices</span>
+        <span className="w-full text-3xl font-bold text-blue-600">
+          {total_invoices?.toLocaleString() ?? "0"}
+        </span>
+      </div>
+
+      {/* Total Amount Paid Card */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label={`Total Amount Paid: $${total_amount_paid?.toFixed(2) ?? "0.00"}`}
+        tabIndex={0}
+      >
+        <span className="text-lg font-semibold text-gray-700">Total Amount Paid</span>
+        <span className="w-full text-3xl font-bold text-green-700">
+          $
+          {total_amount_paid?.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }) ?? "0.00"}
+        </span>
+      </div>
+
+      {/* Invoices By Referrer Over Time (Stacked Bar Chart) */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label="Invoices by Referrer Over Time Chart"
+        tabIndex={0}
+      >
+        <h2 className="mb-4 text-lg font-semibold text-gray-700">Invoices by Referrer Over Time</h2>
+        <ResponsiveContainer width="100%" height={340}>
+          <BarChart data={invoicesByReferrerByMonth}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+            <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
+            <Tooltip />
+            <Legend />
+            {referrerNames.map((referrer, idx) => (
+              <Bar
+                key={referrer}
+                dataKey={referrer}
+                stackId="a"
+                fill={CHART_COLORS[idx % CHART_COLORS.length]}
+                name={referrer}
+                isAnimationActive
+              />
+            ))}
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Total Amount Paid By Referrer (Horizontal Bar Chart) */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label="Total Amount Paid By Referrer Chart"
+        tabIndex={0}
+      >
+        <h2 className="mb-4 text-lg font-semibold text-gray-700">Total Amount Paid By Referrer</h2>
+        <ResponsiveContainer width="100%" height={340}>
+          <BarChart
+            layout="vertical"
+            data={totalAmountPaidByReferrerData}
+            margin={{ left: 40, right: 20 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" tick={{ fontSize: 12 }} allowDecimals />
+            <YAxis dataKey="referrer_name" type="category" tick={{ fontSize: 12 }} width={120} />
+            <Tooltip
+              formatter={(value) =>
+                `$${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+              }
+            />
+            <Bar dataKey="total_amount_paid" isAnimationActive>
+              {totalAmountPaidByReferrerData.map((entry, idx) => (
+                <Cell key={`cell-${idx}`} fill={entry.color} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Amount Paid By Referrer Over Time (Stacked Bar Chart) */}
+      <div
+        className="flex w-full flex-wrap rounded-xl border border-gray-100 bg-white p-6 shadow xl:w-5/12"
+        aria-label="Amount Paid By Referrer Over Time Chart"
+        tabIndex={0}
+      >
+        <h2 className="mb-4 text-lg font-semibold text-gray-700">
+          Amount Paid By Referrer Over Time
+        </h2>
+        <ResponsiveContainer width="100%" height={340}>
+          <BarChart data={amountPaidByReferrerByMonth}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+            <YAxis allowDecimals tick={{ fontSize: 12 }} />
+            <Tooltip
+              formatter={(value) =>
+                `$${Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+              }
+            />
+            <Legend />
+            {paidReferrerNames.map((referrer, idx) => (
+              <Bar
+                key={referrer}
+                dataKey={referrer}
+                stackId="a"
+                fill={CHART_COLORS[idx % CHART_COLORS.length]}
+                name={referrer}
+                isAnimationActive
+              />
+            ))}
+          </BarChart>
         </ResponsiveContainer>
       </div>
 

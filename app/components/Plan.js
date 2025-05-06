@@ -278,7 +278,12 @@ const Plan = ({
       </>
     ) : (
       <>
-        By checking this box, you agree to start your subscription now and be charged immediately.
+        By checking this box, you agree to start your {hasSubscription ? "new " : ""} subscription
+        now and be charged immediately after confirmation
+        {hasSubscription
+          ? ", and to be automatically switched to the new plan. Your previous subscription will be instantly cancelled"
+          : ""}
+        .
       </>
     );
   };

@@ -119,7 +119,7 @@ export default function Contact() {
               <Textarea
                 id="content"
                 labelText="Message"
-                placeholder="Describe your request in detail..."
+                placeholder="Describe your request precisely in any language 🌐"
                 value={content}
                 required
                 rows={6}

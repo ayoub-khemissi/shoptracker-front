@@ -37,28 +37,21 @@ export function convertMillisecondsToText(ms) {
 
 /**
  * @param {number|string} price
+ * @param {string} currency
+ * @param {string} lang
  * @returns {string}
  * @description
  * Takes a number or a string, and returns a human-readable string.
- * The output is the number or string formatted as a price
- * with a comma as the decimal separator and spaces as the thousand separator.
- * @example
- * formatPrice(9.99) // returns "9,99"
- * formatPrice("9.99") // returns "9,99"
+ * The output is the number or string formatted as a price.
  */
-export function formatPrice(price) {
+export function formatPrice(price, currency = "EUR", lang = "en") {
   if (typeof price !== "number" && typeof price !== "string") {
     return price;
   }
 
-  let [integerPart, decimalPart] = String(price).replace(".", ",").split(",");
-
-  if (decimalPart && decimalPart.length === 1) {
-    decimalPart += "0";
-  }
-
-  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
+  return Intl.NumberFormat(lang || "en", { style: "currency", currency: currency || "EUR" }).format(
+    price,
+  );
 }
 
 /**

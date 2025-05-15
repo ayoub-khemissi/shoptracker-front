@@ -56,6 +56,8 @@ export default function TVProduct({ params }) {
     const availability = rng(0, 1) > 0.5;
 
     return {
+      currency: "EUR",
+      lang: "en",
       price: price,
       availability: availability,
     };
@@ -106,7 +108,7 @@ export default function TVProduct({ params }) {
   const seed = Math.floor(Date.now() / getIntervalMs(interval));
   const productData = generateProductData(seed);
 
-  const { price, availability } = productData;
+  const { price, availability, currency, lang } = productData;
 
   return (
     <>
@@ -135,7 +137,7 @@ export default function TVProduct({ params }) {
               </div>
               <div className="space-y-3 rounded-xl border border-white/10 bg-white/5 p-4">
                 <TextNormal className="text-4xl font-bold text-blue-200 drop-shadow-lg">
-                  {formatPrice(price)}€
+                  {formatPrice(price, currency, lang)}
                 </TextNormal>
                 <TextNormal
                   className={`text-lg font-semibold ${

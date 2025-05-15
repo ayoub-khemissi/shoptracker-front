@@ -54,6 +54,7 @@ const Track = ({ number, data }) => {
     url,
     name,
     description,
+    lang,
     initial_price,
     currency,
     track_stock,
@@ -109,18 +110,12 @@ const Track = ({ number, data }) => {
     const price = track_checks_chart[track_checks_chart.length - 1]?.price || initial_price;
 
     if (priceStatus === TRACK_PRICE_STATUS_STABLE) {
-      return (
-        <>
-          {formatPrice(price)}
-          <span className="text-xs">{currency}</span>
-        </>
-      );
+      return formatPrice(price, currency, lang);
     } else {
       return (
         <>
-          {formatPrice(price)}
-          <span className="text-xs">{currency}</span>{" "}
-          <span className="text-xs line-through">{formatPrice(initial_price) + currency}</span>
+          {formatPrice(price, currency, lang)}
+          <span className="text-xs line-through">{formatPrice(initial_price, currency, lang)}</span>
         </>
       );
     }
@@ -542,7 +537,7 @@ const Track = ({ number, data }) => {
                               <div className="w-48 rounded-lg border border-white/10 bg-gradient-to-br from-contrast/95 via-contrast to-contrast/90 p-3 shadow-md shadow-secondary/10 ring-1 ring-tertiary/10 backdrop-blur-md">
                                 <TextImportant className="text-sm font-medium text-primary">
                                   {isOk
-                                    ? `✔️ ${formatPrice(trackCheck.price)}${currency} - ${getAvailabilityText(trackCheck.availability)}`
+                                    ? `✔️ ${formatPrice(trackCheck.price, trackCheck.currency, trackCheck.lang)} - ${getAvailabilityText(trackCheck.availability)}`
                                     : `⚠️ ${trackCheck.title}: ${trackCheck.reason}`}
                                 </TextImportant>
                                 <TextImportant className="mt-1 text-xs text-primary/70">

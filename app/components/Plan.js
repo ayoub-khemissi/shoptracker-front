@@ -313,7 +313,7 @@ const Plan = ({
             className={`text-3xl font-bold ${popular ? "text-white" : "text-primary"}`}
           >
             {formatPrice(price)}
-            <span className="ml-1 text-sm opacity-80">€ {getBillingPeriodText()}</span>
+            <span className="ml-1 text-sm opacity-80"> {getBillingPeriodText()}</span>
           </TextImportant>
           {displayFreeTrialBadge() && (
             <span

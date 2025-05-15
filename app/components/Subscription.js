@@ -219,8 +219,7 @@ const Subscription = ({ className = "" }) => {
                         {new Date(invoice.date).toLocaleDateString()}
                       </TextNormal>
                       <TextImportant className="text-right">
-                        {formatPrice(invoice.amount)}
-                        {invoice.currency}
+                        {formatPrice(invoice.amount, invoice.currency)}
                       </TextImportant>
                     </NavLink>
                   );

@@ -10,13 +10,14 @@ import { formatPrice } from "@/modules/TextFormatter";
 import Link from "next/link";
 import Section from "@/app/components/Section";
 
-const priceRange = {
-  min: 500,
-  max: 999,
-};
-
 export default function TVProduct({ params }) {
   const validIntervals = ["30s", "5m", "15m", "30m", "1h", "2h", "6h", "12h", "1d"];
+  const name = "Ultra 4k Smart TV";
+  const brand = "Celestium";
+  const priceRange = {
+    min: 500,
+    max: 999,
+  };
   const { interval } = params;
   const [timeLeft, setTimeLeft] = useState(0);
 
@@ -51,18 +52,12 @@ export default function TVProduct({ params }) {
       return (min + (rand - Math.floor(rand)) * (max - min + 1)).toFixed(2);
     };
 
-    const product = {
-      name: "Ultra 4k Smart TV",
-      brand: "Celestium",
-    };
-
     const price = rng(priceRange.min, priceRange.max);
     const availability = rng(0, 1) > 0.5;
 
     return {
-      ...product,
-      price,
-      availability,
+      price: price,
+      availability: availability,
     };
   };
 
@@ -111,13 +106,11 @@ export default function TVProduct({ params }) {
   const seed = Math.floor(Date.now() / getIntervalMs(interval));
   const productData = generateProductData(seed);
 
-  const { name, brand, price, availability } = productData;
+  const { price, availability } = productData;
 
   return (
     <>
-      <title>
-        {name} - {brand} | ShopTracker
-      </title>
+      <title>{`${name} - ${brand} | ShopTracker`}</title>
       <meta
         name="description"
         content={`Experience stunning clarity with the ${name} from ${brand}. Smart features, vibrant colors, and seamless streaming—entertainment has never looked this good.`}
@@ -129,7 +122,7 @@ export default function TVProduct({ params }) {
               <div className="absolute -inset-2 rounded-full bg-blue-500/10 blur-2xl"></div>
               <Image
                 src={TVProductSvg}
-                alt="Ultra 4k Smart TV"
+                alt={name}
                 className="relative h-64 w-64 transform object-contain transition-transform duration-300 hover:scale-105"
               />
             </div>
